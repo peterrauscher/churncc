@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -19,10 +18,7 @@ const Home = () => {
     const loadFeaturedItems = async () => {
       setIsLoading(true);
       try {
-        // Fetch credit card data
         const cards = await fetchCreditCards();
-        
-        // Get top cards by offer amount
         const topCards = [...cards]
           .filter(card => !card.discontinued && card.offers.length > 0)
           .sort((a, b) => {
@@ -31,17 +27,12 @@ const Home = () => {
             return bOffer - aOffer;
           })
           .slice(0, 4);
-        
         setFeaturedCards(topCards);
         
-        // Get bank account data
         const accounts = getMockBankAccounts();
-        
-        // Get top accounts by offer amount
         const topAccounts = [...accounts]
           .sort((a, b) => b.offerAmount - a.offerAmount)
           .slice(0, 3);
-        
         setFeaturedAccounts(topAccounts);
       } catch (error) {
         console.error("Error loading featured items:", error);
@@ -55,33 +46,75 @@ const Home = () => {
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-fintech-purple to-fintech-blue px-4 py-16 text-white">
-        <div className="container mx-auto flex flex-col items-center text-center">
+      <section className="relative overflow-hidden bg-gradient-to-br from-fintech-purple to-fintech-blue px-4 py-16 text-white">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -right-1/4 top-1/4 h-96 w-96 animate-pulse rounded-full bg-fintech-orange/20 blur-3xl"></div>
+          <div className="absolute -left-1/4 top-1/2 h-96 w-96 animate-pulse rounded-full bg-fintech-purple/20 blur-3xl"></div>
+        </div>
+        <div className="container relative mx-auto flex flex-col items-center text-center">
+          <div className="mb-8 inline-flex items-center rounded-full bg-white/10 px-4 py-2 text-sm backdrop-blur-sm">
+            <TrendingUp className="mr-2 h-4 w-4 text-fintech-orange" />
+            <span>Average user earns $2,500+ in first year bonuses</span>
+          </div>
+          
           <h1 className="mb-6 text-4xl font-bold md:text-5xl lg:text-6xl">
-            Find Your Perfect Credit Card & Bank Bonus
+            Maximize Your{" "}
+            <span className="bg-gradient-to-r from-fintech-orange to-white bg-clip-text text-transparent">
+              Money
+            </span>
+            <br />
+            with Card & Bank Bonuses
           </h1>
+          
           <p className="mb-8 max-w-2xl text-lg text-white/80 md:text-xl">
-            Compare the best credit card offers and bank account bonuses to maximize your rewards.
+            Join thousands of smart churners who earn{" "}
+            <span className="font-semibold text-fintech-orange">$1,000s in bonuses</span>{" "}
+            every year. We track the best credit card and bank account offers so you don't have to.
           </p>
-          <div className="flex flex-col gap-4 sm:flex-row">
+          
+          <div className="mb-12 flex flex-col gap-4 sm:flex-row">
             <Button asChild size="lg" className="bg-white text-fintech-purple hover:bg-white/90">
               <Link to="/credit-cards">
-                <CreditCardIcon className="mr-2 h-5 w-5" />
-                Explore Credit Cards
+                <CreditCard className="mr-2 h-5 w-5" />
+                Find Credit Card Offers
               </Link>
             </Button>
             <Button asChild size="lg" className="bg-fintech-orange hover:bg-fintech-orange/90">
               <Link to="/bank-accounts">
                 <BanknoteIcon className="mr-2 h-5 w-5" />
-                Find Bank Bonuses
+                Explore Bank Bonuses
               </Link>
             </Button>
+          </div>
+
+          <div className="grid gap-8 sm:grid-cols-3">
+            <div className="flex flex-col items-center rounded-lg bg-white/10 p-6 backdrop-blur-sm">
+              <div className="mb-4 rounded-full bg-fintech-orange/20 p-3">
+                <CreditCard className="h-6 w-6 text-fintech-orange" />
+              </div>
+              <h3 className="mb-2 text-lg font-semibold">Credit Card Bonuses</h3>
+              <p className="text-white/80">Up to $1,000+ per card sign-up bonus</p>
+            </div>
+            
+            <div className="flex flex-col items-center rounded-lg bg-white/10 p-6 backdrop-blur-sm">
+              <div className="mb-4 rounded-full bg-fintech-blue/20 p-3">
+                <BanknoteIcon className="h-6 w-6 text-fintech-blue" />
+              </div>
+              <h3 className="mb-2 text-lg font-semibold">Bank Account Bonuses</h3>
+              <p className="text-white/80">Earn $200-$500 per new account</p>
+            </div>
+            
+            <div className="flex flex-col items-center rounded-lg bg-white/10 p-6 backdrop-blur-sm">
+              <div className="mb-4 rounded-full bg-fintech-purple/20 p-3">
+                <TrendingUp className="h-6 w-6 text-fintech-purple" />
+              </div>
+              <h3 className="mb-2 text-lg font-semibold">Track Your Progress</h3>
+              <p className="text-white/80">Easy tracking of your bonus progress</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Featured Credit Cards Section */}
       <section className="px-4 py-12 md:py-16">
         <div className="container mx-auto">
           <div className="mb-8 flex items-center justify-between">
@@ -117,7 +150,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Featured Bank Accounts Section */}
       <section className="bg-gray-50 px-4 py-12 md:py-16">
         <div className="container mx-auto">
           <div className="mb-8 flex items-center justify-between">
@@ -153,7 +185,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Why Use Card Bonanza Hub Section */}
       <section className="px-4 py-12 md:py-16">
         <div className="container mx-auto">
           <div className="mb-10 text-center">
@@ -203,7 +234,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="bg-fintech-darkPurple px-4 py-12 text-white md:py-16">
         <div className="container mx-auto">
           <div className="flex flex-col items-center text-center">

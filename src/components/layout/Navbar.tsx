@@ -23,7 +23,7 @@ const Navbar = () => {
         <div className="flex items-center gap-2">
           <Link to="/" className="flex items-center gap-2" onClick={closeMenu}>
             <CreditCard className="h-6 w-6 text-fintech-purple" />
-            <span className="text-xl font-bold">Card Bonanza Hub</span>
+            <span className="text-xl font-bold">churn.cc</span>
           </Link>
         </div>
 
