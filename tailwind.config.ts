@@ -52,6 +52,18 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+        fintech: {
+          purple: '#9b87f5',
+          darkPurple: '#1A1F2C',
+          secondary: '#7E69AB',
+          tertiary: '#6E59A5',
+          light: '#D6BCFA',
+          vivid: '#8B5CF6',
+          orange: '#F97316',
+          blue: '#0EA5E9',
+          red: '#ea384c',
+          gray: '#8E9196',
+        },
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
