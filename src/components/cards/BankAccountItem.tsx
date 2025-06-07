@@ -1,9 +1,8 @@
-
 import { BankAccount } from '@/types';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { BanknoteIcon, ArrowRight, DollarSign, Calendar, Info } from 'lucide-react';
 
 interface BankAccountItemProps {
@@ -88,7 +87,7 @@ const BankAccountItem = ({ account }: BankAccountItemProps) => {
       
       <CardFooter className="flex items-center justify-between p-4 pt-0">
         <Link 
-          to={`/bank-accounts/${account.id}`}
+          href={`/bank-accounts/${account.id}`}
           className="text-sm font-medium text-fintech-purple hover:underline"
         >
           View Details

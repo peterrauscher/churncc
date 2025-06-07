@@ -1,6 +1,7 @@
+'use client';
 
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import Link from "next/link";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -18,8 +19,12 @@ import { CreditCard } from "@/types";
 import { fetchCreditCardById } from "@/services/api";
 import { ArrowLeft, CreditCard as CreditCardIcon, DollarSign, Calendar, Check, Info } from "lucide-react";
 
-const CreditCardDetail = () => {
-  const { id } = useParams<{ id: string }>();
+interface CreditCardDetailPageProps {
+  params: { id: string };
+}
+
+export default function CreditCardDetailPage({ params }: CreditCardDetailPageProps) {
+  const { id } = params;
   const [card, setCard] = useState<CreditCard | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -38,16 +43,18 @@ const CreditCardDetail = () => {
       }
     };
 
-    loadCreditCard();
+    if (id) {
+        loadCreditCard();
+    } else {
+        setIsLoading(false);
+    }
   }, [id]);
 
-  // Format currency display
   const formatCurrency = (currency: string) => {
     if (currency === 'USD') return '$';
     return currency;
   };
   
-  // Format the reward value for display
   const formatRewardValue = (amount: number, currency: string) => {
     if (currency === 'USD') {
       return `$${amount.toLocaleString()}`;
@@ -74,7 +81,7 @@ const CreditCardDetail = () => {
       <Layout>
         <div className="container mx-auto px-4 py-8 md:px-6">
           <div className="mb-6">
-            <Link to="/credit-cards" className="flex items-center text-fintech-purple hover:underline">
+            <Link href="/credit-cards" className="flex items-center text-fintech-purple hover:underline">
               <ArrowLeft className="mr-2 h-4 w-4" /> Back to Credit Cards
             </Link>
           </div>
@@ -82,10 +89,10 @@ const CreditCardDetail = () => {
             <CreditCardIcon className="mb-4 h-16 w-16 text-muted-foreground" />
             <h2 className="mb-2 text-2xl font-bold">Card Not Found</h2>
             <p className="mb-6 text-muted-foreground">
-              The credit card you're looking for doesn't exist or has been discontinued.
+              The credit card you're looking for (ID: {id || 'N/A'}) doesn't exist, has been discontinued, or there was an issue loading it.
             </p>
             <Button asChild>
-              <Link to="/credit-cards">Browse All Credit Cards</Link>
+              <Link href="/credit-cards">Browse All Credit Cards</Link>
             </Button>
           </div>
         </div>
@@ -99,7 +106,7 @@ const CreditCardDetail = () => {
     <Layout>
       <div className="container mx-auto px-4 py-8 md:px-6">
         <div className="mb-6">
-          <Link to="/credit-cards" className="flex items-center text-fintech-purple hover:underline">
+          <Link href="/credit-cards" className="flex items-center text-fintech-purple hover:underline">
             <ArrowLeft className="mr-2 h-4 w-4" /> Back to Credit Cards
           </Link>
         </div>
@@ -216,8 +223,8 @@ const CreditCardDetail = () => {
                 src={card.imageUrl} 
                 alt={`${card.name} Card`}
                 className="mb-6 h-auto max-h-[250px] w-auto"
-                onError={(e) => {
-                  e.currentTarget.src = '/placeholder.svg';
+                onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                  (e.target as HTMLImageElement).src = '/placeholder.svg';
                 }}
               />
             ) : (
@@ -248,68 +255,94 @@ const CreditCardDetail = () => {
                       <Check className="mt-0.5 h-4 w-4 text-fintech-purple" />
                       <div>
                         <p className="font-medium">{credit.description}</p>
-                        <p className="text-sm text-muted-foreground">
-                          Value: {formatCurrency(credit.currency)}{credit.value} 
-                          {credit.weight < 1 && ` (Effective value: ~${formatCurrency(credit.currency)}${Math.round(credit.value * credit.weight)})`}
-                        </p>
+                        {credit.value && (
+                          <p className="text-sm text-muted-foreground">
+                            Value: ${credit.value.toLocaleString()}
+                          </p>
+                        )}
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
             )}
+            
+            {card.rewardMultipliers.length > 0 && (
+              <div className="mt-8 w-full">
+                <h3 className="mb-4 text-lg font-bold">Reward Multipliers</h3>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Category</TableHead>
+                      <TableHead>Multiplier</TableHead>
+                      <TableHead>Details</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {card.rewardMultipliers.map((multiplier, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="font-medium">{multiplier.category}</TableCell>
+                        <TableCell>{multiplier.multiplier}x</TableCell>
+                        <TableCell>{multiplier.details}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            )}
+            
+            {card.insurances.length > 0 && (
+              <div className="mt-8 w-full">
+                <h3 className="mb-4 text-lg font-bold">Travel & Purchase Protections</h3>
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                  {card.insurances.map((insurance, index) => (
+                    <div key={index} className="flex items-start gap-2 rounded-lg border p-3">
+                       <Check className="mt-0.5 h-4 w-4 text-fintech-purple flex-shrink-0" />
+                       <span>{insurance}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            
           </div>
         </div>
         
-        {card.historicalOffers.length > 0 && (
-          <div className="mt-10">
-            <h3 className="mb-4 text-xl font-bold">Historical Offers</h3>
-            <p className="mb-4 text-muted-foreground">
-              These are the best recent historical offers for this card. They may become available again in the future.
-            </p>
-            
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Bonus</TableHead>
-                  <TableHead>Spend Requirement</TableHead>
-                  <TableHead>Timeframe</TableHead>
-                  <TableHead>Last Seen</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {card.historicalOffers.map((offer, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="font-medium">
-                      {formatRewardValue(
-                        offer.amount[0]?.amount || 0,
-                        offer.amount[0]?.currency || 'USD'
-                      )}
-                    </TableCell>
-                    <TableCell>${offer.spend.toLocaleString()}</TableCell>
-                    <TableCell>{offer.days} days</TableCell>
-                    <TableCell>
-                      {offer.expiration 
-                        ? new Date(offer.expiration).toLocaleDateString() 
-                        : 'Unknown'}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
+        {(card.pros.length > 0 || card.cons.length > 0) && (
+          <>
+            <Separator className="my-8" />
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+              {card.pros.length > 0 && (
+                <div>
+                  <h3 className="mb-4 text-xl font-bold">Pros</h3>
+                  <ul className="space-y-2">
+                    {card.pros.map((pro, index) => (
+                      <li key={index} className="flex items-start gap-2">
+                        <Check className="mt-1 h-4 w-4 text-green-500 flex-shrink-0" />
+                        <span>{pro}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {card.cons.length > 0 && (
+                <div>
+                  <h3 className="mb-4 text-xl font-bold">Cons</h3>
+                  <ul className="space-y-2">
+                    {card.cons.map((con, index) => (
+                      <li key={index} className="flex items-start gap-2">
+                        <Info className="mt-1 h-4 w-4 text-red-500 flex-shrink-0" />
+                        <span>{con}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </>
         )}
         
-        <div className="mt-10">
-          <Separator className="mb-6" />
-          <p className="text-sm text-muted-foreground">
-            Disclaimer: Card offers are subject to change. Please verify all terms and conditions with the card issuer before applying.
-            Card Bonanza Hub earns a commission when you apply through our affiliate links.
-          </p>
-        </div>
       </div>
     </Layout>
   );
-};
-
-export default CreditCardDetail;
+} 

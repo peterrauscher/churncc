@@ -1,52 +1,52 @@
+'use client';
 
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from "next/navigation"; // Changed from react-router-dom
 import Layout from "@/components/layout/Layout";
 import CreditCardGrid from "@/components/cards/CreditCardGrid";
 import CreditCardFilters from "@/components/filters/CreditCardFilters";
 import { CreditCard, FilterOptions, SortOptions } from "@/types";
 import { fetchCreditCards } from "@/services/api";
 
-const CreditCards = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+export default function CreditCardsPage() { // Renamed for clarity
+  const searchParams = useSearchParams(); // From next/navigation
+  // We are not using setSearchParams directly in this component, 
+  // but CreditCardFilters might need to be updated to use Next.js navigation for URL updates.
   const [creditCards, setCreditCards] = useState<CreditCard[]>([]);
   const [filteredCards, setFilteredCards] = useState<CreditCard[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [issuers, setIssuers] = useState<string[]>([]);
   const [networks, setNetworks] = useState<string[]>([]);
   
-  // Get URL params for initial filter state
   const urlIssuer = searchParams.get("issuer");
 
   useEffect(() => {
     const loadCreditCards = async () => {
       setIsLoading(true);
       try {
-        const cards = await fetchCreditCards();
+        const cardsData = await fetchCreditCards();
         
-        // Filter out discontinued cards
-        const activeCards = cards.filter(card => !card.discontinued);
+        const activeCards = cardsData.filter((card: CreditCard) => !card.discontinued);
         setCreditCards(activeCards);
-        setFilteredCards(activeCards);
+        let initialDisplayCards = [...activeCards];
         
-        // Extract unique issuers and networks for filters
         const uniqueIssuers = Array.from(
-          new Set(activeCards.map(card => card.issuer))
-        );
+          new Set(activeCards.map((card: CreditCard) => card.issuer))
+        ) as string[]; // Explicit type assertion
         setIssuers(uniqueIssuers);
         
         const uniqueNetworks = Array.from(
-          new Set(activeCards.map(card => card.network))
-        );
+          new Set(activeCards.map((card: CreditCard) => card.network))
+        ) as string[]; // Explicit type assertion
         setNetworks(uniqueNetworks);
         
-        // Apply initial filter from URL if present
         if (urlIssuer) {
-          const initialFiltered = activeCards.filter(
-            card => card.issuer === urlIssuer
+          initialDisplayCards = activeCards.filter(
+            (card: CreditCard) => card.issuer === urlIssuer
           );
-          setFilteredCards(initialFiltered);
         }
+        setFilteredCards(initialDisplayCards);
+
       } catch (error) {
         console.error("Error loading credit cards:", error);
       } finally {
@@ -58,32 +58,28 @@ const CreditCards = () => {
   }, [urlIssuer]);
 
   const handleFilterChange = (filters: FilterOptions) => {
-    let filtered = [...creditCards];
+    let tempFiltered = [...creditCards];
     
-    // Filter by issuer
     if (filters.issuer && filters.issuer.length > 0) {
-      filtered = filtered.filter(card => 
+      tempFiltered = tempFiltered.filter((card: CreditCard) => 
         filters.issuer!.includes(card.issuer)
       );
     }
     
-    // Filter by network
     if (filters.network && filters.network.length > 0) {
-      filtered = filtered.filter(card => 
+      tempFiltered = tempFiltered.filter((card: CreditCard) => 
         filters.network!.includes(card.network)
       );
     }
     
-    // Filter by annual fee
     if (filters.annualFeeMax !== undefined) {
-      filtered = filtered.filter(card => 
+      tempFiltered = tempFiltered.filter((card: CreditCard) => 
         card.annualFee <= filters.annualFeeMax!
       );
     }
     
-    // Filter by minimum offer amount
     if (filters.offerAmountMin !== undefined) {
-      filtered = filtered.filter(card => {
+      tempFiltered = tempFiltered.filter((card: CreditCard) => {
         if (card.offers.length === 0) return false;
         const bestOffer = card.offers[0];
         const offerAmount = bestOffer.amount[0]?.amount || 0;
@@ -91,29 +87,27 @@ const CreditCards = () => {
       });
     }
     
-    // Filter by business cards
     if (filters.isBusiness !== undefined) {
-      filtered = filtered.filter(card => 
+      tempFiltered = tempFiltered.filter((card: CreditCard) => 
         card.isBusiness === filters.isBusiness
       );
     }
     
-    // Filter by annual fee waived
     if (filters.isAnnualFeeWaived !== undefined) {
-      filtered = filtered.filter(card => 
+      tempFiltered = tempFiltered.filter((card: CreditCard) => 
         card.isAnnualFeeWaived === filters.isAnnualFeeWaived
       );
     }
     
-    setFilteredCards(filtered);
+    setFilteredCards(tempFiltered);
   };
 
   const handleSortChange = (sort: SortOptions) => {
-    const sorted = [...filteredCards];
+    const tempSorted = [...filteredCards];
     
     switch (sort.field) {
       case "offerAmount":
-        sorted.sort((a, b) => {
+        tempSorted.sort((a: CreditCard, b: CreditCard) => {
           const aOffer = a.offers[0]?.amount[0]?.amount || 0;
           const bOffer = b.offers[0]?.amount[0]?.amount || 0;
           return sort.direction === "asc" ? aOffer - bOffer : bOffer - aOffer;
@@ -121,7 +115,7 @@ const CreditCards = () => {
         break;
         
       case "annualFee":
-        sorted.sort((a, b) => {
+        tempSorted.sort((a: CreditCard, b: CreditCard) => {
           return sort.direction === "asc" 
             ? a.annualFee - b.annualFee 
             : b.annualFee - a.annualFee;
@@ -129,7 +123,7 @@ const CreditCards = () => {
         break;
         
       case "universalCashbackPercent":
-        sorted.sort((a, b) => {
+        tempSorted.sort((a: CreditCard, b: CreditCard) => {
           return sort.direction === "asc" 
             ? a.universalCashbackPercent - b.universalCashbackPercent 
             : b.universalCashbackPercent - a.universalCashbackPercent;
@@ -140,7 +134,7 @@ const CreditCards = () => {
         break;
     }
     
-    setFilteredCards(sorted);
+    setFilteredCards(tempSorted);
   };
 
   return (
@@ -159,6 +153,8 @@ const CreditCards = () => {
             onSortChange={handleSortChange}
             issuers={issuers}
             networks={networks}
+            // Pass initial searchParam for issuer if needed by CreditCardFilters
+            initialIssuer={urlIssuer || undefined} 
           />
         </div>
         
@@ -183,6 +179,4 @@ const CreditCards = () => {
       </div>
     </Layout>
   );
-};
-
-export default CreditCards;
+} 

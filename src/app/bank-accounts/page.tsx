@@ -1,12 +1,28 @@
+'use client';
 
 import { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
 import BankAccountGrid from "@/components/cards/BankAccountGrid";
 import BankAccountFilters from "@/components/filters/BankAccountFilters";
-import { BankAccount } from "@/types";
+import { BankAccount } from "@/types"; // Assuming BankAccount type is defined in @/types
 import { getMockBankAccounts } from "@/services/api";
 
-const BankAccounts = () => {
+// Define a more specific type for filter options based on usage
+interface BankAccountFilterState {
+  institutions?: string[];
+  accountTypes?: string[]; // Assuming account types are strings e.g., ['checking', 'savings']
+  minBonus?: number;
+  noMonthlyFee?: boolean;
+  directDepositRequired?: boolean;
+}
+
+// Define a type for sort options
+interface BankAccountSortState {
+  field: keyof Pick<BankAccount, 'offerAmount' | 'monthlyFee'> | string; // Allow known sortable fields or any string
+  direction: 'asc' | 'desc';
+}
+
+export default function BankAccountsPage() {
   const [bankAccounts, setBankAccounts] = useState<BankAccount[]>([]);
   const [filteredAccounts, setFilteredAccounts] = useState<BankAccount[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -16,16 +32,13 @@ const BankAccounts = () => {
     const loadBankAccounts = async () => {
       setIsLoading(true);
       try {
-        // In production, you would fetch from your API endpoint that scrapes bankrewards.io
-        // For now, we'll use the mock data
-        const accounts = getMockBankAccounts();
-        setBankAccounts(accounts);
-        setFilteredAccounts(accounts);
+        const accountsData = getMockBankAccounts();
+        setBankAccounts(accountsData);
+        setFilteredAccounts(accountsData);
         
-        // Extract unique institutions for filters
         const uniqueInstitutions = Array.from(
-          new Set(accounts.map(account => account.institution))
-        );
+          new Set(accountsData.map((account: BankAccount) => account.institution))
+        ) as string[];
         setInstitutions(uniqueInstitutions);
       } catch (error) {
         console.error("Error loading bank accounts:", error);
@@ -37,53 +50,48 @@ const BankAccounts = () => {
     loadBankAccounts();
   }, []);
 
-  const handleFilterChange = (filters: any) => {
-    let filtered = [...bankAccounts];
+  const handleFilterChange = (filters: BankAccountFilterState) => {
+    let tempFiltered = [...bankAccounts];
     
-    // Filter by institutions
     if (filters.institutions && filters.institutions.length > 0) {
-      filtered = filtered.filter(account => 
-        filters.institutions.includes(account.institution)
+      tempFiltered = tempFiltered.filter((account: BankAccount) => 
+        filters.institutions!.includes(account.institution)
       );
     }
     
-    // Filter by account types
     if (filters.accountTypes && filters.accountTypes.length > 0) {
-      filtered = filtered.filter(account => 
-        filters.accountTypes.includes(account.type)
+      tempFiltered = tempFiltered.filter((account: BankAccount) => 
+        filters.accountTypes!.includes(account.type)
       );
     }
     
-    // Filter by minimum bonus amount
     if (filters.minBonus !== undefined) {
-      filtered = filtered.filter(account => 
-        account.offerAmount >= filters.minBonus
+      tempFiltered = tempFiltered.filter((account: BankAccount) => 
+        account.offerAmount >= filters.minBonus!
       );
     }
     
-    // Filter by no monthly fee
     if (filters.noMonthlyFee) {
-      filtered = filtered.filter(account => 
+      tempFiltered = tempFiltered.filter((account: BankAccount) => 
         account.monthlyFee === 0 || account.monthlyFee === undefined
       );
     }
     
-    // Filter by direct deposit required
     if (filters.directDepositRequired !== undefined) {
-      filtered = filtered.filter(account => 
+      tempFiltered = tempFiltered.filter((account: BankAccount) => 
         account.directDepositRequired === filters.directDepositRequired
       );
     }
     
-    setFilteredAccounts(filtered);
+    setFilteredAccounts(tempFiltered);
   };
 
-  const handleSortChange = (sort: { field: string; direction: 'asc' | 'desc' }) => {
-    const sorted = [...filteredAccounts];
+  const handleSortChange = (sort: BankAccountSortState) => {
+    const tempSorted = [...filteredAccounts];
     
     switch (sort.field) {
       case "offerAmount":
-        sorted.sort((a, b) => {
+        tempSorted.sort((a: BankAccount, b: BankAccount) => {
           return sort.direction === "asc" 
             ? a.offerAmount - b.offerAmount 
             : b.offerAmount - a.offerAmount;
@@ -91,7 +99,7 @@ const BankAccounts = () => {
         break;
         
       case "monthlyFee":
-        sorted.sort((a, b) => {
+        tempSorted.sort((a: BankAccount, b: BankAccount) => {
           const aFee = a.monthlyFee || 0;
           const bFee = b.monthlyFee || 0;
           return sort.direction === "asc" 
@@ -101,10 +109,12 @@ const BankAccounts = () => {
         break;
         
       default:
+        // Optionally log if an unexpected sort field is encountered
+        // console.warn(`Unsupported sort field: ${sort.field}`);
         break;
     }
     
-    setFilteredAccounts(sorted);
+    setFilteredAccounts(tempSorted);
   };
 
   return (
@@ -146,6 +156,4 @@ const BankAccounts = () => {
       </div>
     </Layout>
   );
-};
-
-export default BankAccounts;
+} 

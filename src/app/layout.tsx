@@ -1,0 +1,45 @@
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import { AppProviders } from "./app-providers";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import { cn } from "@/lib/utils";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "Churnable: Earn More With Banking & Credit Card Bonuses",
+  description: "Find the latest and greatest bank account and credit card bonus offers to earn more money from your paycheck. Flip the script and profit like the banks do.",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body
+        className={cn(
+          geistSans.className,
+          "antialiased flex flex-col min-h-screen"
+        )}
+      >
+        <Navbar />
+        <AppProviders>
+          {children}
+        </AppProviders>
+        <Footer />
+      </body>
+    </html>
+  );
+}

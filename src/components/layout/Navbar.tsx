@@ -1,6 +1,7 @@
+'use client';
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { CreditCard, BanknoteIcon, Link as LinkIcon, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -21,7 +22,7 @@ const Navbar = () => {
     <header className="sticky top-0 z-40 w-full border-b bg-white/90 backdrop-blur-sm">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         <div className="flex items-center gap-2">
-          <Link to="/" className="flex items-center gap-2" onClick={closeMenu}>
+          <Link href="/" className="flex items-center gap-2" onClick={closeMenu}>
             <CreditCard className="h-6 w-6 text-fintech-purple" />
             <span className="text-xl font-bold">churn.cc</span>
           </Link>
@@ -53,7 +54,7 @@ const Navbar = () => {
             <SheetContent side="right" className="flex flex-col">
               <nav className="flex flex-col items-start gap-6 pt-6">
                 <Link
-                  to="/credit-cards"
+                  href="/credit-cards"
                   className="flex items-center gap-2 text-lg font-medium hover:text-fintech-purple"
                   onClick={closeMenu}
                 >
@@ -61,7 +62,7 @@ const Navbar = () => {
                   Credit Cards
                 </Link>
                 <Link
-                  to="/bank-accounts"
+                  href="/bank-accounts"
                   className="flex items-center gap-2 text-lg font-medium hover:text-fintech-purple"
                   onClick={closeMenu}
                 >
@@ -69,7 +70,7 @@ const Navbar = () => {
                   Bank Accounts
                 </Link>
                 <Link
-                  to="/resources"
+                  href="/resources"
                   className="flex items-center gap-2 text-lg font-medium hover:text-fintech-purple"
                   onClick={closeMenu}
                 >
@@ -93,21 +94,21 @@ const Navbar = () => {
           <>
             <nav className="hidden gap-6 md:flex">
               <Link
-                to="/credit-cards"
+                href="/credit-cards"
                 className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-fintech-purple"
               >
                 <CreditCard className="h-5 w-5" />
                 Credit Cards
               </Link>
               <Link
-                to="/bank-accounts"
+                href="/bank-accounts"
                 className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-fintech-purple"
               >
                 <BanknoteIcon className="h-5 w-5" />
                 Bank Accounts
               </Link>
               <Link
-                to="/resources"
+                href="/resources"
                 className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-fintech-purple"
               >
                 <LinkIcon className="h-5 w-5" />

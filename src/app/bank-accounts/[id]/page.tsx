@@ -1,6 +1,7 @@
+'use client';
 
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import Link from "next/link";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -8,10 +9,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { BankAccount } from "@/types";
 import { fetchBankAccountById } from "@/services/api";
-import { ArrowLeft, BanknoteIcon, DollarSign, Calendar, Check, Info } from "lucide-react";
+import { ArrowLeft, BanknoteIcon as BanknoteIconDetail, DollarSign, Calendar, Check, Info } from "lucide-react"; // Renamed BanknoteIcon to avoid conflict if any
 
-const BankAccountDetail = () => {
-  const { id } = useParams<{ id: string }>();
+interface BankAccountDetailPageProps {
+  params: { id: string };
+}
+
+export default function BankAccountDetailPage({ params }: BankAccountDetailPageProps) {
+  const { id } = params;
   const [account, setAccount] = useState<BankAccount | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -30,7 +35,11 @@ const BankAccountDetail = () => {
       }
     };
 
-    loadBankAccount();
+    if (id) {
+        loadBankAccount();
+    } else {
+        setIsLoading(false);
+    }
   }, [id]);
 
   if (isLoading) {
@@ -48,18 +57,18 @@ const BankAccountDetail = () => {
       <Layout>
         <div className="container mx-auto px-4 py-8 md:px-6">
           <div className="mb-6">
-            <Link to="/bank-accounts" className="flex items-center text-fintech-purple hover:underline">
+            <Link href="/bank-accounts" className="flex items-center text-fintech-purple hover:underline">
               <ArrowLeft className="mr-2 h-4 w-4" /> Back to Bank Accounts
             </Link>
           </div>
           <div className="flex min-h-[50vh] flex-col items-center justify-center rounded-lg border p-8 text-center">
-            <BanknoteIcon className="mb-4 h-16 w-16 text-muted-foreground" />
+            <BanknoteIconDetail className="mb-4 h-16 w-16 text-muted-foreground" />
             <h2 className="mb-2 text-2xl font-bold">Account Not Found</h2>
             <p className="mb-6 text-muted-foreground">
-              The bank account you're looking for doesn't exist or has been removed.
+              The bank account you're looking for (ID: {id || 'N/A'}) doesn't exist, has been removed, or there was an issue loading it.
             </p>
             <Button asChild>
-              <Link to="/bank-accounts">Browse All Bank Accounts</Link>
+              <Link href="/bank-accounts">Browse All Bank Accounts</Link>
             </Button>
           </div>
         </div>
@@ -78,7 +87,7 @@ const BankAccountDetail = () => {
     <Layout>
       <div className="container mx-auto px-4 py-8 md:px-6">
         <div className="mb-6">
-          <Link to="/bank-accounts" className="flex items-center text-fintech-purple hover:underline">
+          <Link href="/bank-accounts" className="flex items-center text-fintech-purple hover:underline">
             <ArrowLeft className="mr-2 h-4 w-4" /> Back to Bank Accounts
           </Link>
         </div>
@@ -87,8 +96,8 @@ const BankAccountDetail = () => {
           <div className="flex flex-col justify-between">
             <div>
               <div className="mb-4">
-                <Badge className={accountTypeColors[account.type] || 'bg-gray-500 text-white'}>
-                  {account.type}
+                <Badge className={accountTypeColors[account.type.toUpperCase()] || 'bg-gray-500 text-white'}>
+                  {account.type.toUpperCase()}
                 </Badge>
               </div>
               
@@ -97,7 +106,7 @@ const BankAccountDetail = () => {
               </h1>
               
               <h2 className="mb-6 text-xl font-semibold text-fintech-purple">
-                ${account.offerAmount} Bonus
+                ${account.offerAmount.toLocaleString()} Bonus
               </h2>
               
               {account.description && (
@@ -135,7 +144,7 @@ const BankAccountDetail = () => {
                       </div>
                     )}
                     
-                    {account.minimumBalance !== undefined && (
+                    {account.minimumBalance !== undefined && account.minimumBalance > 0 && (
                       <div className="flex items-start gap-3">
                         <div className="mt-1 rounded-full bg-fintech-blue/10 p-1">
                           <DollarSign className="h-5 w-5 text-fintech-blue" />
@@ -170,9 +179,9 @@ const BankAccountDetail = () => {
                 <div className="rounded-lg bg-gray-50 p-4">
                   <p className="text-sm text-muted-foreground">Monthly Fee</p>
                   <p className="text-xl font-medium">
-                    {account.monthlyFee ? `$${account.monthlyFee}` : 'No Monthly Fee'}
+                    {account.monthlyFee ? `$${account.monthlyFee.toLocaleString()}` : 'No Monthly Fee'}
                   </p>
-                  {account.monthlyFee > 0 && account.isMonthlyFeeWaivable && (
+                  {account.monthlyFee && account.monthlyFee > 0 && account.isMonthlyFeeWaivable && (
                     <p className="text-sm text-fintech-purple">Fee can be waived</p>
                   )}
                 </div>
@@ -180,7 +189,7 @@ const BankAccountDetail = () => {
                 <div className="rounded-lg bg-gray-50 p-4">
                   <p className="text-sm text-muted-foreground">Account Type</p>
                   <p className="text-xl font-medium">
-                    {account.type.charAt(0) + account.type.slice(1).toLowerCase()}
+                    {account.type.charAt(0).toUpperCase() + account.type.slice(1).toLowerCase()}
                   </p>
                   <p className="text-sm text-muted-foreground">{account.institution}</p>
                 </div>
@@ -202,9 +211,26 @@ const BankAccountDetail = () => {
           </div>
           
           <div className="flex flex-col rounded-lg border bg-white p-6 md:p-8">
+            {/* Card Image or Placeholder */} 
+            {account.imageUrl ? (
+                <img 
+                    src={account.imageUrl} 
+                    alt={`${account.name} from ${account.institution}`}
+                    className="mb-6 h-auto max-h-[200px] w-auto self-center rounded-lg shadow-md" // Adjusted styling
+                    onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                    (e.target as HTMLImageElement).src = '/placeholder-bank.svg'; // Specific placeholder for banks
+                    }}
+                />
+                ) : (
+                <div className="mb-6 flex h-[200px] w-full items-center justify-center rounded-lg bg-gray-100">
+                    <BanknoteIconDetail className="h-24 w-24 text-muted-foreground" />
+                </div>
+            )}
+
             <div className="mb-6 rounded-lg bg-gradient-to-r from-fintech-blue to-fintech-purple p-8 text-center text-white">
               <h3 className="mb-2 text-xl font-bold">Bonus Amount</h3>
-              <div className="text-5xl font-bold">${account.offerAmount}</div>
+              <div className="text-5xl font-bold">${account.offerAmount.toLocaleString()}</div>
+              {account.offerType && <p className="mt-1 text-sm text-white/80">({account.offerType})</p>}
               <p className="mt-2 text-white/80">Limited-Time Offer</p>
             </div>
             
@@ -213,37 +239,37 @@ const BankAccountDetail = () => {
               
               <div className="space-y-3">
                 <div className="flex items-start gap-2">
-                  <Check className="mt-0.5 h-5 w-5 text-fintech-purple" />
+                  <Check className="mt-0.5 h-5 w-5 text-fintech-purple flex-shrink-0" />
                   <p>
                     <span className="font-medium">Institution:</span> {account.institution}
                   </p>
                 </div>
                 
                 <div className="flex items-start gap-2">
-                  <Check className="mt-0.5 h-5 w-5 text-fintech-purple" />
+                  <Check className="mt-0.5 h-5 w-5 text-fintech-purple flex-shrink-0" />
                   <p>
-                    <span className="font-medium">Account Type:</span> {account.type.charAt(0) + account.type.slice(1).toLowerCase()}
+                    <span className="font-medium">Account Type:</span> {account.type.charAt(0).toUpperCase() + account.type.slice(1).toLowerCase()}
                   </p>
                 </div>
                 
                 <div className="flex items-start gap-2">
-                  <Check className="mt-0.5 h-5 w-5 text-fintech-purple" />
+                  <Check className="mt-0.5 h-5 w-5 text-fintech-purple flex-shrink-0" />
                   <p>
-                    <span className="font-medium">Bonus Amount:</span> ${account.offerAmount}
+                    <span className="font-medium">Bonus Amount:</span> ${account.offerAmount.toLocaleString()}
                   </p>
                 </div>
                 
                 <div className="flex items-start gap-2">
-                  <Check className="mt-0.5 h-5 w-5 text-fintech-purple" />
+                  <Check className="mt-0.5 h-5 w-5 text-fintech-purple flex-shrink-0" />
                   <p>
-                    <span className="font-medium">Monthly Fee:</span> {account.monthlyFee ? `$${account.monthlyFee}` : 'None'}
-                    {account.monthlyFee > 0 && account.isMonthlyFeeWaivable && ' (Can be waived)'}
+                    <span className="font-medium">Monthly Fee:</span> {account.monthlyFee ? `$${account.monthlyFee.toLocaleString()}` : 'None'}
+                    {account.monthlyFee && account.monthlyFee > 0 && account.isMonthlyFeeWaivable && ' (Can be waived)'}
                   </p>
                 </div>
                 
                 {account.directDepositRequired && (
                   <div className="flex items-start gap-2">
-                    <Check className="mt-0.5 h-5 w-5 text-fintech-purple" />
+                    <Check className="mt-0.5 h-5 w-5 text-fintech-purple flex-shrink-0" />
                     <p>
                       <span className="font-medium">Direct Deposit:</span> Required
                       {account.directDepositAmount && ` ($${account.directDepositAmount.toLocaleString()})`}
@@ -251,43 +277,39 @@ const BankAccountDetail = () => {
                   </div>
                 )}
                 
-                {account.minimumBalance !== undefined && (
+                {account.minimumBalance !== undefined && account.minimumBalance > 0 && (
                   <div className="flex items-start gap-2">
-                    <Check className="mt-0.5 h-5 w-5 text-fintech-purple" />
+                    <Check className="mt-0.5 h-5 w-5 text-fintech-purple flex-shrink-0" />
                     <p>
-                      <span className="font-medium">Minimum Balance:</span> ${account.minimumBalance.toLocaleString()}
+                      <span className="font-medium">Min Balance:</span> ${account.minimumBalance.toLocaleString()}
                     </p>
                   </div>
                 )}
-                
-                {account.expirationDate && (
-                  <div className="flex items-start gap-2">
-                    <Check className="mt-0.5 h-5 w-5 text-fintech-purple" />
-                    <p>
-                      <span className="font-medium">Expiration:</span> {new Date(account.expirationDate).toLocaleDateString()}
-                    </p>
-                  </div>
+
+                {account.availability && account.availability.toLowerCase() !== 'nationwide' && (
+                     <div className="flex items-start gap-2">
+                        <Info className="mt-0.5 h-5 w-5 text-fintech-red flex-shrink-0" />
+                        <p>
+                        <span className="font-medium">Availability:</span> {account.availability}
+                        </p>
+                    </div>
                 )}
               </div>
             </div>
             
-            <div className="mt-auto rounded-lg bg-gray-50 p-4">
-              <h4 className="mb-2 font-medium">How to Earn the Bonus</h4>
-              <p className="text-muted-foreground">{account.requirements}</p>
-            </div>
+            {account.additionalInfo && (
+                <>
+                <Separator className="my-6" />
+                <div>
+                    <h3 className="mb-3 text-xl font-bold">Additional Information</h3>
+                    <p className="text-muted-foreground whitespace-pre-line">{account.additionalInfo}</p>
+                </div>
+                </>
+            )}
+
           </div>
-        </div>
-        
-        <div className="mt-10">
-          <Separator className="mb-6" />
-          <p className="text-sm text-muted-foreground">
-            Disclaimer: Bank account offers are subject to change. Please verify all terms and conditions with the bank before opening an account.
-            Card Bonanza Hub earns a commission when you open an account through our affiliate links.
-          </p>
         </div>
       </div>
     </Layout>
   );
-};
-
-export default BankAccountDetail;
+} 

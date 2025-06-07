@@ -1,16 +1,16 @@
+'use client'; // Mark as a Client Component due to useState and useEffect
 
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link"; // Changed from react-router-dom
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import Layout from "@/components/layout/Layout";
 import CreditCardGrid from "@/components/cards/CreditCardGrid";
 import BankAccountGrid from "@/components/cards/BankAccountGrid";
 import { CreditCard as CreditCardIcon, BanknoteIcon, ArrowRight, TrendingUp } from "lucide-react";
 import { CreditCard, BankAccount } from "@/types";
 import { fetchCreditCards, getMockBankAccounts } from "@/services/api";
 
-const Home = () => {
+export default function HomePage() { // Changed to default export and renamed for clarity
   const [featuredCards, setFeaturedCards] = useState<CreditCard[]>([]);
   const [featuredAccounts, setFeaturedAccounts] = useState<BankAccount[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -46,7 +46,7 @@ const Home = () => {
   }, []);
 
   return (
-    <Layout>
+    <>
       <section className="relative overflow-hidden bg-gradient-to-br from-fintech-purple to-fintech-blue px-4 py-16 text-white">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -right-1/4 top-1/4 h-96 w-96 animate-pulse rounded-full bg-fintech-orange/20 blur-3xl"></div>
@@ -64,7 +64,7 @@ const Home = () => {
               Money
             </span>
             <br />
-            with Card & Bank Bonuses
+            with Credit Card & Bank Bonuses
           </h1>
           
           <p className="mb-8 max-w-2xl text-lg text-white/80 md:text-xl">
@@ -75,13 +75,13 @@ const Home = () => {
           
           <div className="mb-12 flex flex-col gap-4 sm:flex-row">
             <Button asChild size="lg" className="bg-white text-fintech-purple hover:bg-white/90">
-              <Link to="/credit-cards">
+              <Link href="/credit-cards"> {/* Changed to href */}
                 <CreditCardIcon className="mr-2 h-5 w-5" />
                 Find Credit Card Offers
               </Link>
             </Button>
             <Button asChild size="lg" className="bg-fintech-orange hover:bg-fintech-orange/90">
-              <Link to="/bank-accounts">
+              <Link href="/bank-accounts"> {/* Changed to href */}
                 <BanknoteIcon className="mr-2 h-5 w-5" />
                 Explore Bank Bonuses
               </Link>
@@ -126,7 +126,7 @@ const Home = () => {
               </p>
             </div>
             <Button asChild variant="outline">
-              <Link to="/credit-cards">
+              <Link href="/credit-cards"> {/* Changed to href */}
                 View All <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -161,7 +161,7 @@ const Home = () => {
               </p>
             </div>
             <Button asChild variant="outline">
-              <Link to="/bank-accounts">
+              <Link href="/bank-accounts"> {/* Changed to href */}
                 View All <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -246,23 +246,21 @@ const Home = () => {
             </p>
             <div className="flex flex-col gap-4 sm:flex-row">
               <Button asChild size="lg" className="bg-fintech-purple hover:bg-fintech-purple/90">
-                <Link to="/credit-cards">
+                <Link href="/credit-cards"> {/* Changed to href */}
                   <CreditCardIcon className="mr-2 h-5 w-5" />
-                  Explore Credit Cards
+                  Find Credit Card Offers
                 </Link>
               </Button>
-              <Button asChild size="lg" className="bg-white text-fintech-darkPurple hover:bg-white/90">
-                <Link to="/bank-accounts">
-                  <BanknoteIcon className="mr-2 h-5 w-5" />
-                  Find Bank Bonuses
-                </Link>
+              <Button asChild size="lg" className="bg-fintech-orange hover:bg-fintech-orange/90">
+                 <Link href="/bank-accounts"> {/* Changed to href */}
+                    <BanknoteIcon className="mr-2 h-5 w-5" />
+                    Explore Bank Account Offers
+                 </Link>
               </Button>
             </div>
           </div>
         </div>
       </section>
-    </Layout>
+    </>
   );
-};
-
-export default Home;
+}

@@ -1,9 +1,8 @@
-
 import { CreditCard } from '@/types';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { CreditCard as CreditCardIcon, ArrowRight, DollarSign, Calendar } from 'lucide-react';
 
 interface CreditCardItemProps {
@@ -116,7 +115,7 @@ const CreditCardItem = ({ card }: CreditCardItemProps) => {
       
       <CardFooter className="flex items-center justify-between p-4 pt-0">
         <Link 
-          to={`/credit-cards/${card.cardId}`}
+          href={`/credit-cards/${card.cardId}`}
           className="text-sm font-medium text-fintech-purple hover:underline"
         >
           View Details
