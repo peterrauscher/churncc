@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Edit theme here: */
+/* https://tweakcn.com/themes/cmcl5y8la000604kzfnn97ngg */
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
