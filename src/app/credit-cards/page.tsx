@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation"; // Changed from react-router-dom
@@ -8,16 +8,17 @@ import CreditCardFilters from "@/components/filters/CreditCardFilters";
 import { CreditCard, FilterOptions, SortOptions } from "@/types";
 import { fetchCreditCards } from "@/services/api";
 
-export default function CreditCardsPage() { // Renamed for clarity
+export default function CreditCardsPage() {
+  // Renamed for clarity
   const searchParams = useSearchParams(); // From next/navigation
-  // We are not using setSearchParams directly in this component, 
+  // We are not using setSearchParams directly in this component,
   // but CreditCardFilters might need to be updated to use Next.js navigation for URL updates.
   const [creditCards, setCreditCards] = useState<CreditCard[]>([]);
   const [filteredCards, setFilteredCards] = useState<CreditCard[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [issuers, setIssuers] = useState<string[]>([]);
   const [networks, setNetworks] = useState<string[]>([]);
-  
+
   const urlIssuer = searchParams.get("issuer");
 
   useEffect(() => {
@@ -25,59 +26,60 @@ export default function CreditCardsPage() { // Renamed for clarity
       setIsLoading(true);
       try {
         const cardsData = await fetchCreditCards();
-        
-        const activeCards = cardsData.filter((card: CreditCard) => !card.discontinued);
+
+        const activeCards = cardsData.filter(
+          (card: CreditCard) => !card.discontinued,
+        );
         setCreditCards(activeCards);
         let initialDisplayCards = [...activeCards];
-        
+
         const uniqueIssuers = Array.from(
-          new Set(activeCards.map((card: CreditCard) => card.issuer))
+          new Set(activeCards.map((card: CreditCard) => card.issuer)),
         ) as string[]; // Explicit type assertion
         setIssuers(uniqueIssuers);
-        
+
         const uniqueNetworks = Array.from(
-          new Set(activeCards.map((card: CreditCard) => card.network))
+          new Set(activeCards.map((card: CreditCard) => card.network)),
         ) as string[]; // Explicit type assertion
         setNetworks(uniqueNetworks);
-        
+
         if (urlIssuer) {
           initialDisplayCards = activeCards.filter(
-            (card: CreditCard) => card.issuer === urlIssuer
+            (card: CreditCard) => card.issuer === urlIssuer,
           );
         }
         setFilteredCards(initialDisplayCards);
-
       } catch (error) {
         console.error("Error loading credit cards:", error);
       } finally {
         setIsLoading(false);
       }
     };
-    
+
     loadCreditCards();
   }, [urlIssuer]);
 
   const handleFilterChange = (filters: FilterOptions) => {
     let tempFiltered = [...creditCards];
-    
+
     if (filters.issuer && filters.issuer.length > 0) {
-      tempFiltered = tempFiltered.filter((card: CreditCard) => 
-        filters.issuer!.includes(card.issuer)
+      tempFiltered = tempFiltered.filter((card: CreditCard) =>
+        filters.issuer!.includes(card.issuer),
       );
     }
-    
+
     if (filters.network && filters.network.length > 0) {
-      tempFiltered = tempFiltered.filter((card: CreditCard) => 
-        filters.network!.includes(card.network)
+      tempFiltered = tempFiltered.filter((card: CreditCard) =>
+        filters.network!.includes(card.network),
       );
     }
-    
+
     if (filters.annualFeeMax !== undefined) {
-      tempFiltered = tempFiltered.filter((card: CreditCard) => 
-        card.annualFee <= filters.annualFeeMax!
+      tempFiltered = tempFiltered.filter(
+        (card: CreditCard) => card.annualFee <= filters.annualFeeMax!,
       );
     }
-    
+
     if (filters.offerAmountMin !== undefined) {
       tempFiltered = tempFiltered.filter((card: CreditCard) => {
         if (card.offers.length === 0) return false;
@@ -86,25 +88,26 @@ export default function CreditCardsPage() { // Renamed for clarity
         return offerAmount >= filters.offerAmountMin!;
       });
     }
-    
+
     if (filters.isBusiness !== undefined) {
-      tempFiltered = tempFiltered.filter((card: CreditCard) => 
-        card.isBusiness === filters.isBusiness
+      tempFiltered = tempFiltered.filter(
+        (card: CreditCard) => card.isBusiness === filters.isBusiness,
       );
     }
-    
+
     if (filters.isAnnualFeeWaived !== undefined) {
-      tempFiltered = tempFiltered.filter((card: CreditCard) => 
-        card.isAnnualFeeWaived === filters.isAnnualFeeWaived
+      tempFiltered = tempFiltered.filter(
+        (card: CreditCard) =>
+          card.isAnnualFeeWaived === filters.isAnnualFeeWaived,
       );
     }
-    
+
     setFilteredCards(tempFiltered);
   };
 
   const handleSortChange = (sort: SortOptions) => {
     const tempSorted = [...filteredCards];
-    
+
     switch (sort.field) {
       case "offerAmount":
         tempSorted.sort((a: CreditCard, b: CreditCard) => {
@@ -113,70 +116,69 @@ export default function CreditCardsPage() { // Renamed for clarity
           return sort.direction === "asc" ? aOffer - bOffer : bOffer - aOffer;
         });
         break;
-        
+
       case "annualFee":
         tempSorted.sort((a: CreditCard, b: CreditCard) => {
-          return sort.direction === "asc" 
-            ? a.annualFee - b.annualFee 
+          return sort.direction === "asc"
+            ? a.annualFee - b.annualFee
             : b.annualFee - a.annualFee;
         });
         break;
-        
+
       case "universalCashbackPercent":
         tempSorted.sort((a: CreditCard, b: CreditCard) => {
-          return sort.direction === "asc" 
-            ? a.universalCashbackPercent - b.universalCashbackPercent 
+          return sort.direction === "asc"
+            ? a.universalCashbackPercent - b.universalCashbackPercent
             : b.universalCashbackPercent - a.universalCashbackPercent;
         });
         break;
-        
+
       default:
         break;
     }
-    
+
     setFilteredCards(tempSorted);
   };
 
   return (
-    <Layout>
-      <div className="container mx-auto px-4 py-8 md:px-6">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold md:text-4xl">Credit Card Offers</h1>
-          <p className="mt-2 text-muted-foreground">
-            Compare and find the best credit card bonuses available
-          </p>
-        </div>
-        
-        <div className="mb-6 rounded-lg border bg-background p-4 shadow-sm">
-          <CreditCardFilters 
-            onFilterChange={handleFilterChange}
-            onSortChange={handleSortChange}
-            issuers={issuers}
-            networks={networks}
-            // Pass initial searchParam for issuer if needed by CreditCardFilters
-            initialIssuer={urlIssuer || undefined} 
-          />
-        </div>
-        
-        {isLoading ? (
-          <div className="flex min-h-[300px] items-center justify-center">
-            <div className="h-10 w-10 animate-spin rounded-full border-4 border-fintech-purple border-t-transparent" />
-          </div>
-        ) : (
-          <>
-            <div className="mb-6">
-              <p className="text-muted-foreground">
-                Showing {filteredCards.length} of {creditCards.length} credit cards
-              </p>
-            </div>
-            
-            <CreditCardGrid 
-              cards={filteredCards} 
-              emptyMessage="No credit cards match your filters. Try adjusting your criteria." 
-            />
-          </>
-        )}
+    <div className="container mx-auto px-4 py-8 md:px-6">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold md:text-4xl">Credit Card Offers</h1>
+        <p className="mt-2 text-muted-foreground">
+          Compare and find the best credit card bonuses available
+        </p>
       </div>
-    </Layout>
+
+      <div className="mb-6 rounded-lg border bg-background p-4 shadow-sm">
+        <CreditCardFilters
+          onFilterChange={handleFilterChange}
+          onSortChange={handleSortChange}
+          issuers={issuers}
+          networks={networks}
+          // Pass initial searchParam for issuer if needed by CreditCardFilters
+          initialIssuer={urlIssuer || undefined}
+        />
+      </div>
+
+      {isLoading ? (
+        <div className="flex min-h-[300px] items-center justify-center">
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-fintech-purple border-t-transparent" />
+        </div>
+      ) : (
+        <>
+          <div className="mb-6">
+            <p className="text-muted-foreground">
+              Showing {filteredCards.length} of {creditCards.length} credit
+              cards
+            </p>
+          </div>
+
+          <CreditCardGrid
+            cards={filteredCards}
+            emptyMessage="No credit cards match your filters. Try adjusting your criteria."
+          />
+        </>
+      )}
+    </div>
   );
-} 
+}

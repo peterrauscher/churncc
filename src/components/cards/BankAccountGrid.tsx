@@ -1,13 +1,15 @@
-
-import { BankAccount } from '@/types';
-import BankAccountItem from './BankAccountItem';
+import { BankAccount } from "@/types";
+import BankAccountItem from "./BankAccountItem";
 
 interface BankAccountGridProps {
   accounts: BankAccount[];
   emptyMessage?: string;
 }
 
-const BankAccountGrid = ({ accounts, emptyMessage = "No bank accounts found" }: BankAccountGridProps) => {
+const BankAccountGrid = ({
+  accounts,
+  emptyMessage = "No bank accounts found",
+}: BankAccountGridProps) => {
   if (!accounts || accounts.length === 0) {
     return (
       <div className="my-10 flex flex-col items-center justify-center rounded-lg border border-dashed p-10 text-center">

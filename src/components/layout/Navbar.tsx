@@ -1,12 +1,17 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { CreditCard, BanknoteIcon, Link as LinkIcon, Search } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useState } from "react";
+import Link from "next/link";
+import {
+  CreditCard,
+  BanknoteIcon,
+  Link as LinkIcon,
+  Search,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +27,11 @@ const Navbar = () => {
     <header className="sticky top-0 z-40 w-full border-b bg-white/90 backdrop-blur-sm">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         <div className="flex items-center gap-2">
-          <Link href="/" className="flex items-center gap-2" onClick={closeMenu}>
+          <Link
+            href="/"
+            className="flex items-center gap-2"
+            onClick={closeMenu}
+          >
             <CreditCard className="h-6 w-6 text-fintech-purple" />
             <span className="text-xl font-bold">churn.cc</span>
           </Link>

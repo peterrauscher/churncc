@@ -1,16 +1,15 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import {
   Accordion,
@@ -68,7 +67,9 @@ const CreditCardFilters = ({
       newNetworks = currentNetworks.filter((n) => n !== network);
     }
 
-    handleFilterChange({ network: newNetworks.length ? newNetworks : undefined });
+    handleFilterChange({
+      network: newNetworks.length ? newNetworks : undefined,
+    });
   };
 
   const handleSortChange = (value: string) => {
@@ -110,10 +111,7 @@ const CreditCardFilters = ({
         <div className="flex items-center gap-2">
           <ArrowDownWideNarrow className="h-5 w-5" />
           <Label htmlFor="sort">Sort By</Label>
-          <Select
-            value={sortOption}
-            onValueChange={handleSortChange}
-          >
+          <Select value={sortOption} onValueChange={handleSortChange}>
             <SelectTrigger id="sort" className="w-[180px]">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
@@ -122,35 +120,39 @@ const CreditCardFilters = ({
               <SelectItem value="offerAmount-asc">Lowest Bonus</SelectItem>
               <SelectItem value="annualFee-desc">Highest Annual Fee</SelectItem>
               <SelectItem value="annualFee-asc">Lowest Annual Fee</SelectItem>
-              <SelectItem value="universalCashbackPercent-desc">Highest Cashback</SelectItem>
+              <SelectItem value="universalCashbackPercent-desc">
+                Highest Cashback
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         <div className="flex items-center gap-4">
-          <Checkbox 
-            id="noAnnualFee" 
+          <Checkbox
+            id="noAnnualFee"
             checked={filters.annualFeeMax === 0}
-            onCheckedChange={(checked) => 
+            onCheckedChange={(checked) =>
               handleFilterChange({ annualFeeMax: checked ? 0 : undefined })
             }
           />
           <Label htmlFor="noAnnualFee">No Annual Fee</Label>
 
-          <Checkbox 
-            id="businessCards" 
+          <Checkbox
+            id="businessCards"
             checked={filters.isBusiness}
-            onCheckedChange={(checked) => 
+            onCheckedChange={(checked) =>
               handleFilterChange({ isBusiness: checked ? true : undefined })
             }
           />
           <Label htmlFor="businessCards">Business Cards</Label>
 
-          <Checkbox 
-            id="feeWaived" 
+          <Checkbox
+            id="feeWaived"
             checked={filters.isAnnualFeeWaived}
-            onCheckedChange={(checked) => 
-              handleFilterChange({ isAnnualFeeWaived: checked ? true : undefined })
+            onCheckedChange={(checked) =>
+              handleFilterChange({
+                isAnnualFeeWaived: checked ? true : undefined,
+              })
             }
           />
           <Label htmlFor="feeWaived">Fee Waived Year 1</Label>
@@ -164,15 +166,15 @@ const CreditCardFilters = ({
             <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
               {issuers.map((issuer) => (
                 <div key={issuer} className="flex items-center space-x-2">
-                  <Checkbox 
-                    id={`issuer-${issuer}`} 
+                  <Checkbox
+                    id={`issuer-${issuer}`}
                     checked={filters.issuer?.includes(issuer)}
-                    onCheckedChange={(checked) => 
+                    onCheckedChange={(checked) =>
                       handleIssuerToggle(issuer, checked as boolean)
                     }
                   />
                   <Label htmlFor={`issuer-${issuer}`}>
-                    {issuer.replace('_', ' ')}
+                    {issuer.replace("_", " ")}
                   </Label>
                 </div>
               ))}
@@ -186,15 +188,15 @@ const CreditCardFilters = ({
             <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
               {networks.map((network) => (
                 <div key={network} className="flex items-center space-x-2">
-                  <Checkbox 
-                    id={`network-${network}`} 
+                  <Checkbox
+                    id={`network-${network}`}
                     checked={filters.network?.includes(network)}
-                    onCheckedChange={(checked) => 
+                    onCheckedChange={(checked) =>
                       handleNetworkToggle(network, checked as boolean)
                     }
                   />
                   <Label htmlFor={`network-${network}`}>
-                    {network.replace('_', ' ')}
+                    {network.replace("_", " ")}
                   </Label>
                 </div>
               ))}
@@ -206,10 +208,10 @@ const CreditCardFilters = ({
           <AccordionTrigger>Annual Fee</AccordionTrigger>
           <AccordionContent>
             <div className="space-y-4 px-1">
-              <Slider 
-                value={[annualFee]} 
-                min={0} 
-                max={700} 
+              <Slider
+                value={[annualFee]}
+                min={0}
+                max={700}
                 step={50}
                 onValueChange={handleAnnualFeeChange}
               />
@@ -226,10 +228,10 @@ const CreditCardFilters = ({
           <AccordionTrigger>Minimum Bonus Value</AccordionTrigger>
           <AccordionContent>
             <div className="space-y-4 px-1">
-              <Slider 
-                value={[minOfferAmount]} 
-                min={0} 
-                max={2000} 
+              <Slider
+                value={[minOfferAmount]}
+                min={0}
+                max={2000}
                 step={100}
                 onValueChange={handleMinOfferChange}
               />

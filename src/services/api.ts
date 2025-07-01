@@ -1,9 +1,9 @@
-
-import { CreditCard, BankAccount } from '../types';
+import { CreditCard, BankAccount } from "../types";
 
 // API endpoint for credit card bonuses
-const CREDIT_CARD_API_URL = 'https://raw.githubusercontent.com/andenacitelli/credit-card-bonuses-api/main/exports/data.json';
-const BANK_REWARDS_PROXY_URL = '/api/bank-rewards'; // Will implement proxy API route to handle scraping
+const CREDIT_CARD_API_URL =
+  "https://raw.githubusercontent.com/andenacitelli/credit-card-bonuses-api/main/exports/data.json";
+const BANK_REWARDS_PROXY_URL = "/api/bank-rewards"; // Will implement proxy API route to handle scraping
 
 // Fetch all credit card data
 export const fetchCreditCards = async (): Promise<CreditCard[]> => {
@@ -13,14 +13,14 @@ export const fetchCreditCards = async (): Promise<CreditCard[]> => {
       throw new Error(`Failed to fetch credit cards: ${response.status}`);
     }
     const data = await response.json();
-    
+
     // Add affiliate links (placeholder - you'll replace with your actual links)
     return data.map((card: CreditCard) => ({
       ...card,
       url: card.url, // Replace with your affiliate link in production
-      imageUrl: card.imageUrl.startsWith('http') 
-        ? card.imageUrl 
-        : `https://offeroptimist.com${card.imageUrl}`
+      imageUrl: card.imageUrl.startsWith("http")
+        ? card.imageUrl
+        : `https://offeroptimist.com${card.imageUrl}`,
     }));
   } catch (error) {
     console.error("Error fetching credit card data:", error);
@@ -129,10 +129,12 @@ export const getMockBankAccounts = (): BankAccount[] => {
 };
 
 // Fetch a specific credit card by ID
-export const fetchCreditCardById = async (cardId: string): Promise<CreditCard | null> => {
+export const fetchCreditCardById = async (
+  cardId: string,
+): Promise<CreditCard | null> => {
   try {
     const cards = await fetchCreditCards();
-    return cards.find(card => card.cardId === cardId) || null;
+    return cards.find((card) => card.cardId === cardId) || null;
   } catch (error) {
     console.error(`Error fetching credit card with ID ${cardId}:`, error);
     return null;
@@ -140,11 +142,13 @@ export const fetchCreditCardById = async (cardId: string): Promise<CreditCard | 
 };
 
 // Fetch a specific bank account by ID
-export const fetchBankAccountById = async (accountId: string): Promise<BankAccount | null> => {
+export const fetchBankAccountById = async (
+  accountId: string,
+): Promise<BankAccount | null> => {
   try {
     // In production, this would be fetched from your API
     const accounts = getMockBankAccounts();
-    return accounts.find(account => account.id === accountId) || null;
+    return accounts.find((account) => account.id === accountId) || null;
   } catch (error) {
     console.error(`Error fetching bank account with ID ${accountId}:`, error);
     return null;

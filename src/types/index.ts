@@ -1,4 +1,3 @@
-
 // Credit Card Types based on the API schema
 export interface CreditCard {
   cardId: string;
@@ -49,7 +48,7 @@ export interface BankAccount {
   id: string;
   name: string;
   institution: string;
-  type: 'CHECKING' | 'SAVINGS' | 'BROKERAGE' | 'HYBRID';
+  type: "CHECKING" | "SAVINGS" | "BROKERAGE" | "HYBRID";
   offerAmount: number;
   requirements: string;
   directDepositRequired: boolean;
@@ -75,5 +74,5 @@ export interface FilterOptions {
 
 export interface SortOptions {
   field: string;
-  direction: 'asc' | 'desc';
+  direction: "asc" | "desc";
 }

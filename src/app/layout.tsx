@@ -18,7 +18,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Churnable: Earn More With Banking & Credit Card Bonuses",
-  description: "Find the latest and greatest bank account and credit card bonus offers to earn more money from your paycheck. Flip the script and profit like the banks do.",
+  description:
+    "Find the latest and greatest bank account and credit card bonus offers to earn more money from your paycheck. Flip the script and profit like the banks do.",
 };
 
 export default function RootLayout({
@@ -31,13 +32,11 @@ export default function RootLayout({
       <body
         className={cn(
           geistSans.className,
-          "antialiased flex flex-col min-h-screen"
+          "antialiased flex flex-col min-h-screen",
         )}
       >
         <Navbar />
-        <AppProviders>
-          {children}
-        </AppProviders>
+        <AppProviders>{children}</AppProviders>
         <Footer />
       </body>
     </html>

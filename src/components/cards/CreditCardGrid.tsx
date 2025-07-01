@@ -1,13 +1,15 @@
-
-import { CreditCard } from '@/types';
-import CreditCardItem from './CreditCardItem';
+import { CreditCard } from "@/types";
+import CreditCardItem from "./CreditCardItem";
 
 interface CreditCardGridProps {
   cards: CreditCard[];
   emptyMessage?: string;
 }
 
-const CreditCardGrid = ({ cards, emptyMessage = "No credit cards found" }: CreditCardGridProps) => {
+const CreditCardGrid = ({
+  cards,
+  emptyMessage = "No credit cards found",
+}: CreditCardGridProps) => {
   if (!cards || cards.length === 0) {
     return (
       <div className="my-10 flex flex-col items-center justify-center rounded-lg border border-dashed p-10 text-center">

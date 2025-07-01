@@ -1,15 +1,14 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import {
   Accordion,
@@ -22,7 +21,7 @@ import { Filter, ArrowDownWideNarrow } from "lucide-react";
 
 interface BankAccountFiltersProps {
   onFilterChange: (filters: any) => void;
-  onSortChange: (sort: { field: string; direction: 'asc' | 'desc' }) => void;
+  onSortChange: (sort: { field: string; direction: "asc" | "desc" }) => void;
   institutions: string[];
 }
 
@@ -48,10 +47,14 @@ const BankAccountFilters = ({
     if (checked) {
       newInstitutions = [...currentInstitutions, institution];
     } else {
-      newInstitutions = currentInstitutions.filter((i: string) => i !== institution);
+      newInstitutions = currentInstitutions.filter(
+        (i: string) => i !== institution,
+      );
     }
 
-    handleFilterChange({ institutions: newInstitutions.length ? newInstitutions : undefined });
+    handleFilterChange({
+      institutions: newInstitutions.length ? newInstitutions : undefined,
+    });
   };
 
   const handleTypeToggle = (type: string, checked: boolean) => {
@@ -64,7 +67,9 @@ const BankAccountFilters = ({
       newTypes = currentTypes.filter((t: string) => t !== type);
     }
 
-    handleFilterChange({ accountTypes: newTypes.length ? newTypes : undefined });
+    handleFilterChange({
+      accountTypes: newTypes.length ? newTypes : undefined,
+    });
   };
 
   const handleSortChange = (value: string) => {
@@ -100,37 +105,38 @@ const BankAccountFilters = ({
         <div className="flex items-center gap-2">
           <ArrowDownWideNarrow className="h-5 w-5" />
           <Label htmlFor="sort">Sort By</Label>
-          <Select
-            value={sortOption}
-            onValueChange={handleSortChange}
-          >
+          <Select value={sortOption} onValueChange={handleSortChange}>
             <SelectTrigger id="sort" className="w-[180px]">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="offerAmount-desc">Highest Bonus</SelectItem>
               <SelectItem value="offerAmount-asc">Lowest Bonus</SelectItem>
-              <SelectItem value="monthlyFee-desc">Highest Monthly Fee</SelectItem>
+              <SelectItem value="monthlyFee-desc">
+                Highest Monthly Fee
+              </SelectItem>
               <SelectItem value="monthlyFee-asc">Lowest Monthly Fee</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         <div className="flex items-center gap-4">
-          <Checkbox 
-            id="noMonthlyFee" 
+          <Checkbox
+            id="noMonthlyFee"
             checked={filters.noMonthlyFee}
-            onCheckedChange={(checked) => 
+            onCheckedChange={(checked) =>
               handleFilterChange({ noMonthlyFee: checked ? true : undefined })
             }
           />
           <Label htmlFor="noMonthlyFee">No Monthly Fee</Label>
 
-          <Checkbox 
-            id="directDepositRequired" 
+          <Checkbox
+            id="directDepositRequired"
             checked={filters.directDepositRequired}
-            onCheckedChange={(checked) => 
-              handleFilterChange({ directDepositRequired: checked ? true : undefined })
+            onCheckedChange={(checked) =>
+              handleFilterChange({
+                directDepositRequired: checked ? true : undefined,
+              })
             }
           />
           <Label htmlFor="directDepositRequired">Direct Deposit Required</Label>
@@ -144,10 +150,10 @@ const BankAccountFilters = ({
             <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
               {institutions.map((institution) => (
                 <div key={institution} className="flex items-center space-x-2">
-                  <Checkbox 
-                    id={`institution-${institution}`} 
+                  <Checkbox
+                    id={`institution-${institution}`}
                     checked={filters.institutions?.includes(institution)}
-                    onCheckedChange={(checked) => 
+                    onCheckedChange={(checked) =>
                       handleInstitutionToggle(institution, checked as boolean)
                     }
                   />
@@ -166,10 +172,10 @@ const BankAccountFilters = ({
             <div className="grid grid-cols-2 gap-3">
               {["CHECKING", "SAVINGS", "BROKERAGE", "HYBRID"].map((type) => (
                 <div key={type} className="flex items-center space-x-2">
-                  <Checkbox 
-                    id={`type-${type}`} 
+                  <Checkbox
+                    id={`type-${type}`}
                     checked={filters.accountTypes?.includes(type)}
-                    onCheckedChange={(checked) => 
+                    onCheckedChange={(checked) =>
                       handleTypeToggle(type, checked as boolean)
                     }
                   />
@@ -186,10 +192,10 @@ const BankAccountFilters = ({
           <AccordionTrigger>Minimum Bonus Amount</AccordionTrigger>
           <AccordionContent>
             <div className="space-y-4 px-1">
-              <Slider 
-                value={[minBonus]} 
-                min={0} 
-                max={1000} 
+              <Slider
+                value={[minBonus]}
+                min={0}
+                max={1000}
                 step={50}
                 onValueChange={handleMinBonusChange}
               />

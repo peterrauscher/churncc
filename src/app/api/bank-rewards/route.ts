@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
-import type { BankAccount } from '@/types';
+import { NextResponse } from "next/server";
+import type { BankAccount } from "@/types";
 
 // This is the mock data, same as in the original services/api.ts
 // In a real scenario, this GET handler would perform scraping or call an external API.
@@ -87,6 +87,6 @@ const MOCK_BANK_ACCOUNTS: BankAccount[] = [
 
 export async function GET() {
   // Simulate API delay
-  await new Promise(resolve => setTimeout(resolve, 500));
+  await new Promise((resolve) => setTimeout(resolve, 500));
   return NextResponse.json(MOCK_BANK_ACCOUNTS);
-} 
+}
