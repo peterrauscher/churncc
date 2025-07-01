@@ -144,12 +144,12 @@ export default function CreditCardsPage() {
     <div className="container mx-auto px-4 py-8 md:px-6">
       <div className="mb-8">
         <h1 className="text-3xl font-bold md:text-4xl">Credit Card Offers</h1>
-        <p className="mt-2 text-muted-foreground">
+        <p className="text-muted-foreground mt-2">
           Compare and find the best credit card bonuses available
         </p>
       </div>
 
-      <div className="mb-6 rounded-lg border bg-background p-4 shadow-sm">
+      <div className="bg-background mb-6 rounded-lg border p-4 shadow-sm">
         <CreditCardFilters
           onFilterChange={handleFilterChange}
           onSortChange={handleSortChange}
@@ -162,7 +162,7 @@ export default function CreditCardsPage() {
 
       {isLoading ? (
         <div className="flex min-h-[300px] items-center justify-center">
-          <div className="h-10 w-10 animate-spin rounded-full border-4 border-fintech-purple border-t-transparent" />
+          <div className="border-fintech-purple h-10 w-10 animate-spin rounded-full border-4 border-t-transparent" />
         </div>
       ) : (
         <>

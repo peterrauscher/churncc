@@ -84,7 +84,7 @@ export default function CreditCardDetailPage({
   if (isLoading) {
     return (
       <div className="container mx-auto flex min-h-[70vh] items-center justify-center px-4 py-8 md:px-6">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-fintech-purple border-t-transparent" />
+        <div className="border-fintech-purple h-12 w-12 animate-spin rounded-full border-4 border-t-transparent" />
       </div>
     );
   }
@@ -95,15 +95,15 @@ export default function CreditCardDetailPage({
         <div className="mb-6">
           <Link
             href="/credit-cards"
-            className="flex items-center text-fintech-purple hover:underline"
+            className="text-fintech-purple flex items-center hover:underline"
           >
             <ArrowLeft className="mr-2 h-4 w-4" /> Back to Credit Cards
           </Link>
         </div>
         <div className="flex min-h-[50vh] flex-col items-center justify-center rounded-lg border p-8 text-center">
-          <CreditCardIcon className="mb-4 h-16 w-16 text-muted-foreground" />
+          <CreditCardIcon className="text-muted-foreground mb-4 h-16 w-16" />
           <h2 className="mb-2 text-2xl font-bold">Card Not Found</h2>
-          <p className="mb-6 text-muted-foreground">
+          <p className="text-muted-foreground mb-6">
             The credit card you're looking for (ID: {id || "N/A"}) doesn't
             exist, has been discontinued, or there was an issue loading it.
           </p>
@@ -122,7 +122,7 @@ export default function CreditCardDetailPage({
       <div className="mb-6">
         <Link
           href="/credit-cards"
-          className="flex items-center text-fintech-purple hover:underline"
+          className="text-fintech-purple flex items-center hover:underline"
         >
           <ArrowLeft className="mr-2 h-4 w-4" /> Back to Credit Cards
         </Link>
@@ -150,30 +150,30 @@ export default function CreditCardDetailPage({
             </h1>
 
             {card.details && (
-              <p className="mb-6 text-lg text-muted-foreground">
+              <p className="text-muted-foreground mb-6 text-lg">
                 {card.details}
               </p>
             )}
 
             <div className="mb-6 grid grid-cols-2 gap-4">
               <div className="rounded-lg bg-gray-50 p-4">
-                <p className="text-sm text-muted-foreground">Annual Fee</p>
+                <p className="text-muted-foreground text-sm">Annual Fee</p>
                 <p className="text-xl font-medium">
                   {card.annualFee > 0 ? `$${card.annualFee}` : "No Annual Fee"}
                 </p>
                 {card.isAnnualFeeWaived && (
-                  <p className="text-sm text-fintech-purple">
+                  <p className="text-fintech-purple text-sm">
                     Waived First Year
                   </p>
                 )}
               </div>
 
               <div className="rounded-lg bg-gray-50 p-4">
-                <p className="text-sm text-muted-foreground">Base Cashback</p>
+                <p className="text-muted-foreground text-sm">Base Cashback</p>
                 <p className="text-xl font-medium">
                   {card.universalCashbackPercent}%
                 </p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   On all purchases
                 </p>
               </div>
@@ -181,19 +181,19 @@ export default function CreditCardDetailPage({
           </div>
 
           {bestOffer && (
-            <Card className="border-2 border-fintech-purple">
+            <Card className="border-fintech-purple border-2">
               <CardContent className="p-6">
                 <h3 className="mb-4 text-xl font-bold">Current Offer</h3>
 
                 <div className="mb-6 flex items-center">
-                  <div className="mr-4 rounded-full bg-fintech-purple/10 p-3">
-                    <DollarSign className="h-8 w-8 text-fintech-purple" />
+                  <div className="bg-fintech-purple/10 mr-4 rounded-full p-3">
+                    <DollarSign className="text-fintech-purple h-8 w-8" />
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       Welcome Bonus
                     </p>
-                    <p className="text-2xl font-bold text-fintech-purple">
+                    <p className="text-fintech-purple text-2xl font-bold">
                       {formatRewardValue(
                         bestOffer.amount[0]?.amount || 0,
                         bestOffer.amount[0]?.currency || "USD",
@@ -204,7 +204,7 @@ export default function CreditCardDetailPage({
 
                 <div className="space-y-3">
                   <div className="flex items-start gap-2">
-                    <DollarSign className="mt-0.5 h-4 w-4 text-fintech-purple" />
+                    <DollarSign className="text-fintech-purple mt-0.5 h-4 w-4" />
                     <span>
                       Spend ${bestOffer.spend.toLocaleString()} in{" "}
                       {bestOffer.days} days
@@ -213,7 +213,7 @@ export default function CreditCardDetailPage({
 
                   {bestOffer.expiration && (
                     <div className="flex items-start gap-2">
-                      <Calendar className="mt-0.5 h-4 w-4 text-fintech-purple" />
+                      <Calendar className="text-fintech-purple mt-0.5 h-4 w-4" />
                       <span>
                         Expires:{" "}
                         {new Date(bestOffer.expiration).toLocaleDateString()}
@@ -223,7 +223,7 @@ export default function CreditCardDetailPage({
 
                   {bestOffer.details && (
                     <div className="flex items-start gap-2">
-                      <Info className="mt-0.5 h-4 w-4 text-fintech-purple" />
+                      <Info className="text-fintech-purple mt-0.5 h-4 w-4" />
                       <span>{bestOffer.details}</span>
                     </div>
                   )}
@@ -231,7 +231,7 @@ export default function CreditCardDetailPage({
 
                 <Button
                   asChild
-                  className="mt-6 w-full bg-fintech-purple hover:bg-fintech-secondary"
+                  className="bg-fintech-purple hover:bg-fintech-secondary mt-6 w-full"
                 >
                   <a
                     href={bestOffer.url || card.url}
@@ -258,7 +258,7 @@ export default function CreditCardDetailPage({
             />
           ) : (
             <div className="mb-6 flex h-[250px] w-full items-center justify-center rounded bg-gray-100">
-              <CreditCardIcon className="h-24 w-24 text-muted-foreground" />
+              <CreditCardIcon className="text-muted-foreground h-24 w-24" />
             </div>
           )}
 
@@ -283,11 +283,11 @@ export default function CreditCardDetailPage({
                     key={index}
                     className="flex items-start gap-2 rounded-lg border p-3"
                   >
-                    <Check className="mt-0.5 h-4 w-4 text-fintech-purple" />
+                    <Check className="text-fintech-purple mt-0.5 h-4 w-4" />
                     <div>
                       <p className="font-medium">{credit.description}</p>
                       {credit.value && (
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-muted-foreground text-sm">
                           Value: ${credit.value.toLocaleString()}
                         </p>
                       )}
@@ -335,7 +335,7 @@ export default function CreditCardDetailPage({
                     key={index}
                     className="flex items-start gap-2 rounded-lg border p-3"
                   >
-                    <Check className="mt-0.5 h-4 w-4 text-fintech-purple flex-shrink-0" />
+                    <Check className="text-fintech-purple mt-0.5 h-4 w-4 flex-shrink-0" />
                     <span>{insurance}</span>
                   </div>
                 ))}
@@ -355,7 +355,7 @@ export default function CreditCardDetailPage({
                 <ul className="space-y-2">
                   {card.pros.map((pro, index) => (
                     <li key={index} className="flex items-start gap-2">
-                      <Check className="mt-1 h-4 w-4 text-green-500 flex-shrink-0" />
+                      <Check className="mt-1 h-4 w-4 flex-shrink-0 text-green-500" />
                       <span>{pro}</span>
                     </li>
                   ))}
@@ -368,7 +368,7 @@ export default function CreditCardDetailPage({
                 <ul className="space-y-2">
                   {card.cons.map((con, index) => (
                     <li key={index} className="flex items-start gap-2">
-                      <Info className="mt-1 h-4 w-4 text-red-500 flex-shrink-0" />
+                      <Info className="mt-1 h-4 w-4 flex-shrink-0 text-red-500" />
                       <span>{con}</span>
                     </li>
                   ))}

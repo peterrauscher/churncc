@@ -32,7 +32,7 @@ const Navbar = () => {
             className="flex items-center gap-2"
             onClick={closeMenu}
           >
-            <CreditCard className="h-6 w-6 text-fintech-purple" />
+            <CreditCard className="text-fintech-purple h-6 w-6" />
             <span className="text-xl font-bold">churn.cc</span>
           </Link>
         </div>
@@ -64,7 +64,7 @@ const Navbar = () => {
               <nav className="flex flex-col items-start gap-6 pt-6">
                 <Link
                   href="/credit-cards"
-                  className="flex items-center gap-2 text-lg font-medium hover:text-fintech-purple"
+                  className="hover:text-fintech-purple flex items-center gap-2 text-lg font-medium"
                   onClick={closeMenu}
                 >
                   <CreditCard className="h-5 w-5" />
@@ -72,7 +72,7 @@ const Navbar = () => {
                 </Link>
                 <Link
                   href="/bank-accounts"
-                  className="flex items-center gap-2 text-lg font-medium hover:text-fintech-purple"
+                  className="hover:text-fintech-purple flex items-center gap-2 text-lg font-medium"
                   onClick={closeMenu}
                 >
                   <BanknoteIcon className="h-5 w-5" />
@@ -80,7 +80,7 @@ const Navbar = () => {
                 </Link>
                 <Link
                   href="/resources"
-                  className="flex items-center gap-2 text-lg font-medium hover:text-fintech-purple"
+                  className="hover:text-fintech-purple flex items-center gap-2 text-lg font-medium"
                   onClick={closeMenu}
                 >
                   <LinkIcon className="h-5 w-5" />
@@ -89,11 +89,11 @@ const Navbar = () => {
               </nav>
               <div className="mt-auto pt-6">
                 <div className="relative">
-                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Search className="text-muted-foreground absolute top-2.5 left-2.5 h-4 w-4" />
                   <Input
                     type="search"
                     placeholder="Search offers..."
-                    className="w-full bg-background pl-8 md:w-[200px] lg:w-[300px]"
+                    className="bg-background w-full pl-8 md:w-[200px] lg:w-[300px]"
                   />
                 </div>
               </div>
@@ -104,21 +104,21 @@ const Navbar = () => {
             <nav className="hidden gap-6 md:flex">
               <Link
                 href="/credit-cards"
-                className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-fintech-purple"
+                className="hover:text-fintech-purple flex items-center gap-2 text-lg font-medium transition-colors"
               >
                 <CreditCard className="h-5 w-5" />
                 Credit Cards
               </Link>
               <Link
                 href="/bank-accounts"
-                className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-fintech-purple"
+                className="hover:text-fintech-purple flex items-center gap-2 text-lg font-medium transition-colors"
               >
                 <BanknoteIcon className="h-5 w-5" />
                 Bank Accounts
               </Link>
               <Link
                 href="/resources"
-                className="flex items-center gap-2 text-lg font-medium transition-colors hover:text-fintech-purple"
+                className="hover:text-fintech-purple flex items-center gap-2 text-lg font-medium transition-colors"
               >
                 <LinkIcon className="h-5 w-5" />
                 Resources
@@ -127,11 +127,11 @@ const Navbar = () => {
 
             <div className="hidden md:flex md:items-center md:gap-4">
               <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Search className="text-muted-foreground absolute top-2.5 left-2.5 h-4 w-4" />
                 <Input
                   type="search"
                   placeholder="Search offers..."
-                  className="w-full bg-background pl-8 md:w-[200px] lg:w-[300px]"
+                  className="bg-background w-full pl-8 md:w-[200px] lg:w-[300px]"
                 />
               </div>
             </div>

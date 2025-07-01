@@ -54,11 +54,11 @@ const CreditCardItem = ({ card }: CreditCardItemProps) => {
           />
         ) : (
           <div className="flex h-full items-center justify-center">
-            <CreditCardIcon className="h-16 w-16 text-fintech-purple/50" />
+            <CreditCardIcon className="text-fintech-purple/50 h-16 w-16" />
           </div>
         )}
         {card.isAnnualFeeWaived && (
-          <Badge className="absolute right-2 top-2 bg-fintech-orange text-white">
+          <Badge className="bg-fintech-orange absolute top-2 right-2 text-white">
             No Annual Fee Year 1
           </Badge>
         )}
@@ -79,17 +79,17 @@ const CreditCardItem = ({ card }: CreditCardItemProps) => {
         {bestOffer && (
           <div className="mt-4 space-y-2">
             <div className="flex items-center gap-2">
-              <DollarSign className="h-4 w-4 text-fintech-purple" />
+              <DollarSign className="text-fintech-purple h-4 w-4" />
               <span className="font-medium">
                 Welcome Bonus:{" "}
-                <span className="font-bold text-fintech-purple">
+                <span className="text-fintech-purple font-bold">
                   {formatRewardValue(offerAmount, offerCurrency)}
                 </span>
               </span>
             </div>
 
             <div className="flex items-center gap-2">
-              <DollarSign className="h-4 w-4 text-fintech-purple" />
+              <DollarSign className="text-fintech-purple h-4 w-4" />
               <span className="text-sm">
                 Spend ${bestOffer.spend.toLocaleString()} in {bestOffer.days}{" "}
                 days
@@ -98,7 +98,7 @@ const CreditCardItem = ({ card }: CreditCardItemProps) => {
 
             {bestOffer.expiration && (
               <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-fintech-purple" />
+                <Calendar className="text-fintech-purple h-4 w-4" />
                 <span className="text-sm">
                   Expires: {new Date(bestOffer.expiration).toLocaleDateString()}
                 </span>
@@ -127,7 +127,7 @@ const CreditCardItem = ({ card }: CreditCardItemProps) => {
       <CardFooter className="flex items-center justify-between p-4 pt-0">
         <Link
           href={`/credit-cards/${card.cardId}`}
-          className="text-sm font-medium text-fintech-purple hover:underline"
+          className="text-fintech-purple text-sm font-medium hover:underline"
         >
           View Details
         </Link>

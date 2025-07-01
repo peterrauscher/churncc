@@ -3,12 +3,12 @@ import { CreditCard } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="border-t bg-background">
+    <footer className="bg-background border-t">
       <div className="container px-4 py-10 md:px-6">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
           <div className="flex flex-col gap-2">
             <Link href="/" className="flex items-center gap-2">
-              <CreditCard className="h-6 w-6 text-fintech-purple" />
+              <CreditCard className="text-fintech-purple h-6 w-6" />
               <span className="text-xl font-bold">churn.cc</span>
             </Link>
             <p className="text-muted-foreground">
@@ -97,10 +97,10 @@ const Footer = () => {
         </div>
 
         <div className="mt-10 flex flex-col items-center justify-center gap-4 border-t pt-6 md:flex-row md:justify-between">
-          <p className="text-center text-sm text-muted-foreground md:text-left">
+          <p className="text-muted-foreground text-center text-sm md:text-left">
             © {new Date().getFullYear()} churn.cc. All rights reserved.
           </p>
-          <p className="text-center text-sm text-muted-foreground md:text-right">
+          <p className="text-muted-foreground text-center text-sm md:text-right">
             Card offers and bank promotions are subject to change. See issuer
             websites for current details.
           </p>

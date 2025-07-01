@@ -32,7 +32,7 @@ export default function RootLayout({
       <body
         className={cn(
           geistSans.className,
-          "antialiased flex flex-col min-h-screen",
+          "flex min-h-screen flex-col antialiased",
         )}
       >
         <Navbar />

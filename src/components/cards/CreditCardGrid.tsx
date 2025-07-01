@@ -13,7 +13,7 @@ const CreditCardGrid = ({
   if (!cards || cards.length === 0) {
     return (
       <div className="my-10 flex flex-col items-center justify-center rounded-lg border border-dashed p-10 text-center">
-        <p className="text-lg text-muted-foreground">{emptyMessage}</p>
+        <p className="text-muted-foreground text-lg">{emptyMessage}</p>
       </div>
     );
   }

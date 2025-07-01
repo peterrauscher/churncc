@@ -54,7 +54,7 @@ export default function BankAccountDetailPage({
   if (isLoading) {
     return (
       <div className="container mx-auto flex min-h-[70vh] items-center justify-center px-4 py-8 md:px-6">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-fintech-purple border-t-transparent" />
+        <div className="border-fintech-purple h-12 w-12 animate-spin rounded-full border-4 border-t-transparent" />
       </div>
     );
   }
@@ -65,15 +65,15 @@ export default function BankAccountDetailPage({
         <div className="mb-6">
           <Link
             href="/bank-accounts"
-            className="flex items-center text-fintech-purple hover:underline"
+            className="text-fintech-purple flex items-center hover:underline"
           >
             <ArrowLeft className="mr-2 h-4 w-4" /> Back to Bank Accounts
           </Link>
         </div>
         <div className="flex min-h-[50vh] flex-col items-center justify-center rounded-lg border p-8 text-center">
-          <BanknoteIconDetail className="mb-4 h-16 w-16 text-muted-foreground" />
+          <BanknoteIconDetail className="text-muted-foreground mb-4 h-16 w-16" />
           <h2 className="mb-2 text-2xl font-bold">Account Not Found</h2>
-          <p className="mb-6 text-muted-foreground">
+          <p className="text-muted-foreground mb-6">
             The bank account you're looking for (ID: {id || "N/A"}) doesn't
             exist, has been removed, or there was an issue loading it.
           </p>
@@ -97,7 +97,7 @@ export default function BankAccountDetailPage({
       <div className="mb-6">
         <Link
           href="/bank-accounts"
-          className="flex items-center text-fintech-purple hover:underline"
+          className="text-fintech-purple flex items-center hover:underline"
         >
           <ArrowLeft className="mr-2 h-4 w-4" /> Back to Bank Accounts
         </Link>
@@ -121,24 +121,24 @@ export default function BankAccountDetailPage({
               {account.institution} {account.name}
             </h1>
 
-            <h2 className="mb-6 text-xl font-semibold text-fintech-purple">
+            <h2 className="text-fintech-purple mb-6 text-xl font-semibold">
               ${account.offerAmount.toLocaleString()} Bonus
             </h2>
 
             {account.description && (
-              <p className="mb-6 text-lg text-muted-foreground">
+              <p className="text-muted-foreground mb-6 text-lg">
                 {account.description}
               </p>
             )}
 
-            <Card className="mb-6 border-2 border-fintech-purple">
+            <Card className="border-fintech-purple mb-6 border-2">
               <CardContent className="p-6">
                 <h3 className="mb-4 text-xl font-bold">Offer Requirements</h3>
 
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
-                    <div className="mt-1 rounded-full bg-fintech-orange/10 p-1">
-                      <Info className="h-5 w-5 text-fintech-orange" />
+                    <div className="bg-fintech-orange/10 mt-1 rounded-full p-1">
+                      <Info className="text-fintech-orange h-5 w-5" />
                     </div>
                     <div>
                       <p className="font-medium">Requirements</p>
@@ -150,8 +150,8 @@ export default function BankAccountDetailPage({
 
                   {account.directDepositRequired && (
                     <div className="flex items-start gap-3">
-                      <div className="mt-1 rounded-full bg-fintech-purple/10 p-1">
-                        <DollarSign className="h-5 w-5 text-fintech-purple" />
+                      <div className="bg-fintech-purple/10 mt-1 rounded-full p-1">
+                        <DollarSign className="text-fintech-purple h-5 w-5" />
                       </div>
                       <div>
                         <p className="font-medium">Direct Deposit Required</p>
@@ -167,8 +167,8 @@ export default function BankAccountDetailPage({
                   {account.minimumBalance !== undefined &&
                     account.minimumBalance > 0 && (
                       <div className="flex items-start gap-3">
-                        <div className="mt-1 rounded-full bg-fintech-blue/10 p-1">
-                          <DollarSign className="h-5 w-5 text-fintech-blue" />
+                        <div className="bg-fintech-blue/10 mt-1 rounded-full p-1">
+                          <DollarSign className="text-fintech-blue h-5 w-5" />
                         </div>
                         <div>
                           <p className="font-medium">Minimum Balance</p>
@@ -182,8 +182,8 @@ export default function BankAccountDetailPage({
 
                   {account.expirationDate && (
                     <div className="flex items-start gap-3">
-                      <div className="mt-1 rounded-full bg-fintech-red/10 p-1">
-                        <Calendar className="h-5 w-5 text-fintech-red" />
+                      <div className="bg-fintech-red/10 mt-1 rounded-full p-1">
+                        <Calendar className="text-fintech-red h-5 w-5" />
                       </div>
                       <div>
                         <p className="font-medium">Offer Expiration</p>
@@ -202,7 +202,7 @@ export default function BankAccountDetailPage({
 
             <div className="mb-6 grid grid-cols-2 gap-4">
               <div className="rounded-lg bg-gray-50 p-4">
-                <p className="text-sm text-muted-foreground">Monthly Fee</p>
+                <p className="text-muted-foreground text-sm">Monthly Fee</p>
                 <p className="text-xl font-medium">
                   {account.monthlyFee
                     ? `$${account.monthlyFee.toLocaleString()}`
@@ -211,19 +211,19 @@ export default function BankAccountDetailPage({
                 {account.monthlyFee &&
                   account.monthlyFee > 0 &&
                   account.isMonthlyFeeWaivable && (
-                    <p className="text-sm text-fintech-purple">
+                    <p className="text-fintech-purple text-sm">
                       Fee can be waived
                     </p>
                   )}
               </div>
 
               <div className="rounded-lg bg-gray-50 p-4">
-                <p className="text-sm text-muted-foreground">Account Type</p>
+                <p className="text-muted-foreground text-sm">Account Type</p>
                 <p className="text-xl font-medium">
                   {account.type.charAt(0).toUpperCase() +
                     account.type.slice(1).toLowerCase()}
                 </p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   {account.institution}
                 </p>
               </div>
@@ -232,7 +232,7 @@ export default function BankAccountDetailPage({
 
           <Button
             asChild
-            className="mt-6 bg-fintech-orange hover:bg-fintech-orange/90 text-white"
+            className="bg-fintech-orange hover:bg-fintech-orange/90 mt-6 text-white"
           >
             <a href={account.url} target="_blank" rel="noopener noreferrer">
               Open Account Now
@@ -253,11 +253,11 @@ export default function BankAccountDetailPage({
             />
           ) : (
             <div className="mb-6 flex h-[200px] w-full items-center justify-center rounded-lg bg-gray-100">
-              <BanknoteIconDetail className="h-24 w-24 text-muted-foreground" />
+              <BanknoteIconDetail className="text-muted-foreground h-24 w-24" />
             </div>
           )}
 
-          <div className="mb-6 rounded-lg bg-gradient-to-r from-fintech-blue to-fintech-purple p-8 text-center text-white">
+          <div className="from-fintech-blue to-fintech-purple mb-6 rounded-lg bg-gradient-to-r p-8 text-center text-white">
             <h3 className="mb-2 text-xl font-bold">Bonus Amount</h3>
             <div className="text-5xl font-bold">
               ${account.offerAmount.toLocaleString()}
@@ -275,7 +275,7 @@ export default function BankAccountDetailPage({
 
             <div className="space-y-3">
               <div className="flex items-start gap-2">
-                <Check className="mt-0.5 h-5 w-5 text-fintech-purple flex-shrink-0" />
+                <Check className="text-fintech-purple mt-0.5 h-5 w-5 flex-shrink-0" />
                 <p>
                   <span className="font-medium">Institution:</span>{" "}
                   {account.institution}
@@ -283,7 +283,7 @@ export default function BankAccountDetailPage({
               </div>
 
               <div className="flex items-start gap-2">
-                <Check className="mt-0.5 h-5 w-5 text-fintech-purple flex-shrink-0" />
+                <Check className="text-fintech-purple mt-0.5 h-5 w-5 flex-shrink-0" />
                 <p>
                   <span className="font-medium">Account Type:</span>{" "}
                   {account.type.charAt(0).toUpperCase() +
@@ -292,7 +292,7 @@ export default function BankAccountDetailPage({
               </div>
 
               <div className="flex items-start gap-2">
-                <Check className="mt-0.5 h-5 w-5 text-fintech-purple flex-shrink-0" />
+                <Check className="text-fintech-purple mt-0.5 h-5 w-5 flex-shrink-0" />
                 <p>
                   <span className="font-medium">Bonus Amount:</span> $
                   {account.offerAmount.toLocaleString()}
@@ -300,7 +300,7 @@ export default function BankAccountDetailPage({
               </div>
 
               <div className="flex items-start gap-2">
-                <Check className="mt-0.5 h-5 w-5 text-fintech-purple flex-shrink-0" />
+                <Check className="text-fintech-purple mt-0.5 h-5 w-5 flex-shrink-0" />
                 <p>
                   <span className="font-medium">Monthly Fee:</span>{" "}
                   {account.monthlyFee
@@ -315,7 +315,7 @@ export default function BankAccountDetailPage({
 
               {account.directDepositRequired && (
                 <div className="flex items-start gap-2">
-                  <Check className="mt-0.5 h-5 w-5 text-fintech-purple flex-shrink-0" />
+                  <Check className="text-fintech-purple mt-0.5 h-5 w-5 flex-shrink-0" />
                   <p>
                     <span className="font-medium">Direct Deposit:</span>{" "}
                     Required
@@ -328,7 +328,7 @@ export default function BankAccountDetailPage({
               {account.minimumBalance !== undefined &&
                 account.minimumBalance > 0 && (
                   <div className="flex items-start gap-2">
-                    <Check className="mt-0.5 h-5 w-5 text-fintech-purple flex-shrink-0" />
+                    <Check className="text-fintech-purple mt-0.5 h-5 w-5 flex-shrink-0" />
                     <p>
                       <span className="font-medium">Min Balance:</span> $
                       {account.minimumBalance.toLocaleString()}
@@ -339,7 +339,7 @@ export default function BankAccountDetailPage({
               {account.availability &&
                 account.availability.toLowerCase() !== "nationwide" && (
                   <div className="flex items-start gap-2">
-                    <Info className="mt-0.5 h-5 w-5 text-fintech-red flex-shrink-0" />
+                    <Info className="text-fintech-red mt-0.5 h-5 w-5 flex-shrink-0" />
                     <p>
                       <span className="font-medium">Availability:</span>{" "}
                       {account.availability}
