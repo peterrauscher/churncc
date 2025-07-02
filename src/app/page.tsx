@@ -229,7 +229,7 @@ export default function HomePage() {
         <div className="container mx-auto">
           <div className="mb-10 text-center">
             <h2 className="text-2xl font-bold md:text-3xl">
-              Why Use churn.cc?
+              Why Use Churnable?
             </h2>
             <p className="text-muted-foreground mt-2">
               We help you find the best financial offers and maximize your

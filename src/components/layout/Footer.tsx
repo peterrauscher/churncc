@@ -9,7 +9,7 @@ const Footer = () => {
           <div className="flex flex-col gap-2">
             <Link href="/" className="flex items-center gap-2">
               <CreditCard className="text-primary h-6 w-6" />
-              <span className="text-xl font-bold">churn.cc</span>
+              <span className="text-xl font-bold">Churnable</span>
             </Link>
             <p className="text-muted-foreground">
               Find the best credit card and bank account offers to maximize your
@@ -98,7 +98,7 @@ const Footer = () => {
 
         <div className="mt-10 flex flex-col items-center justify-center gap-4 border-t pt-6 md:flex-row md:justify-between">
           <p className="text-muted-foreground text-center text-sm md:text-left">
-            © {new Date().getFullYear()} churn.cc. All rights reserved.
+            © {new Date().getFullYear()} Churnable. All rights reserved.
           </p>
           <p className="text-muted-foreground text-center text-sm md:text-right">
             Card offers and bank promotions are subject to change. See issuer

@@ -33,7 +33,7 @@ const Navbar = () => {
             onClick={closeMenu}
           >
             <CreditCard className="text-primary h-6 w-6" />
-            <span className="text-xl font-bold">churn.cc</span>
+            <span className="text-xl font-bold">Churnable</span>
           </Link>
         </div>
 
