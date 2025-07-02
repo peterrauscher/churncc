@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation"; // Changed from react-router-dom
-import Layout from "@/components/layout/Layout";
 import CreditCardGrid from "@/components/cards/CreditCardGrid";
 import CreditCardFilters from "@/components/filters/CreditCardFilters";
 import { CreditCard, FilterOptions, SortOptions } from "@/types";

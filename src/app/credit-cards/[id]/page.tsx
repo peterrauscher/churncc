@@ -23,7 +23,6 @@ import {
   Calendar,
   Check,
   Info,
-  Layout,
 } from "lucide-react";
 
 interface CreditCardDetailPageProps {
