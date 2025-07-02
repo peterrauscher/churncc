@@ -18,7 +18,7 @@ interface BankAccountItemProps {
 const BankAccountItem = ({ account }: BankAccountItemProps) => {
   return (
     <Card className="h-full overflow-hidden transition-all hover:shadow-md">
-      <div className="from-fintech-blue to-fintech-purple bg-gradient-to-r p-4 text-white">
+      <div className="from-ring to-primary bg-gradient-to-r p-4 text-white">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold">{account.institution}</h3>
           <Badge className="bg-white/20 text-white">{account.type}</Badge>
@@ -38,13 +38,13 @@ const BankAccountItem = ({ account }: BankAccountItemProps) => {
       <CardContent className="p-4">
         <div className="space-y-3">
           <div className="flex items-start gap-2">
-            <Info className="text-fintech-purple mt-0.5 h-4 w-4 flex-shrink-0" />
+            <Info className="text-primary mt-0.5 h-4 w-4 flex-shrink-0" />
             <p className="text-sm">{account.requirements}</p>
           </div>
 
           {account.directDepositRequired && (
             <div className="flex items-center gap-2">
-              <DollarSign className="text-fintech-purple h-4 w-4" />
+              <DollarSign className="text-primary h-4 w-4" />
               <span className="text-sm">
                 Direct Deposit Required:
                 {account.directDepositAmount
@@ -56,7 +56,7 @@ const BankAccountItem = ({ account }: BankAccountItemProps) => {
 
           {account.minimumBalance !== undefined && (
             <div className="flex items-center gap-2">
-              <DollarSign className="text-fintech-purple h-4 w-4" />
+              <DollarSign className="text-primary h-4 w-4" />
               <span className="text-sm">
                 Min Balance: ${account.minimumBalance.toLocaleString()}
               </span>
@@ -65,7 +65,7 @@ const BankAccountItem = ({ account }: BankAccountItemProps) => {
 
           {account.expirationDate && (
             <div className="flex items-center gap-2">
-              <Calendar className="text-fintech-purple h-4 w-4" />
+              <Calendar className="text-primary h-4 w-4" />
               <span className="text-sm">
                 Expires: {new Date(account.expirationDate).toLocaleDateString()}
               </span>
@@ -81,25 +81,28 @@ const BankAccountItem = ({ account }: BankAccountItemProps) => {
             </span>
           </div>
 
-          {account.monthlyFee > 0 && account.isMonthlyFeeWaivable && (
-            <p className="mt-1 text-xs text-gray-500">
-              Fee can be waived with qualifying activity
-            </p>
-          )}
+          {account.monthlyFee &&
+            account.monthlyFee > 0 &&
+            account.isMonthlyFeeWaivable && (
+              <p className="mt-1 text-xs text-gray-500">
+                Fee can be waived with qualifying activity
+              </p>
+            )}
         </div>
       </CardContent>
 
       <CardFooter className="flex items-center justify-between p-4 pt-0">
         <Link
           href={`/bank-accounts/${account.id}`}
-          className="text-fintech-purple text-sm font-medium hover:underline"
+          className="text-primary text-sm font-medium hover:underline"
         >
           View Details
         </Link>
 
         <Button
           asChild
-          className="bg-fintech-orange hover:bg-fintech-orange/90 text-white"
+          size="sm"
+          className="bg-chart-1 hover:bg-chart-1/90 text-white"
         >
           <a href={account.url} target="_blank" rel="noopener noreferrer">
             Open Account <ArrowRight className="ml-1 h-4 w-4" />

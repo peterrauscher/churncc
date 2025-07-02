@@ -54,11 +54,11 @@ const CreditCardItem = ({ card }: CreditCardItemProps) => {
           />
         ) : (
           <div className="flex h-full items-center justify-center">
-            <CreditCardIcon className="text-fintech-purple/50 h-16 w-16" />
+            <CreditCardIcon className="text-primary/50 h-16 w-16" />
           </div>
         )}
         {card.isAnnualFeeWaived && (
-          <Badge className="bg-fintech-orange absolute top-2 right-2 text-white">
+          <Badge className="bg-chart-1 absolute top-2 right-2 text-white">
             No Annual Fee Year 1
           </Badge>
         )}
@@ -79,17 +79,17 @@ const CreditCardItem = ({ card }: CreditCardItemProps) => {
         {bestOffer && (
           <div className="mt-4 space-y-2">
             <div className="flex items-center gap-2">
-              <DollarSign className="text-fintech-purple h-4 w-4" />
+              <DollarSign className="text-primary h-4 w-4" />
               <span className="font-medium">
                 Welcome Bonus:{" "}
-                <span className="text-fintech-purple font-bold">
+                <span className="text-primary font-bold">
                   {formatRewardValue(offerAmount, offerCurrency)}
                 </span>
               </span>
             </div>
 
             <div className="flex items-center gap-2">
-              <DollarSign className="text-fintech-purple h-4 w-4" />
+              <DollarSign className="text-primary h-4 w-4" />
               <span className="text-sm">
                 Spend ${bestOffer.spend.toLocaleString()} in {bestOffer.days}{" "}
                 days
@@ -98,7 +98,7 @@ const CreditCardItem = ({ card }: CreditCardItemProps) => {
 
             {bestOffer.expiration && (
               <div className="flex items-center gap-2">
-                <Calendar className="text-fintech-purple h-4 w-4" />
+                <Calendar className="text-primary h-4 w-4" />
                 <span className="text-sm">
                   Expires: {new Date(bestOffer.expiration).toLocaleDateString()}
                 </span>
@@ -127,15 +127,12 @@ const CreditCardItem = ({ card }: CreditCardItemProps) => {
       <CardFooter className="flex items-center justify-between p-4 pt-0">
         <Link
           href={`/credit-cards/${card.cardId}`}
-          className="text-fintech-purple text-sm font-medium hover:underline"
+          className="text-primary text-sm font-medium hover:underline"
         >
           View Details
         </Link>
 
-        <Button
-          asChild
-          className="bg-fintech-purple hover:bg-fintech-secondary"
-        >
+        <Button asChild size="sm" className="bg-primary hover:bg-secondary">
           <a href={card.url} target="_blank" rel="noopener noreferrer">
             Apply Now <ArrowRight className="ml-1 h-4 w-4" />
           </a>

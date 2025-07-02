@@ -84,7 +84,7 @@ export default function CreditCardDetailPage({
   if (isLoading) {
     return (
       <div className="container mx-auto flex min-h-[70vh] items-center justify-center px-4 py-8 md:px-6">
-        <div className="border-fintech-purple h-12 w-12 animate-spin rounded-full border-4 border-t-transparent" />
+        <div className="border-primary h-12 w-12 animate-spin rounded-full border-4 border-t-transparent" />
       </div>
     );
   }
@@ -95,7 +95,7 @@ export default function CreditCardDetailPage({
         <div className="mb-6">
           <Link
             href="/credit-cards"
-            className="text-fintech-purple flex items-center hover:underline"
+            className="text-primary flex items-center hover:underline"
           >
             <ArrowLeft className="mr-2 h-4 w-4" /> Back to Credit Cards
           </Link>
@@ -122,7 +122,7 @@ export default function CreditCardDetailPage({
       <div className="mb-6">
         <Link
           href="/credit-cards"
-          className="text-fintech-purple flex items-center hover:underline"
+          className="text-primary flex items-center hover:underline"
         >
           <ArrowLeft className="mr-2 h-4 w-4" /> Back to Credit Cards
         </Link>
@@ -139,9 +139,7 @@ export default function CreditCardDetailPage({
                 {card.issuer.replace("_", " ")}
               </Badge>
               {card.isBusiness && (
-                <Badge className="bg-fintech-blue text-white">
-                  Business Card
-                </Badge>
+                <Badge className="bg-ring text-white">Business Card</Badge>
               )}
             </div>
 
@@ -162,9 +160,7 @@ export default function CreditCardDetailPage({
                   {card.annualFee > 0 ? `$${card.annualFee}` : "No Annual Fee"}
                 </p>
                 {card.isAnnualFeeWaived && (
-                  <p className="text-fintech-purple text-sm">
-                    Waived First Year
-                  </p>
+                  <p className="text-primary text-sm">Waived First Year</p>
                 )}
               </div>
 
@@ -181,22 +177,22 @@ export default function CreditCardDetailPage({
           </div>
 
           {bestOffer && (
-            <Card className="border-fintech-purple border-2">
+            <Card className="border-primary border-2">
               <CardContent className="p-6">
                 <h3 className="mb-4 text-xl font-bold">Current Offer</h3>
 
                 <div className="mb-6 flex items-center">
-                  <div className="bg-fintech-purple/10 mr-4 rounded-full p-3">
-                    <DollarSign className="text-fintech-purple h-8 w-8" />
+                  <div className="bg-primary/10 mr-4 rounded-full p-3">
+                    <DollarSign className="text-primary h-8 w-8" />
                   </div>
                   <div>
                     <p className="text-muted-foreground text-sm">
                       Welcome Bonus
                     </p>
-                    <p className="text-fintech-purple text-2xl font-bold">
+                    <p className="text-primary text-2xl font-bold">
                       {formatRewardValue(
                         bestOffer.amount[0]?.amount || 0,
-                        bestOffer.amount[0]?.currency || "USD",
+                        bestOffer.amount[0]?.currency || "USD"
                       )}
                     </p>
                   </div>
@@ -204,7 +200,9 @@ export default function CreditCardDetailPage({
 
                 <div className="space-y-3">
                   <div className="flex items-start gap-2">
-                    <DollarSign className="text-fintech-purple mt-0.5 h-4 w-4" />
+                    <div className="bg-primary/10 rounded-full p-2">
+                      <DollarSign className="text-primary mt-0.5 h-4 w-4" />
+                    </div>
                     <span>
                       Spend ${bestOffer.spend.toLocaleString()} in{" "}
                       {bestOffer.days} days
@@ -213,7 +211,9 @@ export default function CreditCardDetailPage({
 
                   {bestOffer.expiration && (
                     <div className="flex items-start gap-2">
-                      <Calendar className="text-fintech-purple mt-0.5 h-4 w-4" />
+                      <div className="bg-primary/10 rounded-full p-2">
+                        <Calendar className="text-primary mt-0.5 h-4 w-4" />
+                      </div>
                       <span>
                         Expires:{" "}
                         {new Date(bestOffer.expiration).toLocaleDateString()}
@@ -223,7 +223,9 @@ export default function CreditCardDetailPage({
 
                   {bestOffer.details && (
                     <div className="flex items-start gap-2">
-                      <Info className="text-fintech-purple mt-0.5 h-4 w-4" />
+                      <div className="bg-primary/10 rounded-full p-2">
+                        <Info className="text-primary mt-0.5 h-4 w-4" />
+                      </div>
                       <span>{bestOffer.details}</span>
                     </div>
                   )}
@@ -231,7 +233,7 @@ export default function CreditCardDetailPage({
 
                 <Button
                   asChild
-                  className="bg-fintech-purple hover:bg-fintech-secondary mt-6 w-full"
+                  className="bg-primary hover:bg-secondary mt-6 w-full"
                 >
                   <a
                     href={bestOffer.url || card.url}
@@ -283,7 +285,7 @@ export default function CreditCardDetailPage({
                     key={index}
                     className="flex items-start gap-2 rounded-lg border p-3"
                   >
-                    <Check className="text-fintech-purple mt-0.5 h-4 w-4" />
+                    <Check className="text-primary mt-0.5 h-4 w-4" />
                     <div>
                       <p className="font-medium">{credit.description}</p>
                       {credit.value && (
@@ -335,7 +337,7 @@ export default function CreditCardDetailPage({
                     key={index}
                     className="flex items-start gap-2 rounded-lg border p-3"
                   >
-                    <Check className="text-fintech-purple mt-0.5 h-4 w-4 flex-shrink-0" />
+                    <Check className="text-primary mt-0.5 h-4 w-4 flex-shrink-0" />
                     <span>{insurance}</span>
                   </div>
                 ))}

@@ -58,19 +58,6 @@
   --shadow-2xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.25);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
-
-  /* Custom colors */
-  --fintech-purple: #9b87f5;
-  --fintech-darkPurple: #1a1f2c;
-  --fintech-secondary: #7e69ab; /* Assuming this is a distinct color */
-  --fintech-tertiary: #6e59a5; /* Assuming this is a distinct color */
-  --fintech-light: #d6bcfa;
-  --fintech-vivid: #8b5cf6;
-  --fintech-orange: #f97316;
-  --fintech-blue: #0ea5e9;
-  --fintech-red: #ea384c;
-  --fintech-gray: #8e9196;
-  /* End of custom colors */
   --shadow-color: hsl(0 0% 0%);
   --shadow-opacity: 0.1;
   --shadow-blur: 8px;
@@ -130,27 +117,15 @@
   --shadow-xl:
     0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 8px 10px -2px hsl(0 0% 0% / 0.1);
   --shadow-2xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.25);
-
-  /* Custom Fintech Colors (Dark Mode - assuming same as light for now, adjust if needed) */
-  --fintech-purple: #9b87f5;
-  --fintech-darkPurple: #1a1f2c; /* This might be more of a background in dark mode */
-  --fintech-secondary: #7e69ab;
-  --fintech-tertiary: #6e59a5;
-  --fintech-light: #d6bcfa; /* This might need a dark mode equivalent */
-  --fintech-vivid: #8b5cf6;
-  --fintech-orange: #f97316;
-  --fintech-blue: #0ea5e9;
-  --fintech-red: #ea384c;
-  --fintech-gray: #8e9196; /* This might need a dark mode equivalent */
-  /* End of custom colors */
   --shadow-color: hsl(0 0% 0%);
   --shadow-opacity: 0.1;
   --shadow-blur: 8px;
   --shadow-spread: -1px;
   --shadow-offset-x: 0px;
   --shadow-offset-y: 4px;
-  --letter-spacing: 0em;
+  --tracking-normal: 0em;
   --spacing: 0.25rem;
+  --letter-spacing: 0em;
 }
 
 @theme inline {
@@ -206,18 +181,6 @@
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
 
-  /* Custom colors */
-  --color-fintech-purple: var(--fintech-purple);
-  --color-fintech-darkPurple: var(--fintech-darkPurple);
-  --color-fintech-secondary: var(--fintech-secondary);
-  --color-fintech-tertiary: var(--fintech-tertiary);
-  --color-fintech-light: var(--fintech-light);
-  --color-fintech-vivid: var(--fintech-vivid);
-  --color-fintech-orange: var(--fintech-orange);
-  --color-fintech-blue: var(--fintech-blue);
-  --color-fintech-red: var(--fintech-red);
-  --color-fintech-gray: var(--fintech-gray);
-  /* End of custom colors */
   --radius: 0.5rem;
   --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
   --tracking-tight: calc(var(--tracking-normal) - 0.025em);

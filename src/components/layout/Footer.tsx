@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
           <div className="flex flex-col gap-2">
             <Link href="/" className="flex items-center gap-2">
-              <CreditCard className="text-fintech-purple h-6 w-6" />
+              <CreditCard className="text-primary h-6 w-6" />
               <span className="text-xl font-bold">churn.cc</span>
             </Link>
             <p className="text-muted-foreground">
@@ -22,19 +22,19 @@ const Footer = () => {
             <nav className="flex flex-col gap-2">
               <Link
                 href="/credit-cards"
-                className="text-muted-foreground hover:text-fintech-purple"
+                className="text-muted-foreground hover:text-primary"
               >
                 Credit Cards
               </Link>
               <Link
                 href="/bank-accounts"
-                className="text-muted-foreground hover:text-fintech-purple"
+                className="text-muted-foreground hover:text-primary"
               >
                 Bank Accounts
               </Link>
               <Link
                 href="/resources"
-                className="text-muted-foreground hover:text-fintech-purple"
+                className="text-muted-foreground hover:text-primary"
               >
                 Resources
               </Link>
@@ -46,25 +46,25 @@ const Footer = () => {
             <nav className="flex flex-col gap-2">
               <Link
                 href="/credit-cards?issuer=CHASE"
-                className="text-muted-foreground hover:text-fintech-purple"
+                className="text-muted-foreground hover:text-primary"
               >
                 Chase
               </Link>
               <Link
                 href="/credit-cards?issuer=AMERICAN_EXPRESS"
-                className="text-muted-foreground hover:text-fintech-purple"
+                className="text-muted-foreground hover:text-primary"
               >
                 American Express
               </Link>
               <Link
                 href="/credit-cards?issuer=CAPITAL_ONE"
-                className="text-muted-foreground hover:text-fintech-purple"
+                className="text-muted-foreground hover:text-primary"
               >
                 Capital One
               </Link>
               <Link
                 href="/credit-cards?issuer=CITI"
-                className="text-muted-foreground hover:text-fintech-purple"
+                className="text-muted-foreground hover:text-primary"
               >
                 Citi
               </Link>
@@ -76,19 +76,19 @@ const Footer = () => {
             <nav className="flex flex-col gap-2">
               <Link
                 href="/privacy"
-                className="text-muted-foreground hover:text-fintech-purple"
+                className="text-muted-foreground hover:text-primary"
               >
                 Privacy Policy
               </Link>
               <Link
                 href="/terms"
-                className="text-muted-foreground hover:text-fintech-purple"
+                className="text-muted-foreground hover:text-primary"
               >
                 Terms of Service
               </Link>
               <Link
                 href="/affiliates"
-                className="text-muted-foreground hover:text-fintech-purple"
+                className="text-muted-foreground hover:text-primary"
               >
                 Affiliate Disclosure
               </Link>

@@ -53,20 +53,20 @@ export default function HomePage() {
 
   return (
     <>
-      <section className="from-fintech-purple to-fintech-blue relative overflow-hidden bg-gradient-to-br px-4 py-16 text-white">
+      <section className="from-primary to-ring relative overflow-hidden bg-gradient-to-br px-4 py-16 text-white">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="bg-fintech-orange/20 absolute top-1/4 -right-1/4 h-96 w-96 animate-pulse rounded-full blur-3xl"></div>
-          <div className="bg-fintech-purple/20 absolute top-1/2 -left-1/4 h-96 w-96 animate-pulse rounded-full blur-3xl"></div>
+          <div className="bg-chart-1/20 absolute top-1/4 -right-1/4 h-96 w-96 animate-pulse rounded-full blur-3xl"></div>
+          <div className="bg-primary/20 absolute top-1/2 -left-1/4 h-96 w-96 animate-pulse rounded-full blur-3xl"></div>
         </div>
         <div className="relative container mx-auto flex flex-col items-center text-center">
           <div className="mb-8 inline-flex items-center rounded-full bg-white/10 px-4 py-2 text-sm backdrop-blur-sm">
-            <TrendingUp className="text-fintech-orange mr-2 h-4 w-4" />
+            <TrendingUp className="text-chart-1 mr-2 h-4 w-4" />
             <span>Average user earns $2,500+ in first year bonuses</span>
           </div>
 
           <h1 className="mb-6 text-4xl font-bold md:text-5xl lg:text-6xl">
             Maximize Your{" "}
-            <span className="from-fintech-orange bg-gradient-to-r to-white bg-clip-text text-transparent">
+            <span className="from-chart-1 bg-gradient-to-r to-white bg-clip-text text-transparent">
               Money
             </span>
             <br />
@@ -75,7 +75,7 @@ export default function HomePage() {
 
           <p className="mb-8 max-w-2xl text-lg text-white/80 md:text-xl">
             Join thousands of smart churners who earn{" "}
-            <span className="text-fintech-orange font-semibold">
+            <span className="text-chart-1 font-semibold">
               $1,000s in bonuses
             </span>{" "}
             every year. We track the best credit card and bank account offers so
@@ -86,7 +86,7 @@ export default function HomePage() {
             <Button
               asChild
               size="lg"
-              className="text-fintech-purple bg-white hover:bg-white/90"
+              className="text-primary bg-white hover:bg-white/90"
             >
               <Link href="/credit-cards">
                 {" "}
@@ -98,7 +98,7 @@ export default function HomePage() {
             <Button
               asChild
               size="lg"
-              className="bg-fintech-orange hover:bg-fintech-orange/90"
+              className="bg-chart-1 hover:bg-chart-1/90"
             >
               <Link href="/bank-accounts">
                 {" "}
@@ -111,8 +111,8 @@ export default function HomePage() {
 
           <div className="grid gap-8 sm:grid-cols-3">
             <div className="flex flex-col items-center rounded-lg bg-white/10 p-6 backdrop-blur-sm">
-              <div className="bg-fintech-orange/20 mb-4 rounded-full p-3">
-                <CreditCardIcon className="text-fintech-orange h-6 w-6" />
+              <div className="bg-chart-1/20 mb-4 rounded-full p-3">
+                <CreditCardIcon className="text-chart-1 h-6 w-6" />
               </div>
               <h3 className="mb-2 text-lg font-semibold">
                 Credit Card Bonuses
@@ -123,8 +123,8 @@ export default function HomePage() {
             </div>
 
             <div className="flex flex-col items-center rounded-lg bg-white/10 p-6 backdrop-blur-sm">
-              <div className="bg-fintech-blue/20 mb-4 rounded-full p-3">
-                <BanknoteIcon className="text-fintech-blue h-6 w-6" />
+              <div className="bg-ring/20 mb-4 rounded-full p-3">
+                <BanknoteIcon className="text-ring h-6 w-6" />
               </div>
               <h3 className="mb-2 text-lg font-semibold">
                 Bank Account Bonuses
@@ -133,8 +133,8 @@ export default function HomePage() {
             </div>
 
             <div className="flex flex-col items-center rounded-lg bg-white/10 p-6 backdrop-blur-sm">
-              <div className="bg-fintech-purple/20 mb-4 rounded-full p-3">
-                <TrendingUp className="text-fintech-purple h-6 w-6" />
+              <div className="bg-primary/20 mb-4 rounded-full p-3">
+                <TrendingUp className="text-primary h-6 w-6" />
               </div>
               <h3 className="mb-2 text-lg font-semibold">
                 Track Your Progress
@@ -172,7 +172,7 @@ export default function HomePage() {
               {[...Array(4)].map((_, index) => (
                 <Card key={index} className="h-96">
                   <CardContent className="flex h-full items-center justify-center p-6">
-                    <div className="border-fintech-purple h-8 w-8 animate-spin rounded-full border-4 border-t-transparent" />
+                    <div className="border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent" />
                   </CardContent>
                 </Card>
               ))}
@@ -211,7 +211,7 @@ export default function HomePage() {
               {[...Array(3)].map((_, index) => (
                 <Card key={index} className="h-96">
                   <CardContent className="flex h-full items-center justify-center p-6">
-                    <div className="border-fintech-purple h-8 w-8 animate-spin rounded-full border-4 border-t-transparent" />
+                    <div className="border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent" />
                   </CardContent>
                 </Card>
               ))}
@@ -240,8 +240,8 @@ export default function HomePage() {
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             <Card>
               <CardContent className="pt-6">
-                <div className="bg-fintech-purple/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
-                  <CreditCardIcon className="text-fintech-purple h-6 w-6" />
+                <div className="bg-primary/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
+                  <CreditCardIcon className="text-primary h-6 w-6" />
                 </div>
                 <h3 className="mb-2 text-xl font-medium">Compare All Offers</h3>
                 <p className="text-muted-foreground">
@@ -253,8 +253,8 @@ export default function HomePage() {
 
             <Card>
               <CardContent className="pt-6">
-                <div className="bg-fintech-orange/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
-                  <TrendingUp className="text-fintech-orange h-6 w-6" />
+                <div className="bg-chart-1/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
+                  <TrendingUp className="text-chart-1 h-6 w-6" />
                 </div>
                 <h3 className="mb-2 text-xl font-medium">
                   Maximize Your Returns
@@ -268,8 +268,8 @@ export default function HomePage() {
 
             <Card>
               <CardContent className="pt-6">
-                <div className="bg-fintech-blue/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
-                  <BanknoteIcon className="text-fintech-blue h-6 w-6" />
+                <div className="bg-ring/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
+                  <BanknoteIcon className="text-ring h-6 w-6" />
                 </div>
                 <h3 className="mb-2 text-xl font-medium">Exclusive Offers</h3>
                 <p className="text-muted-foreground">
@@ -282,7 +282,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-fintech-darkPurple px-4 py-12 text-white md:py-16">
+      <section className="bg-card px-4 py-12 text-white md:py-16">
         <div className="container mx-auto">
           <div className="flex flex-col items-center text-center">
             <h2 className="mb-4 text-2xl font-bold md:text-3xl">
@@ -296,7 +296,7 @@ export default function HomePage() {
               <Button
                 asChild
                 size="lg"
-                className="bg-fintech-purple hover:bg-fintech-purple/90"
+                className="bg-primary hover:bg-primary/90"
               >
                 <Link href="/credit-cards">
                   {" "}
@@ -308,7 +308,7 @@ export default function HomePage() {
               <Button
                 asChild
                 size="lg"
-                className="bg-fintech-orange hover:bg-fintech-orange/90"
+                className="bg-chart-1 hover:bg-chart-1/90"
               >
                 <Link href="/bank-accounts">
                   {" "}

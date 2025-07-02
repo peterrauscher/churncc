@@ -32,7 +32,7 @@ const Navbar = () => {
             className="flex items-center gap-2"
             onClick={closeMenu}
           >
-            <CreditCard className="text-fintech-purple h-6 w-6" />
+            <CreditCard className="text-primary h-6 w-6" />
             <span className="text-xl font-bold">churn.cc</span>
           </Link>
         </div>
@@ -64,7 +64,7 @@ const Navbar = () => {
               <nav className="flex flex-col items-start gap-6 pt-6">
                 <Link
                   href="/credit-cards"
-                  className="hover:text-fintech-purple flex items-center gap-2 text-lg font-medium"
+                  className="hover:text-primary flex items-center gap-2 text-lg font-medium"
                   onClick={closeMenu}
                 >
                   <CreditCard className="h-5 w-5" />
@@ -72,7 +72,7 @@ const Navbar = () => {
                 </Link>
                 <Link
                   href="/bank-accounts"
-                  className="hover:text-fintech-purple flex items-center gap-2 text-lg font-medium"
+                  className="hover:text-primary flex items-center gap-2 text-lg font-medium"
                   onClick={closeMenu}
                 >
                   <BanknoteIcon className="h-5 w-5" />
@@ -80,7 +80,7 @@ const Navbar = () => {
                 </Link>
                 <Link
                   href="/resources"
-                  className="hover:text-fintech-purple flex items-center gap-2 text-lg font-medium"
+                  className="hover:text-primary flex items-center gap-2 text-lg font-medium"
                   onClick={closeMenu}
                 >
                   <LinkIcon className="h-5 w-5" />
@@ -104,21 +104,21 @@ const Navbar = () => {
             <nav className="hidden gap-6 md:flex">
               <Link
                 href="/credit-cards"
-                className="hover:text-fintech-purple flex items-center gap-2 text-lg font-medium transition-colors"
+                className="hover:text-primary flex items-center gap-2 text-lg font-medium transition-colors"
               >
                 <CreditCard className="h-5 w-5" />
                 Credit Cards
               </Link>
               <Link
                 href="/bank-accounts"
-                className="hover:text-fintech-purple flex items-center gap-2 text-lg font-medium transition-colors"
+                className="hover:text-primary flex items-center gap-2 text-lg font-medium transition-colors"
               >
                 <BanknoteIcon className="h-5 w-5" />
                 Bank Accounts
               </Link>
               <Link
                 href="/resources"
-                className="hover:text-fintech-purple flex items-center gap-2 text-lg font-medium transition-colors"
+                className="hover:text-primary flex items-center gap-2 text-lg font-medium transition-colors"
               >
                 <LinkIcon className="h-5 w-5" />
                 Resources

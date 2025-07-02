@@ -17,18 +17,6 @@ const config: Config = {
     },
     extend: {
       colors: {
-        fintech: {
-          purple: "var(--fintech-purple)",
-          darkPurple: "var(--fintech-darkPurple)",
-          secondary: "var(--fintech-secondary)",
-          tertiary: "var(--fintech-tertiary)",
-          light: "var(--fintech-light)",
-          vivid: "var(--fintech-vivid)",
-          orange: "var(--fintech-orange)",
-          blue: "var(--fintech-blue)",
-          red: "var(--fintech-red)",
-          gray: "var(--fintech-gray)",
-        },
         border: "var(--border)",
         input: "var(--input)",
         ring: "var(--ring)",

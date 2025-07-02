@@ -42,8 +42,8 @@ const Resources = () => {
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             <Card>
               <CardContent className="p-6">
-                <div className="bg-fintech-purple/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
-                  <Info className="text-fintech-purple h-6 w-6" />
+                <div className="bg-primary/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
+                  <Info className="text-primary h-6 w-6" />
                 </div>
                 <h3 className="mb-2 text-xl font-medium">
                   Understanding Credit Card Bonuses
@@ -58,8 +58,8 @@ const Resources = () => {
 
             <Card>
               <CardContent className="p-6">
-                <div className="bg-fintech-orange/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
-                  <TrendingUp className="text-fintech-orange h-6 w-6" />
+                <div className="bg-chart-1/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
+                  <TrendingUp className="text-chart-1 h-6 w-6" />
                 </div>
                 <h3 className="mb-2 text-xl font-medium">
                   Maximizing Point Values
@@ -73,8 +73,8 @@ const Resources = () => {
 
             <Card>
               <CardContent className="p-6">
-                <div className="bg-fintech-blue/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
-                  <Calendar className="text-fintech-blue h-6 w-6" />
+                <div className="bg-ring/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
+                  <Calendar className="text-ring h-6 w-6" />
                 </div>
                 <h3 className="mb-2 text-xl font-medium">
                   Timing Your Applications
@@ -234,8 +234,8 @@ const Resources = () => {
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             <Card>
               <CardContent className="p-6">
-                <div className="bg-fintech-blue/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
-                  <Info className="text-fintech-blue h-6 w-6" />
+                <div className="bg-primary/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
+                  <Info className="text-primary h-6 w-6" />
                 </div>
                 <h3 className="mb-2 text-xl font-medium">
                   Bank Account Bonus Basics
@@ -250,8 +250,8 @@ const Resources = () => {
 
             <Card>
               <CardContent className="p-6">
-                <div className="bg-fintech-orange/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
-                  <BanknoteIcon className="text-fintech-orange h-6 w-6" />
+                <div className="bg-chart-1/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
+                  <BanknoteIcon className="text-chart-1 h-6 w-6" />
                 </div>
                 <h3 className="mb-2 text-xl font-medium">
                   Understanding Direct Deposits
@@ -266,8 +266,8 @@ const Resources = () => {
 
             <Card>
               <CardContent className="p-6">
-                <div className="bg-fintech-purple/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
-                  <Calendar className="text-fintech-purple h-6 w-6" />
+                <div className="bg-primary/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
+                  <Calendar className="text-primary h-6 w-6" />
                 </div>
                 <h3 className="mb-2 text-xl font-medium">
                   Timing Multiple Bank Bonuses
