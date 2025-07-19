@@ -192,7 +192,7 @@ export default function CreditCardDetailPage({
                     <p className="text-primary text-2xl font-bold">
                       {formatRewardValue(
                         bestOffer.amount[0]?.amount || 0,
-                        bestOffer.amount[0]?.currency || "USD"
+                        bestOffer.amount[0]?.currency || "USD",
                       )}
                     </p>
                   </div>

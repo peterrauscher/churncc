@@ -48,7 +48,7 @@ const BankAccountFilters = ({
       newInstitutions = [...currentInstitutions, institution];
     } else {
       newInstitutions = currentInstitutions.filter(
-        (i: string) => i !== institution
+        (i: string) => i !== institution,
       );
     }
 

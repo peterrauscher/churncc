@@ -37,8 +37,8 @@ export default function BankAccountsPage() {
 
         const uniqueInstitutions = Array.from(
           new Set(
-            accountsData.map((account: BankAccount) => account.institution)
-          )
+            accountsData.map((account: BankAccount) => account.institution),
+          ),
         ) as string[];
         setInstitutions(uniqueInstitutions);
       } catch (error) {
@@ -56,33 +56,33 @@ export default function BankAccountsPage() {
 
     if (filters.institutions && filters.institutions.length > 0) {
       tempFiltered = tempFiltered.filter((account: BankAccount) =>
-        filters.institutions!.includes(account.institution)
+        filters.institutions!.includes(account.institution),
       );
     }
 
     if (filters.accountTypes && filters.accountTypes.length > 0) {
       tempFiltered = tempFiltered.filter((account: BankAccount) =>
-        filters.accountTypes!.includes(account.type)
+        filters.accountTypes!.includes(account.type),
       );
     }
 
     if (filters.minBonus !== undefined) {
       tempFiltered = tempFiltered.filter(
-        (account: BankAccount) => account.offerAmount >= filters.minBonus!
+        (account: BankAccount) => account.offerAmount >= filters.minBonus!,
       );
     }
 
     if (filters.noMonthlyFee) {
       tempFiltered = tempFiltered.filter(
         (account: BankAccount) =>
-          account.monthlyFee === 0 || account.monthlyFee === undefined
+          account.monthlyFee === 0 || account.monthlyFee === undefined,
       );
     }
 
     if (filters.directDepositRequired !== undefined) {
       tempFiltered = tempFiltered.filter(
         (account: BankAccount) =>
-          account.directDepositRequired === filters.directDepositRequired
+          account.directDepositRequired === filters.directDepositRequired,
       );
     }
 

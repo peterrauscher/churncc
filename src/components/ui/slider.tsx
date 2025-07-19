@@ -11,7 +11,7 @@ const Slider = React.forwardRef<
     ref={ref}
     className={cn(
       "relative flex w-full touch-none items-center select-none",
-      className
+      className,
     )}
     {...props}
   >

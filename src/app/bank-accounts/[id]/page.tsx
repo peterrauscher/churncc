@@ -190,7 +190,7 @@ export default function BankAccountDetailPage({
                         <p className="text-muted-foreground">
                           Expires on{" "}
                           {new Date(
-                            account.expirationDate
+                            account.expirationDate,
                           ).toLocaleDateString()}
                         </p>
                       </div>

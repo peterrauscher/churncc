@@ -27,24 +27,24 @@ export default function CreditCardsPage() {
         const cardsData = await fetchCreditCards();
 
         const activeCards = cardsData.filter(
-          (card: CreditCard) => !card.discontinued
+          (card: CreditCard) => !card.discontinued,
         );
         setCreditCards(activeCards);
         let initialDisplayCards = [...activeCards];
 
         const uniqueIssuers = Array.from(
-          new Set(activeCards.map((card: CreditCard) => card.issuer))
+          new Set(activeCards.map((card: CreditCard) => card.issuer)),
         ) as string[]; // Explicit type assertion
         setIssuers(uniqueIssuers);
 
         const uniqueNetworks = Array.from(
-          new Set(activeCards.map((card: CreditCard) => card.network))
+          new Set(activeCards.map((card: CreditCard) => card.network)),
         ) as string[]; // Explicit type assertion
         setNetworks(uniqueNetworks);
 
         if (urlIssuer) {
           initialDisplayCards = activeCards.filter(
-            (card: CreditCard) => card.issuer === urlIssuer
+            (card: CreditCard) => card.issuer === urlIssuer,
           );
         }
         setFilteredCards(initialDisplayCards);
@@ -63,19 +63,19 @@ export default function CreditCardsPage() {
 
     if (filters.issuer && filters.issuer.length > 0) {
       tempFiltered = tempFiltered.filter((card: CreditCard) =>
-        filters.issuer!.includes(card.issuer)
+        filters.issuer!.includes(card.issuer),
       );
     }
 
     if (filters.network && filters.network.length > 0) {
       tempFiltered = tempFiltered.filter((card: CreditCard) =>
-        filters.network!.includes(card.network)
+        filters.network!.includes(card.network),
       );
     }
 
     if (filters.annualFeeMax !== undefined) {
       tempFiltered = tempFiltered.filter(
-        (card: CreditCard) => card.annualFee <= filters.annualFeeMax!
+        (card: CreditCard) => card.annualFee <= filters.annualFeeMax!,
       );
     }
 
@@ -90,14 +90,14 @@ export default function CreditCardsPage() {
 
     if (filters.isBusiness !== undefined) {
       tempFiltered = tempFiltered.filter(
-        (card: CreditCard) => card.isBusiness === filters.isBusiness
+        (card: CreditCard) => card.isBusiness === filters.isBusiness,
       );
     }
 
     if (filters.isAnnualFeeWaived !== undefined) {
       tempFiltered = tempFiltered.filter(
         (card: CreditCard) =>
-          card.isAnnualFeeWaived === filters.isAnnualFeeWaived
+          card.isAnnualFeeWaived === filters.isAnnualFeeWaived,
       );
     }
 
