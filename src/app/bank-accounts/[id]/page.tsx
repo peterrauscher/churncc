@@ -15,7 +15,7 @@ import {
   Calendar,
   Check,
   Info,
-} from "lucide-react"; // Renamed BanknoteIcon to avoid conflict if any
+} from "lucide-react";
 
 interface BankAccountDetailPageProps {
   params: { id: string };

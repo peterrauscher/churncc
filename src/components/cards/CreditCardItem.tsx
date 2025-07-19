@@ -35,9 +35,13 @@ const CreditCardItem = ({ card }: CreditCardItemProps) => {
       currency.includes("MILES") ||
       ["DELTA", "AMERICAN", "UNITED", "SOUTHWEST"].includes(currency)
     ) {
-      return `${amount.toLocaleString()} ${currency.replace("_", " ").toLowerCase()}`;
+      return `${amount.toLocaleString()} ${currency
+        .replace("_", " ")
+        .toLowerCase()}`;
     }
-    return `${amount.toLocaleString()} ${currency.replace("_", " ").toLowerCase()}`;
+    return `${amount.toLocaleString()} ${currency
+      .replace("_", " ")
+      .toLowerCase()}`;
   };
 
   return (

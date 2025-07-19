@@ -130,7 +130,7 @@ export const getMockBankAccounts = (): BankAccount[] => {
 
 // Fetch a specific credit card by ID
 export const fetchCreditCardById = async (
-  cardId: string,
+  cardId: string
 ): Promise<CreditCard | null> => {
   try {
     const cards = await fetchCreditCards();
@@ -143,7 +143,7 @@ export const fetchCreditCardById = async (
 
 // Fetch a specific bank account by ID
 export const fetchBankAccountById = async (
-  accountId: string,
+  accountId: string
 ): Promise<BankAccount | null> => {
   try {
     // In production, this would be fetched from your API
