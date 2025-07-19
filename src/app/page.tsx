@@ -79,7 +79,7 @@ export default function HomePage() {
               $1,000s in bonuses
             </span>{" "}
             every year. We track the best credit card and bank account offers so
-            you don't have to.
+            you don&apos;t have to.
           </p>
 
           <div className="mb-12 flex flex-col gap-4 sm:flex-row">

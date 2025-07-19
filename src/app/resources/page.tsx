@@ -98,21 +98,21 @@ const Resources = () => {
                 <AccordionContent>
                   <p className="mb-3">
                     The Chase 5/24 rule is an unwritten policy where Chase will
-                    automatically reject your credit card application if you\'ve
-                    opened 5 or more personal credit cards across all banks in
-                    the past 24 months.
+                    automatically reject your credit card application if
+                    you&apos;ve opened 5 or more personal credit cards across
+                    all banks in the past 24 months.
                   </p>
                   <p className="mb-3">
                     This rule applies to most Chase credit cards, though there
                     are some exceptions. Business credit cards from most issuers
-                    (except Capital One and Discover) typically don\'t count
+                    (except Capital One and Discover) typically don&apos;t count
                     toward your 5/24 status.
                   </p>
                   <p>
                     To check your 5/24 status, count how many personal credit
-                    cards you\'ve opened in the last 24 months across all banks.
-                    If you\'re at or over 5, you\'ll likely be denied for a new
-                    Chase card.
+                    cards you&apos;ve opened in the last 24 months across all
+                    banks. If you&apos;re at or over 5, you&apos;ll likely be
+                    denied for a new Chase card.
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -137,8 +137,9 @@ const Resources = () => {
                   <p>
                     While churning can be profitable, it may impact your credit
                     score through hard inquiries and reduced average account
-                    age. It\'s important to approach churning strategically and
-                    to understand the potential impact on your credit profile.
+                    age. It&apos;s important to approach churning strategically
+                    and to understand the potential impact on your credit
+                    profile.
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -151,7 +152,7 @@ const Resources = () => {
                   <p className="mb-3">
                     Manufactured spending refers to techniques used to generate
                     credit card spending (to meet minimum spend requirements) in
-                    ways that don\'t represent actual expenses by converting
+                    ways that don&apos;t represent actual expenses by converting
                     credit card purchases into cash or cash equivalents.
                   </p>
                   <p className="mb-3">
@@ -163,7 +164,7 @@ const Resources = () => {
                     While not illegal, many credit card issuers consider
                     manufactured spending against their terms of service and may
                     close accounts they suspect of engaging in this practice. We
-                    don\'t recommend manufactured spending as it carries
+                    don&apos;t recommend manufactured spending as it carries
                     significant risks.
                   </p>
                 </AccordionContent>
@@ -176,22 +177,23 @@ const Resources = () => {
                 <AccordionContent>
                   <p className="mb-3">
                     Yes, you can apply for business credit cards as a sole
-                    proprietor even if you don\'t have a formal business entity.
-                    Many people qualify for business credit cards through side
-                    hustles, freelancing, selling items online, or other
-                    small-scale income-generating activities.
+                    proprietor even if you don&apos;t have a formal business
+                    entity. Many people qualify for business credit cards
+                    through side hustles, freelancing, selling items online, or
+                    other small-scale income-generating activities.
                   </p>
                   <p className="mb-3">
                     When applying as a sole proprietor, you typically use your
                     Social Security Number instead of an EIN, and your legal
-                    name as the business name. You\'ll need to provide honest
-                    estimates of your business revenue and years in business.
+                    name as the business name. You&apos;ll need to provide
+                    honest estimates of your business revenue and years in
+                    business.
                   </p>
                   <p>
                     Business credit cards often have higher welcome bonuses and
-                    don\'t typically report to personal credit reports (except
-                    in cases of default), making them attractive for maximizing
-                    rewards.
+                    don&apos;t typically report to personal credit reports
+                    (except in cases of default), making them attractive for
+                    maximizing rewards.
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -296,9 +298,10 @@ const Resources = () => {
                     1099-INT form for any bonuses you receive.
                   </p>
                   <p className="mb-3">
-                    You\'ll need to report this income when you file your taxes,
-                    even if you don\'t receive a 1099-INT form from the bank
-                    (which typically happens if the bonus is under $10).
+                    You&apos;ll need to report this income when you file your
+                    taxes, even if you don&apos;t receive a 1099-INT form from
+                    the bank (which typically happens if the bonus is under
+                    $10).
                   </p>
                   <p>
                     This tax treatment is an important consideration when
@@ -327,10 +330,10 @@ const Resources = () => {
                   </p>
                   <p>
                     The safest approach is to use an actual employer or
-                    government direct deposit when possible. If that\'s not an
-                    option, research current data points from other users about
-                    which transfers are working for the specific bank you\'re
-                    targeting.
+                    government direct deposit when possible. If that&apos;s not
+                    an option, research current data points from other users
+                    about which transfers are working for the specific bank
+                    you&apos;re targeting.
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -342,7 +345,7 @@ const Resources = () => {
                 <AccordionContent>
                   <p className="mb-3">
                     ChexSystems is a consumer reporting agency that banks use to
-                    verify the banking history of potential customers. It\'s
+                    verify the banking history of potential customers. It&apos;s
                     similar to a credit bureau but specifically for banking
                     activities.
                   </p>
@@ -357,7 +360,7 @@ const Resources = () => {
                     The sensitivity to ChexSystems inquiries varies greatly
                     between banks. Some are very sensitive and may deny
                     applications with just a few recent inquiries, while others
-                    are much more lenient. Research a bank\'s ChexSystems
+                    are much more lenient. Research a bank&apos;s ChexSystems
                     sensitivity before applying.
                   </p>
                 </AccordionContent>
@@ -381,8 +384,8 @@ const Resources = () => {
                   </p>
                   <p>
                     Always read the fine print of the bonus offer and the
-                    bank\'s account agreement carefully. It\'s generally best
-                    practice to keep accounts open for at least 6 months to
+                    bank&apos;s account agreement carefully. It&apos;s generally
+                    best practice to keep accounts open for at least 6 months to
                     avoid issues, even if the bonus terms are shorter.
                   </p>
                 </AccordionContent>
@@ -394,15 +397,16 @@ const Resources = () => {
                 </AccordionTrigger>
                 <AccordionContent>
                   <p className="mb-3">
-                    This depends on the bank\'s specific terms. Some banks allow
-                    you to earn bonuses for different types of accounts (e.g., a
-                    checking bonus and a savings bonus). Others may limit
-                    bonuses to one per customer or one per household.
+                    This depends on the bank&apos;s specific terms. Some banks
+                    allow you to earn bonuses for different types of accounts
+                    (e.g., a checking bonus and a savings bonus). Others may
+                    limit bonuses to one per customer or one per household.
                   </p>
                   <p className="mb-3">
-                    Banks often have "new customer" requirements, meaning you
-                    can\'t have had an account with them recently (e.g., within
-                    the last 12 months or longer) to be eligible for a bonus.
+                    Banks often have &quot;new customer&quot; requirements,
+                    meaning you can&apos;t have had an account with them
+                    recently (e.g., within the last 12 months or longer) to be
+                    eligible for a bonus.
                   </p>
                   <p>
                     Always check the offer terms. Attempting to circumvent these

@@ -103,8 +103,9 @@ export default function CreditCardDetailPage({
           <CreditCardIcon className="text-muted-foreground mb-4 h-16 w-16" />
           <h2 className="mb-2 text-2xl font-bold">Card Not Found</h2>
           <p className="text-muted-foreground mb-6">
-            The credit card you're looking for (ID: {id || "N/A"}) doesn't
-            exist, has been discontinued, or there was an issue loading it.
+            The credit card you&apos;re looking for (ID: {id || "N/A"})
+            doesn&apos;t exist, has been discontinued, or there was an issue
+            loading it.
           </p>
           <Button asChild>
             <Link href="/credit-cards">Browse All Credit Cards</Link>

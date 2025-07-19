@@ -73,8 +73,9 @@ export default function BankAccountDetailPage({
           <BanknoteIconDetail className="text-muted-foreground mb-4 h-16 w-16" />
           <h2 className="mb-2 text-2xl font-bold">Account Not Found</h2>
           <p className="text-muted-foreground mb-6">
-            The bank account you're looking for (ID: {id || "N/A"}) doesn't
-            exist, has been removed, or there was an issue loading it.
+            The bank account you&apos;re looking for (ID: {id || "N/A"})
+            doesn&apos;t exist, has been removed, or there was an issue loading
+            it.
           </p>
           <Button asChild>
             <Link href="/bank-accounts">Browse All Bank Accounts</Link>
