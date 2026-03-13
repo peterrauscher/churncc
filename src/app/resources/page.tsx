@@ -1,6 +1,5 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Accordion,
@@ -15,19 +14,20 @@ import {
   TrendingUp,
   Calendar,
 } from "lucide-react";
+import { PageContainer } from "@/components/shared/PageContainer";
+import { PageHeader } from "@/components/shared/PageHeader";
+import { ResourceCard } from "@/components/resources/ResourceCard";
 
 const Resources = () => {
   return (
-    <div className="container mx-auto px-4 py-8 md:px-6">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold md:text-4xl">Resources & Guides</h1>
-        <p className="text-muted-foreground mt-2">
-          Learn how to maximize credit card and bank account bonuses
-        </p>
-      </div>
+    <PageContainer className="py-8">
+      <PageHeader
+        title="Resources & Guides"
+        description="Playbooks and FAQs to help you maximize card and bank bonuses with less risk and more consistency."
+      />
 
       <Tabs defaultValue="creditcards" className="mb-12">
-        <TabsList className="grid w-full grid-cols-2">
+        <TabsList className="grid w-full grid-cols-2 rounded-xl border border-border/70 bg-card/70">
           <TabsTrigger value="creditcards" className="flex items-center gap-2">
             <CreditCard className="h-4 w-4" />
             Credit Card Strategies
@@ -40,55 +40,25 @@ const Resources = () => {
 
         <TabsContent value="creditcards" className="mt-6">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <Card>
-              <CardContent className="p-6">
-                <div className="bg-primary/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
-                  <Info className="text-primary h-6 w-6" />
-                </div>
-                <h3 className="mb-2 text-xl font-medium">
-                  Understanding Credit Card Bonuses
-                </h3>
-                <p className="text-muted-foreground">
-                  Credit card welcome bonuses are incentives offered to new
-                  cardholders who meet certain spending requirements within a
-                  specified timeframe.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <div className="bg-chart-1/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
-                  <TrendingUp className="text-chart-1 h-6 w-6" />
-                </div>
-                <h3 className="mb-2 text-xl font-medium">
-                  Maximizing Point Values
-                </h3>
-                <p className="text-muted-foreground">
-                  Learn how to get the most value from your credit card points
-                  through strategic redemptions and transfer partners.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <div className="bg-ring/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
-                  <Calendar className="text-ring h-6 w-6" />
-                </div>
-                <h3 className="mb-2 text-xl font-medium">
-                  Timing Your Applications
-                </h3>
-                <p className="text-muted-foreground">
-                  Strategies for timing credit card applications to maximize
-                  approval odds and take advantage of limited-time offers.
-                </p>
-              </CardContent>
-            </Card>
+            <ResourceCard
+              icon={Info}
+              title="Understanding Credit Card Bonuses"
+              description="Credit card welcome bonuses are incentives offered to new cardholders who meet spending requirements within a specific timeframe."
+            />
+            <ResourceCard
+              icon={TrendingUp}
+              title="Maximizing Point Values"
+              description="Learn how to get better value from points through strategic transfer partners and redemption timing."
+            />
+            <ResourceCard
+              icon={Calendar}
+              title="Timing Your Applications"
+              description="Apply with intent to improve approvals and capture elevated offers at the right moment."
+            />
           </div>
 
           <div className="mt-8">
-            <h2 className="mb-4 text-2xl font-bold">Credit Card Bonus FAQs</h2>
+            <h2 className="mb-4 font-serif text-3xl">Credit Card Bonus FAQs</h2>
 
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="chase524">
@@ -234,56 +204,27 @@ const Resources = () => {
 
         <TabsContent value="banks" className="mt-6">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <Card>
-              <CardContent className="p-6">
-                <div className="bg-primary/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
-                  <Info className="text-primary h-6 w-6" />
-                </div>
-                <h3 className="mb-2 text-xl font-medium">
-                  Bank Account Bonus Basics
-                </h3>
-                <p className="text-muted-foreground">
-                  Banks offer cash bonuses to attract new customers who open
-                  checking or savings accounts and meet specific requirements
-                  like direct deposits or minimum balances.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <div className="bg-chart-1/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
-                  <BanknoteIcon className="text-chart-1 h-6 w-6" />
-                </div>
-                <h3 className="mb-2 text-xl font-medium">
-                  Understanding Direct Deposits
-                </h3>
-                <p className="text-muted-foreground">
-                  Many bank bonuses require direct deposits. Learn what
-                  qualifies as a direct deposit and how to meet these
-                  requirements efficiently.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <div className="bg-primary/10 mb-4 flex h-12 w-12 items-center justify-center rounded-full">
-                  <Calendar className="text-primary h-6 w-6" />
-                </div>
-                <h3 className="mb-2 text-xl font-medium">
-                  Timing Multiple Bank Bonuses
-                </h3>
-                <p className="text-muted-foreground">
-                  Strategies for juggling multiple bank account bonuses
-                  simultaneously without missing requirements or deadlines.
-                </p>
-              </CardContent>
-            </Card>
+            <ResourceCard
+              icon={Info}
+              title="Bank Account Bonus Basics"
+              description="Understand how direct deposits, minimum balances, and timelines affect eligibility."
+            />
+            <ResourceCard
+              icon={BanknoteIcon}
+              title="Understanding Direct Deposits"
+              description="Learn what usually qualifies as direct deposit and how to satisfy requirements efficiently."
+            />
+            <ResourceCard
+              icon={Calendar}
+              title="Timing Multiple Bank Bonuses"
+              description="Plan overlapping applications without missing deadlines or fee-waiver conditions."
+            />
           </div>
 
           <div className="mt-8">
-            <h2 className="mb-4 text-2xl font-bold">Bank Account Bonus FAQs</h2>
+            <h2 className="mb-4 font-serif text-3xl">
+              Bank Account Bonus FAQs
+            </h2>
 
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="taxes">
@@ -418,7 +359,7 @@ const Resources = () => {
           </div>
         </TabsContent>
       </Tabs>
-    </div>
+    </PageContainer>
   );
 };
 

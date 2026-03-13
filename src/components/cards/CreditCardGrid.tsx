@@ -1,5 +1,7 @@
 import { CreditCard } from "@/types";
 import CreditCardItem from "./CreditCardItem";
+import { EmptyState } from "@/components/shared/EmptyState";
+import { CreditCard as CreditCardIcon } from "lucide-react";
 
 interface CreditCardGridProps {
   cards: CreditCard[];
@@ -12,9 +14,11 @@ const CreditCardGrid = ({
 }: CreditCardGridProps) => {
   if (!cards || cards.length === 0) {
     return (
-      <div className="my-10 flex flex-col items-center justify-center rounded-lg border border-dashed p-10 text-center">
-        <p className="text-muted-foreground text-lg">{emptyMessage}</p>
-      </div>
+      <EmptyState
+        icon={CreditCardIcon}
+        title="No credit cards found"
+        description={emptyMessage}
+      />
     );
   }
 

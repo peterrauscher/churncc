@@ -1,5 +1,7 @@
 import { BankAccount } from "@/types";
 import BankAccountItem from "./BankAccountItem";
+import { EmptyState } from "@/components/shared/EmptyState";
+import { BanknoteIcon } from "lucide-react";
 
 interface BankAccountGridProps {
   accounts: BankAccount[];
@@ -12,9 +14,11 @@ const BankAccountGrid = ({
 }: BankAccountGridProps) => {
   if (!accounts || accounts.length === 0) {
     return (
-      <div className="my-10 flex flex-col items-center justify-center rounded-lg border border-dashed p-10 text-center">
-        <p className="text-muted-foreground text-lg">{emptyMessage}</p>
-      </div>
+      <EmptyState
+        icon={BanknoteIcon}
+        title="No bank accounts found"
+        description={emptyMessage}
+      />
     );
   }
 

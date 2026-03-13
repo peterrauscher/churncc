@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
+import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -17,22 +17,20 @@ import {
 import { CreditCard } from "@/types";
 import { fetchCreditCardById } from "@/services/api";
 import {
-  ArrowLeft,
   CreditCard as CreditCardIcon,
   DollarSign,
-  Calendar,
   Check,
   Info,
 } from "lucide-react";
+import { PageContainer } from "@/components/shared/PageContainer";
+import { BackLink } from "@/components/shared/BackLink";
+import { EmptyState } from "@/components/shared/EmptyState";
+import { CurrencyValue } from "@/components/finance/CurrencyValue";
+import { OfferSummary } from "@/components/finance/OfferSummary";
 
-interface CreditCardDetailPageProps {
-  params: { id: string };
-}
-
-export default function CreditCardDetailPage({
-  params,
-}: CreditCardDetailPageProps) {
-  const { id } = params;
+export default function CreditCardDetailPage() {
+  const params = useParams<{ id: string }>();
+  const id = params?.id;
   const [card, setCard] = useState<CreditCard | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -58,28 +56,6 @@ export default function CreditCardDetailPage({
     }
   }, [id]);
 
-  const formatCurrency = (currency: string) => {
-    if (currency === "USD") return "$";
-    return currency;
-  };
-
-  const formatRewardValue = (amount: number, currency: string) => {
-    if (currency === "USD") {
-      return `$${amount.toLocaleString()}`;
-    } else if (
-      currency.includes("POINTS") ||
-      currency.includes("MILES") ||
-      ["DELTA", "AMERICAN", "UNITED", "SOUTHWEST"].includes(currency)
-    ) {
-      return `${amount.toLocaleString()} ${currency
-        .replace("_", " ")
-        .toLowerCase()}`;
-    }
-    return `${amount.toLocaleString()} ${currency
-      .replace("_", " ")
-      .toLowerCase()}`;
-  };
-
   if (isLoading) {
     return (
       <div className="container mx-auto flex min-h-[70vh] items-center justify-center px-4 py-8 md:px-6">
@@ -90,42 +66,27 @@ export default function CreditCardDetailPage({
 
   if (!card) {
     return (
-      <div className="container mx-auto px-4 py-8 md:px-6">
+      <PageContainer className="py-8">
         <div className="mb-6">
-          <Link
-            href="/credit-cards"
-            className="text-primary flex items-center hover:underline"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" /> Back to Credit Cards
-          </Link>
+          <BackLink href="/credit-cards" label="Back to Credit Cards" />
         </div>
-        <div className="flex min-h-[50vh] flex-col items-center justify-center rounded-lg border p-8 text-center">
-          <CreditCardIcon className="text-muted-foreground mb-4 h-16 w-16" />
-          <h2 className="mb-2 text-2xl font-bold">Card Not Found</h2>
-          <p className="text-muted-foreground mb-6">
-            The credit card you&apos;re looking for (ID: {id || "N/A"})
-            doesn&apos;t exist, has been discontinued, or there was an issue
-            loading it.
-          </p>
-          <Button asChild>
-            <Link href="/credit-cards">Browse All Credit Cards</Link>
-          </Button>
-        </div>
-      </div>
+        <EmptyState
+          icon={CreditCardIcon}
+          title="Card Not Found"
+          description={`The credit card you are looking for (ID: ${id || "N/A"}) does not exist or could not be loaded.`}
+          actionHref="/credit-cards"
+          actionLabel="Browse All Credit Cards"
+        />
+      </PageContainer>
     );
   }
 
   const bestOffer = card.offers.length > 0 ? card.offers[0] : null;
 
   return (
-    <div className="container mx-auto px-4 py-8 md:px-6">
+    <PageContainer className="py-8">
       <div className="mb-6">
-        <Link
-          href="/credit-cards"
-          className="text-primary flex items-center hover:underline"
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" /> Back to Credit Cards
-        </Link>
+        <BackLink href="/credit-cards" label="Back to Credit Cards" />
       </div>
 
       <div className="mb-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
@@ -154,7 +115,7 @@ export default function CreditCardDetailPage({
             )}
 
             <div className="mb-6 grid grid-cols-2 gap-4">
-              <div className="rounded-lg bg-gray-50 p-4">
+              <div className="rounded-lg bg-muted/55 p-4">
                 <p className="text-muted-foreground text-sm">Annual Fee</p>
                 <p className="text-xl font-medium">
                   {card.annualFee > 0 ? `$${card.annualFee}` : "No Annual Fee"}
@@ -164,7 +125,7 @@ export default function CreditCardDetailPage({
                 )}
               </div>
 
-              <div className="rounded-lg bg-gray-50 p-4">
+              <div className="rounded-lg bg-muted/55 p-4">
                 <p className="text-muted-foreground text-sm">Base Cashback</p>
                 <p className="text-xl font-medium">
                   {card.universalCashbackPercent}%
@@ -177,9 +138,9 @@ export default function CreditCardDetailPage({
           </div>
 
           {bestOffer && (
-            <Card className="border-primary border-2">
+            <Card className="border-primary/40 border-2 bg-card/90">
               <CardContent className="p-6">
-                <h3 className="mb-4 text-xl font-bold">Current Offer</h3>
+                <h3 className="font-serif mb-4 text-3xl">Current Offer</h3>
 
                 <div className="mb-6 flex items-center">
                   <div className="bg-primary/10 mr-4 rounded-full p-3">
@@ -189,37 +150,20 @@ export default function CreditCardDetailPage({
                     <p className="text-muted-foreground text-sm">
                       Welcome Bonus
                     </p>
-                    <p className="text-primary text-2xl font-bold">
-                      {formatRewardValue(
-                        bestOffer.amount[0]?.amount || 0,
-                        bestOffer.amount[0]?.currency || "USD",
-                      )}
-                    </p>
+                    <CurrencyValue
+                      amount={bestOffer.amount[0]?.amount || 0}
+                      currency={bestOffer.amount[0]?.currency || "USD"}
+                      className="text-primary text-2xl font-bold"
+                    />
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  <div className="flex items-start gap-2">
-                    <div className="bg-primary/10 rounded-full p-2">
-                      <DollarSign className="text-primary mt-0.5 h-4 w-4" />
-                    </div>
-                    <span>
-                      Spend ${bestOffer.spend.toLocaleString()} in{" "}
-                      {bestOffer.days} days
-                    </span>
-                  </div>
-
-                  {bestOffer.expiration && (
-                    <div className="flex items-start gap-2">
-                      <div className="bg-primary/10 rounded-full p-2">
-                        <Calendar className="text-primary mt-0.5 h-4 w-4" />
-                      </div>
-                      <span>
-                        Expires:{" "}
-                        {new Date(bestOffer.expiration).toLocaleDateString()}
-                      </span>
-                    </div>
-                  )}
+                  <OfferSummary
+                    spend={bestOffer.spend}
+                    days={bestOffer.days}
+                    expiration={bestOffer.expiration}
+                  />
 
                   {bestOffer.details && (
                     <div className="flex items-start gap-2">
@@ -248,7 +192,7 @@ export default function CreditCardDetailPage({
           )}
         </div>
 
-        <div className="flex flex-col items-center justify-start rounded-lg border bg-white p-6 md:p-8">
+        <div className="flex flex-col items-center justify-start rounded-lg border border-border/70 bg-card/90 p-6 md:p-8">
           {card.imageUrl ? (
             <img
               src={card.imageUrl}
@@ -259,13 +203,13 @@ export default function CreditCardDetailPage({
               }}
             />
           ) : (
-            <div className="mb-6 flex h-[250px] w-full items-center justify-center rounded bg-gray-100">
+            <div className="mb-6 flex h-[250px] w-full items-center justify-center rounded bg-muted/55">
               <CreditCardIcon className="text-muted-foreground h-24 w-24" />
             </div>
           )}
 
           {card.countsTowards524 !== undefined && (
-            <div className="mb-4 w-full rounded-lg bg-gray-50 p-4 text-center">
+            <div className="mb-4 w-full rounded-lg bg-muted/55 p-4 text-center">
               <p className="font-medium">
                 {card.countsTowards524
                   ? "Counts towards Chase 5/24 rule"
@@ -380,6 +324,6 @@ export default function CreditCardDetailPage({
           </div>
         </>
       )}
-    </div>
+    </PageContainer>
   );
 }

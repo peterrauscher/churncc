@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
+import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,22 +9,19 @@ import { Separator } from "@/components/ui/separator";
 import { BankAccount } from "@/types";
 import { fetchBankAccountById } from "@/services/api";
 import {
-  ArrowLeft,
   BanknoteIcon as BanknoteIconDetail,
   DollarSign,
   Calendar,
   Check,
   Info,
 } from "lucide-react";
+import { PageContainer } from "@/components/shared/PageContainer";
+import { BackLink } from "@/components/shared/BackLink";
+import { EmptyState } from "@/components/shared/EmptyState";
 
-interface BankAccountDetailPageProps {
-  params: { id: string };
-}
-
-export default function BankAccountDetailPage({
-  params,
-}: BankAccountDetailPageProps) {
-  const { id } = params;
+export default function BankAccountDetailPage() {
+  const params = useParams<{ id: string }>();
+  const id = params?.id;
   const [account, setAccount] = useState<BankAccount | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -60,28 +57,18 @@ export default function BankAccountDetailPage({
 
   if (!account) {
     return (
-      <div className="container mx-auto px-4 py-8 md:px-6">
+      <PageContainer className="py-8">
         <div className="mb-6">
-          <Link
-            href="/bank-accounts"
-            className="text-primary flex items-center hover:underline"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" /> Back to Bank Accounts
-          </Link>
+          <BackLink href="/bank-accounts" label="Back to Bank Accounts" />
         </div>
-        <div className="flex min-h-[50vh] flex-col items-center justify-center rounded-lg border p-8 text-center">
-          <BanknoteIconDetail className="text-muted-foreground mb-4 h-16 w-16" />
-          <h2 className="mb-2 text-2xl font-bold">Account Not Found</h2>
-          <p className="text-muted-foreground mb-6">
-            The bank account you&apos;re looking for (ID: {id || "N/A"})
-            doesn&apos;t exist, has been removed, or there was an issue loading
-            it.
-          </p>
-          <Button asChild>
-            <Link href="/bank-accounts">Browse All Bank Accounts</Link>
-          </Button>
-        </div>
-      </div>
+        <EmptyState
+          icon={BanknoteIconDetail}
+          title="Account Not Found"
+          description={`The bank account you are looking for (ID: ${id || "N/A"}) does not exist or could not be loaded.`}
+          actionHref="/bank-accounts"
+          actionLabel="Browse All Bank Accounts"
+        />
+      </PageContainer>
     );
   }
 
@@ -93,14 +80,9 @@ export default function BankAccountDetailPage({
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 md:px-6">
+    <PageContainer className="py-8">
       <div className="mb-6">
-        <Link
-          href="/bank-accounts"
-          className="text-primary flex items-center hover:underline"
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" /> Back to Bank Accounts
-        </Link>
+        <BackLink href="/bank-accounts" label="Back to Bank Accounts" />
       </div>
 
       <div className="mb-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
@@ -110,7 +92,7 @@ export default function BankAccountDetailPage({
               <Badge
                 className={
                   accountTypeColors[account.type.toUpperCase()] ||
-                  "bg-gray-500 text-white"
+                  "bg-primary text-primary-foreground"
                 }
               >
                 {account.type.toUpperCase()}
@@ -131,7 +113,7 @@ export default function BankAccountDetailPage({
               </p>
             )}
 
-            <Card className="border-primary mb-6 border-2">
+            <Card className="border-primary/40 mb-6 border-2 bg-card/90">
               <CardContent className="p-6">
                 <h3 className="mb-4 text-xl font-bold">Offer Requirements</h3>
 
@@ -201,7 +183,7 @@ export default function BankAccountDetailPage({
             </Card>
 
             <div className="mb-6 grid grid-cols-2 gap-4">
-              <div className="rounded-lg bg-gray-50 p-4">
+              <div className="rounded-lg bg-muted/55 p-4">
                 <p className="text-muted-foreground text-sm">Monthly Fee</p>
                 <p className="text-xl font-medium">
                   {account.monthlyFee
@@ -215,7 +197,7 @@ export default function BankAccountDetailPage({
                   )}
               </div>
 
-              <div className="rounded-lg bg-gray-50 p-4">
+              <div className="rounded-lg bg-muted/55 p-4">
                 <p className="text-muted-foreground text-sm">Account Type</p>
                 <p className="text-xl font-medium">
                   {account.type.charAt(0).toUpperCase() +
@@ -238,7 +220,7 @@ export default function BankAccountDetailPage({
           </Button>
         </div>
 
-        <div className="flex flex-col rounded-lg border bg-white p-6 md:p-8">
+        <div className="flex flex-col rounded-lg border border-border/70 bg-card/90 p-6 md:p-8">
           {/* Card Image or Placeholder */}
           {account.imageUrl ? (
             <img
@@ -250,13 +232,13 @@ export default function BankAccountDetailPage({
               }}
             />
           ) : (
-            <div className="mb-6 flex h-[200px] w-full items-center justify-center rounded-lg bg-gray-100">
+            <div className="mb-6 flex h-[200px] w-full items-center justify-center rounded-lg bg-muted/55">
               <BanknoteIconDetail className="text-muted-foreground h-24 w-24" />
             </div>
           )}
 
           <div className="from-ring to-primary mb-6 rounded-lg bg-gradient-to-r p-8 text-center text-white">
-            <h3 className="mb-2 text-xl font-bold">Bonus Amount</h3>
+            <h3 className="mb-2 font-serif text-3xl">Bonus Amount</h3>
             <div className="text-5xl font-bold">
               ${account.offerAmount.toLocaleString()}
             </div>
@@ -362,6 +344,6 @@ export default function BankAccountDetailPage({
           )}
         </div>
       </div>
-    </div>
+    </PageContainer>
   );
 }

@@ -16,11 +16,18 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { BankAccount } from "@/types";
 import { Filter, ArrowDownWideNarrow } from "lucide-react";
 
+interface BankAccountFilterState {
+  institutions?: string[];
+  accountTypes?: string[];
+  minBonus?: number;
+  noMonthlyFee?: boolean;
+  directDepositRequired?: boolean;
+}
+
 interface BankAccountFiltersProps {
-  onFilterChange: (filters: any) => void;
+  onFilterChange: (filters: BankAccountFilterState) => void;
   onSortChange: (sort: { field: string; direction: "asc" | "desc" }) => void;
   institutions: string[];
 }
@@ -30,11 +37,11 @@ const BankAccountFilters = ({
   onSortChange,
   institutions,
 }: BankAccountFiltersProps) => {
-  const [filters, setFilters] = useState<any>({});
+  const [filters, setFilters] = useState<BankAccountFilterState>({});
   const [minBonus, setMinBonus] = useState<number>(0);
   const [sortOption, setSortOption] = useState<string>("offerAmount-desc");
 
-  const handleFilterChange = (newFilters: any) => {
+  const handleFilterChange = (newFilters: Partial<BankAccountFilterState>) => {
     const updatedFilters = { ...filters, ...newFilters };
     setFilters(updatedFilters);
     onFilterChange(updatedFilters);

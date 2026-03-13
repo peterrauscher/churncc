@@ -5,6 +5,9 @@ import BankAccountGrid from "@/components/cards/BankAccountGrid";
 import BankAccountFilters from "@/components/filters/BankAccountFilters";
 import { BankAccount } from "@/types"; // Assuming BankAccount type is defined in @/types
 import { getMockBankAccounts } from "@/services/api";
+import { PageContainer } from "@/components/shared/PageContainer";
+import { PageHeader } from "@/components/shared/PageHeader";
+import { LoadingCards } from "@/components/shared/LoadingCards";
 
 // Define a more specific type for filter options based on usage
 interface BankAccountFilterState {
@@ -119,15 +122,13 @@ export default function BankAccountsPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 md:px-6">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold md:text-4xl">Bank Account Bonuses</h1>
-        <p className="text-muted-foreground mt-2">
-          Find the best bank account promotions and sign-up bonuses
-        </p>
-      </div>
+    <PageContainer className="py-8">
+      <PageHeader
+        title="Bank Account Bonuses"
+        description="Find checking and savings promotions with clear requirements, fees, and timelines."
+      />
 
-      <div className="bg-background mb-6 rounded-lg border p-4 shadow-sm">
+      <div className="mb-6 rounded-2xl border border-border/70 bg-card/80 p-4 shadow-sm">
         <BankAccountFilters
           onFilterChange={handleFilterChange}
           onSortChange={handleSortChange}
@@ -136,9 +137,10 @@ export default function BankAccountsPage() {
       </div>
 
       {isLoading ? (
-        <div className="flex min-h-[300px] items-center justify-center">
-          <div className="border-primary h-10 w-10 animate-spin rounded-full border-4 border-t-transparent" />
-        </div>
+        <LoadingCards
+          count={6}
+          columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+        />
       ) : (
         <>
           <div className="mb-6">
@@ -154,6 +156,6 @@ export default function BankAccountsPage() {
           />
         </>
       )}
-    </div>
+    </PageContainer>
   );
 }

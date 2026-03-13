@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation"; // Changed from react-router-dom
 import CreditCardGrid from "@/components/cards/CreditCardGrid";
 import CreditCardFilters from "@/components/filters/CreditCardFilters";
+import { PageContainer } from "@/components/shared/PageContainer";
+import { PageHeader } from "@/components/shared/PageHeader";
+import { LoadingCards } from "@/components/shared/LoadingCards";
 import { CreditCard, FilterOptions, SortOptions } from "@/types";
 import { fetchCreditCards } from "@/services/api";
 
@@ -140,15 +143,13 @@ export default function CreditCardsPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 md:px-6">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold md:text-4xl">Credit Card Offers</h1>
-        <p className="text-muted-foreground mt-2">
-          Compare and find the best credit card bonuses available
-        </p>
-      </div>
+    <PageContainer className="py-8">
+      <PageHeader
+        title="Credit Card Offers"
+        description="Compare welcome bonuses, spending requirements, and annual fees with editorial-grade clarity."
+      />
 
-      <div className="bg-background mb-6 rounded-lg border p-4 shadow-sm">
+      <div className="mb-6 rounded-2xl border border-border/70 bg-card/80 p-4 shadow-sm">
         <CreditCardFilters
           onFilterChange={handleFilterChange}
           onSortChange={handleSortChange}
@@ -160,9 +161,10 @@ export default function CreditCardsPage() {
       </div>
 
       {isLoading ? (
-        <div className="flex min-h-[300px] items-center justify-center">
-          <div className="border-primary h-10 w-10 animate-spin rounded-full border-4 border-t-transparent" />
-        </div>
+        <LoadingCards
+          count={8}
+          columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        />
       ) : (
         <>
           <div className="mb-6">
@@ -178,6 +180,6 @@ export default function CreditCardsPage() {
           />
         </>
       )}
-    </div>
+    </PageContainer>
   );
 }

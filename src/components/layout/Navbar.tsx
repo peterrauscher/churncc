@@ -24,16 +24,25 @@ const Navbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-white/90 backdrop-blur-sm">
-      <div className="flex h-16 items-center justify-between px-4 md:px-6">
+    <header className="sticky top-0 z-40 w-full border-b border-border/80 bg-background/90 backdrop-blur-xl">
+      <div className="container mx-auto flex h-18 items-center justify-between px-4 md:px-6">
         <div className="flex items-center gap-2">
           <Link
             href="/"
             className="flex items-center gap-2"
             onClick={closeMenu}
           >
-            <CreditCard className="text-primary h-6 w-6" />
-            <span className="text-xl font-bold">Churnable</span>
+            <div className="bg-primary/10 border-primary/20 rounded-lg border p-2">
+              <CreditCard className="text-primary h-5 w-5" />
+            </div>
+            <div>
+              <p className="font-serif text-xl leading-none text-foreground">
+                Churnable
+              </p>
+              <p className="text-muted-foreground text-xs">
+                Bonus intelligence
+              </p>
+            </div>
           </Link>
         </div>
 
@@ -93,7 +102,7 @@ const Navbar = () => {
                   <Input
                     type="search"
                     placeholder="Search offers..."
-                    className="bg-background w-full pl-8 md:w-[200px] lg:w-[300px]"
+                    className="bg-background/70 w-full rounded-full border-border/80 pl-8 md:w-[200px] lg:w-[300px]"
                   />
                 </div>
               </div>
@@ -104,21 +113,21 @@ const Navbar = () => {
             <nav className="hidden gap-6 md:flex">
               <Link
                 href="/credit-cards"
-                className="hover:text-primary flex items-center gap-2 text-lg font-medium transition-colors"
+                className="hover:text-primary flex items-center gap-2 text-sm font-semibold tracking-wide uppercase transition-colors"
               >
                 <CreditCard className="h-5 w-5" />
                 Credit Cards
               </Link>
               <Link
                 href="/bank-accounts"
-                className="hover:text-primary flex items-center gap-2 text-lg font-medium transition-colors"
+                className="hover:text-primary flex items-center gap-2 text-sm font-semibold tracking-wide uppercase transition-colors"
               >
                 <BanknoteIcon className="h-5 w-5" />
                 Bank Accounts
               </Link>
               <Link
                 href="/resources"
-                className="hover:text-primary flex items-center gap-2 text-lg font-medium transition-colors"
+                className="hover:text-primary flex items-center gap-2 text-sm font-semibold tracking-wide uppercase transition-colors"
               >
                 <LinkIcon className="h-5 w-5" />
                 Resources
@@ -131,7 +140,7 @@ const Navbar = () => {
                 <Input
                   type="search"
                   placeholder="Search offers..."
-                  className="bg-background w-full pl-8 md:w-[200px] lg:w-[300px]"
+                  className="bg-background/70 w-full rounded-full border-border/80 pl-8 md:w-[200px] lg:w-[300px]"
                 />
               </div>
             </div>

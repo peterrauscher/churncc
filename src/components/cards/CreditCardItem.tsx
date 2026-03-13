@@ -6,47 +6,23 @@ import Link from "next/link";
 import {
   CreditCard as CreditCardIcon,
   ArrowRight,
-  DollarSign,
-  Calendar,
+  Sparkles,
 } from "lucide-react";
+import { CurrencyValue } from "@/components/finance/CurrencyValue";
+import { OfferSummary } from "@/components/finance/OfferSummary";
 
 interface CreditCardItemProps {
   card: CreditCard;
 }
 
 const CreditCardItem = ({ card }: CreditCardItemProps) => {
-  // Get the highest offer amount
   const bestOffer = card.offers.length > 0 ? card.offers[0] : null;
   const offerAmount = bestOffer?.amount[0]?.amount || 0;
   const offerCurrency = bestOffer?.amount[0]?.currency || "USD";
 
-  // Format currency display
-  const formatCurrency = (currency: string) => {
-    if (currency === "USD") return "$";
-    return currency;
-  };
-
-  // Format the reward value for display
-  const formatRewardValue = (amount: number, currency: string) => {
-    if (currency === "USD") {
-      return `$${amount.toLocaleString()}`;
-    } else if (
-      currency.includes("POINTS") ||
-      currency.includes("MILES") ||
-      ["DELTA", "AMERICAN", "UNITED", "SOUTHWEST"].includes(currency)
-    ) {
-      return `${amount.toLocaleString()} ${currency
-        .replace("_", " ")
-        .toLowerCase()}`;
-    }
-    return `${amount.toLocaleString()} ${currency
-      .replace("_", " ")
-      .toLowerCase()}`;
-  };
-
   return (
-    <Card className="h-full overflow-hidden transition-all hover:shadow-md">
-      <div className="relative h-48 bg-gray-100">
+    <Card className="h-full overflow-hidden border-border/70 bg-card/95 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
+      <div className="relative h-48 bg-muted/40">
         {card.imageUrl ? (
           <img
             src={card.imageUrl}
@@ -58,11 +34,11 @@ const CreditCardItem = ({ card }: CreditCardItemProps) => {
           />
         ) : (
           <div className="flex h-full items-center justify-center">
-            <CreditCardIcon className="text-primary/50 h-16 w-16" />
+            <CreditCardIcon className="text-primary/40 h-16 w-16" />
           </div>
         )}
         {card.isAnnualFeeWaived && (
-          <Badge className="bg-chart-1 absolute top-2 right-2 text-white">
+          <Badge className="absolute top-2 right-2 bg-secondary text-secondary-foreground">
             No Annual Fee Year 1
           </Badge>
         )}
@@ -70,60 +46,52 @@ const CreditCardItem = ({ card }: CreditCardItemProps) => {
 
       <CardContent className="p-4">
         <div className="flex items-start justify-between">
-          <h3 className="line-clamp-2 text-lg font-semibold">
+          <h3 className="line-clamp-2 font-serif text-xl leading-tight text-foreground">
             {card.issuer.replace("_", " ")} {card.name}
           </h3>
           {card.network && (
-            <Badge variant="outline" className="ml-2">
+            <Badge
+              variant="outline"
+              className="ml-2 text-xs tracking-wide uppercase"
+            >
               {card.network.replace("_", " ")}
             </Badge>
           )}
         </div>
 
         {bestOffer && (
-          <div className="mt-4 space-y-2">
-            <div className="flex items-center gap-2">
-              <DollarSign className="text-primary h-4 w-4" />
-              <span className="font-medium">
-                Welcome Bonus:{" "}
-                <span className="text-primary font-bold">
-                  {formatRewardValue(offerAmount, offerCurrency)}
-                </span>
-              </span>
+          <div className="mt-4 rounded-xl border border-border/70 bg-accent/40 p-3">
+            <p className="text-muted-foreground mb-1 text-xs font-semibold tracking-wide uppercase">
+              Welcome bonus
+            </p>
+            <div className="mb-3 flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-secondary" />
+              <CurrencyValue
+                amount={offerAmount}
+                currency={offerCurrency}
+                className="text-xl font-semibold text-foreground"
+              />
             </div>
-
-            <div className="flex items-center gap-2">
-              <DollarSign className="text-primary h-4 w-4" />
-              <span className="text-sm">
-                Spend ${bestOffer.spend.toLocaleString()} in {bestOffer.days}{" "}
-                days
-              </span>
-            </div>
-
-            {bestOffer.expiration && (
-              <div className="flex items-center gap-2">
-                <Calendar className="text-primary h-4 w-4" />
-                <span className="text-sm">
-                  Expires: {new Date(bestOffer.expiration).toLocaleDateString()}
-                </span>
-              </div>
-            )}
+            <OfferSummary
+              spend={bestOffer.spend}
+              days={bestOffer.days}
+              expiration={bestOffer.expiration}
+            />
           </div>
         )}
 
-        <div className="mt-4">
-          <div className="flex items-center justify-between text-sm">
-            <span>Annual Fee</span>
-            <span className="font-medium">
+        <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
+          <div className="rounded-lg bg-muted/55 p-2">
+            <p className="text-muted-foreground">Annual Fee</p>
+            <p className="font-semibold text-foreground">
               {card.annualFee > 0 ? `$${card.annualFee}` : "No Annual Fee"}
-            </span>
+            </p>
           </div>
-
-          <div className="mt-2 flex items-center justify-between text-sm">
-            <span>Base Cashback</span>
-            <span className="font-medium">
+          <div className="rounded-lg bg-muted/55 p-2">
+            <p className="text-muted-foreground">Base Cashback</p>
+            <p className="font-semibold text-foreground">
               {card.universalCashbackPercent}%
-            </span>
+            </p>
           </div>
         </div>
       </CardContent>
@@ -136,7 +104,11 @@ const CreditCardItem = ({ card }: CreditCardItemProps) => {
           View Details
         </Link>
 
-        <Button asChild size="sm" className="bg-primary hover:bg-secondary">
+        <Button
+          asChild
+          size="sm"
+          className="bg-primary text-primary-foreground hover:bg-primary/90"
+        >
           <a href={card.url} target="_blank" rel="noopener noreferrer">
             Apply Now <ArrowRight className="ml-1 h-4 w-4" />
           </a>

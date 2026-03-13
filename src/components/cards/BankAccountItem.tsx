@@ -17,19 +17,25 @@ interface BankAccountItemProps {
 
 const BankAccountItem = ({ account }: BankAccountItemProps) => {
   return (
-    <Card className="h-full overflow-hidden transition-all hover:shadow-md">
-      <div className="from-ring to-primary bg-gradient-to-r p-4 text-white">
+    <Card className="h-full overflow-hidden border-border/70 bg-card/95 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
+      <div className="from-primary via-primary to-secondary bg-gradient-to-r p-4 text-primary-foreground">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold">{account.institution}</h3>
-          <Badge className="bg-white/20 text-white">{account.type}</Badge>
+          <h3 className="text-lg font-semibold tracking-tight">
+            {account.institution}
+          </h3>
+          <Badge className="bg-white/20 text-primary-foreground">
+            {account.type}
+          </Badge>
         </div>
-        <h2 className="mt-2 text-xl font-bold">{account.name}</h2>
+        <h2 className="font-serif mt-2 text-2xl font-semibold leading-tight">
+          {account.name}
+        </h2>
         <div className="mt-4 flex items-center">
           <div className="rounded-full bg-white/20 p-2">
             <BanknoteIcon className="h-6 w-6" />
           </div>
           <div className="ml-3">
-            <p className="text-sm">Bonus Amount</p>
+            <p className="text-sm text-primary-foreground/85">Bonus Amount</p>
             <p className="text-2xl font-bold">${account.offerAmount}</p>
           </div>
         </div>
@@ -73,10 +79,10 @@ const BankAccountItem = ({ account }: BankAccountItemProps) => {
           )}
         </div>
 
-        <div className="mt-4 rounded-lg bg-gray-50 p-3">
+        <div className="mt-4 rounded-lg bg-muted/55 p-3">
           <div className="flex items-center justify-between text-sm">
             <span>Monthly Fee</span>
-            <span className="font-medium">
+            <span className="font-semibold">
               {account.monthlyFee ? `$${account.monthlyFee}` : "No Fee"}
             </span>
           </div>
@@ -84,7 +90,7 @@ const BankAccountItem = ({ account }: BankAccountItemProps) => {
           {account.monthlyFee &&
             account.monthlyFee > 0 &&
             account.isMonthlyFeeWaivable && (
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="text-muted-foreground mt-1 text-xs">
                 Fee can be waived with qualifying activity
               </p>
             )}
@@ -102,7 +108,7 @@ const BankAccountItem = ({ account }: BankAccountItemProps) => {
         <Button
           asChild
           size="sm"
-          className="bg-chart-1 hover:bg-chart-1/90 text-white"
+          className="bg-secondary text-secondary-foreground hover:bg-secondary/90"
         >
           <a href={account.url} target="_blank" rel="noopener noreferrer">
             Open Account <ArrowRight className="ml-1 h-4 w-4" />
