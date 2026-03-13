@@ -16,8 +16,8 @@ const Footer = () => {
               </span>
             </Link>
             <p className="text-muted-foreground mt-3 max-w-sm">
-              Find the best credit card and bank account offers to maximize your
-              rewards and cash back.
+              Beat the banks at their own acquisition game with smarter credit
+              card and bank bonus decisions.
             </p>
           </div>
 
@@ -111,8 +111,8 @@ const Footer = () => {
             © {new Date().getFullYear()} Churnable. All rights reserved.
           </p>
           <p className="text-muted-foreground text-center text-sm md:text-right">
-            Card offers and bank promotions are subject to change. See issuer
-            websites for current details.
+            Banks update promos constantly. Verify current terms before you
+            apply.
           </p>
         </div>
       </div>

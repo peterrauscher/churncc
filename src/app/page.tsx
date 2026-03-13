@@ -61,15 +61,15 @@ export default function HomePage() {
         <PageContainer className="relative py-20 md:py-28">
           <Badge className="mb-8 border border-white/30 bg-white/15 text-primary-foreground backdrop-blur-sm">
             <TrendingUp className="mr-2 h-4 w-4" />
-            Average advanced user earns $2,500+ in annual bonuses
+            Turn bank promo budgets into your personal upside
           </Badge>
 
           <h1 className="max-w-4xl font-serif text-5xl leading-tight tracking-tight md:text-7xl">
-            Build Wealth From Bonuses, Not Guesswork.
+            Beat The Banks At Their Own Game.
           </h1>
           <p className="mt-6 max-w-2xl text-lg text-primary-foreground/85 md:text-xl">
-            Compare credit card and bank account promotions with a clean,
-            research-first workflow used by serious churners.
+            Banks spend billions to acquire customers. We help you claim that
+            money back through credit card and bank account bonuses.
           </p>
 
           <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -80,7 +80,7 @@ export default function HomePage() {
             >
               <Link href="/credit-cards">
                 <CreditCardIcon className="mr-2 h-5 w-5" />
-                Compare Card Offers
+                Start Winning With Cards
               </Link>
             </Button>
             <Button
@@ -91,7 +91,7 @@ export default function HomePage() {
             >
               <Link href="/bank-accounts">
                 <BanknoteIcon className="mr-2 h-5 w-5" />
-                Explore Bank Bonuses
+                Claim Bank Bonuses
               </Link>
             </Button>
           </div>
@@ -99,18 +99,18 @@ export default function HomePage() {
           <div className="mt-14 grid gap-4 md:grid-cols-3">
             {[
               {
-                title: "Trustworthy comparisons",
-                copy: "Issuer, spend requirement, and fee data in one view.",
+                title: "Play offense, not defense",
+                copy: "See exactly where each bank is paying the most to win you.",
                 icon: ShieldCheck,
               },
               {
-                title: "Fast bonus discovery",
-                copy: "Sort by value, fees, and direct deposit requirements.",
+                title: "Find the highest payouts fast",
+                copy: "Sort by real bonus value, fees, and requirements in seconds.",
                 icon: TrendingUp,
               },
               {
-                title: "Action-ready details",
-                copy: "See what to do next with clear requirement breakdowns.",
+                title: "Win without missing rules",
+                copy: "Get clear next steps so you capture bonuses before they expire.",
                 icon: ArrowRight,
               },
             ].map(({ title, copy, icon: Icon }) => (
@@ -133,7 +133,7 @@ export default function HomePage() {
         <PageContainer>
           <SectionHeading
             title="Featured Credit Card Offers"
-            description="Curated bonus opportunities with strong value and straightforward requirements."
+            description="High-upside card offers designed to put issuer incentives in your pocket."
             action={
               <Button asChild variant="outline">
                 <Link href="/credit-cards">
@@ -161,7 +161,7 @@ export default function HomePage() {
         <PageContainer>
           <SectionHeading
             title="Top Bank Account Bonuses"
-            description="Best current checking and savings account promotions for cash-focused churners."
+            description="Best available checking and savings promos to keep you in control, not the banks."
             action={
               <Button asChild variant="outline">
                 <Link href="/bank-accounts">
@@ -189,18 +189,18 @@ export default function HomePage() {
         <PageContainer>
           <div className="rounded-2xl border border-border/70 bg-gradient-to-br from-card via-card to-accent/45 p-8 text-center shadow-sm md:p-12">
             <h2 className="font-serif text-4xl tracking-tight md:text-5xl">
-              Start Building Your Bonus Stack
+              Start Taking Money Back From The Banks
             </h2>
             <p className="text-muted-foreground mx-auto mt-4 max-w-2xl text-lg">
-              Browse verified opportunities, compare terms side by side, and
-              make decisions with confidence.
+              Browse verified offers, execute with confidence, and turn your
+              normal financial activity into a repeatable win.
             </p>
             <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
               <Button asChild size="lg">
-                <Link href="/credit-cards">Find Credit Card Offers</Link>
+                <Link href="/credit-cards">Win With Credit Cards</Link>
               </Button>
               <Button asChild size="lg" variant="secondary">
-                <Link href="/bank-accounts">Find Bank Bonuses</Link>
+                <Link href="/bank-accounts">Win With Bank Bonuses</Link>
               </Button>
             </div>
           </div>

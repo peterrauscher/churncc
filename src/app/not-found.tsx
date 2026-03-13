@@ -23,10 +23,10 @@ const NotFound = () => {
         </div>
         <h1 className="font-serif text-5xl tracking-tight">404</h1>
         <p className="text-muted-foreground mt-3 text-lg">
-          This page could not be found.
+          This page got lost, but your next bonus win is still waiting.
         </p>
         <Button asChild className="mt-6">
-          <Link href="/">Return to Home</Link>
+          <Link href="/">Back to Winning Offers</Link>
         </Button>
       </div>
     </div>

@@ -23,7 +23,7 @@ const Resources = () => {
     <PageContainer className="py-8">
       <PageHeader
         title="Resources & Guides"
-        description="Playbooks and FAQs to help you maximize card and bank bonuses with less risk and more consistency."
+        description="Winning playbooks and FAQs to help you outmaneuver bank rules and lock in more bonuses."
       />
 
       <Tabs defaultValue="creditcards" className="mb-12">
@@ -43,17 +43,17 @@ const Resources = () => {
             <ResourceCard
               icon={Info}
               title="Understanding Credit Card Bonuses"
-              description="Credit card welcome bonuses are incentives offered to new cardholders who meet spending requirements within a specific timeframe."
+              description="Learn how issuers structure offers so you can extract maximum value with minimum waste."
             />
             <ResourceCard
               icon={TrendingUp}
               title="Maximizing Point Values"
-              description="Learn how to get better value from points through strategic transfer partners and redemption timing."
+              description="Turn points into outsized wins with smarter transfer and redemption strategy."
             />
             <ResourceCard
               icon={Calendar}
               title="Timing Your Applications"
-              description="Apply with intent to improve approvals and capture elevated offers at the right moment."
+              description="Apply at the right moments to beat tighter rules and capture elevated offers."
             />
           </div>
 
@@ -207,17 +207,17 @@ const Resources = () => {
             <ResourceCard
               icon={Info}
               title="Bank Account Bonus Basics"
-              description="Understand how direct deposits, minimum balances, and timelines affect eligibility."
+              description="Master direct deposit, balance, and timeline rules so banks have to pay you."
             />
             <ResourceCard
               icon={BanknoteIcon}
               title="Understanding Direct Deposits"
-              description="Learn what usually qualifies as direct deposit and how to satisfy requirements efficiently."
+              description="Know what counts and satisfy requirements efficiently to secure the payout."
             />
             <ResourceCard
               icon={Calendar}
               title="Timing Multiple Bank Bonuses"
-              description="Plan overlapping applications without missing deadlines or fee-waiver conditions."
+              description="Run multiple bonus cycles without missing deadlines, fees, or key milestones."
             />
           </div>
 

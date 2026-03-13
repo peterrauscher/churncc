@@ -125,7 +125,7 @@ export default function BankAccountsPage() {
     <PageContainer className="py-8">
       <PageHeader
         title="Bank Account Bonuses"
-        description="Find checking and savings promotions with clear requirements, fees, and timelines."
+        description="Find checking and savings promos that put bank acquisition cash in your hands."
       />
 
       <div className="mb-6 rounded-2xl border border-border/70 bg-card/80 p-4 shadow-sm">

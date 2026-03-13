@@ -110,7 +110,7 @@ const CreditCardItem = ({ card }: CreditCardItemProps) => {
           className="bg-primary text-primary-foreground hover:bg-primary/90"
         >
           <a href={card.url} target="_blank" rel="noopener noreferrer">
-            Apply Now <ArrowRight className="ml-1 h-4 w-4" />
+            Claim Offer <ArrowRight className="ml-1 h-4 w-4" />
           </a>
         </Button>
       </CardFooter>

@@ -111,7 +111,7 @@ const BankAccountItem = ({ account }: BankAccountItemProps) => {
           className="bg-secondary text-secondary-foreground hover:bg-secondary/90"
         >
           <a href={account.url} target="_blank" rel="noopener noreferrer">
-            Open Account <ArrowRight className="ml-1 h-4 w-4" />
+            Claim Bonus <ArrowRight className="ml-1 h-4 w-4" />
           </a>
         </Button>
       </CardFooter>

@@ -39,9 +39,7 @@ const Navbar = () => {
               <p className="font-serif text-xl leading-none text-foreground">
                 Churnable
               </p>
-              <p className="text-muted-foreground text-xs">
-                Bonus intelligence
-              </p>
+              <p className="text-muted-foreground text-xs">Beat the banks</p>
             </div>
           </Link>
         </div>

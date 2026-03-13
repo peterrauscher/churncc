@@ -146,7 +146,7 @@ export default function CreditCardsPage() {
     <PageContainer className="py-8">
       <PageHeader
         title="Credit Card Offers"
-        description="Compare welcome bonuses, spending requirements, and annual fees with editorial-grade clarity."
+        description="Compare bonus offers side by side and capture the value banks use to buy new customers."
       />
 
       <div className="mb-6 rounded-2xl border border-border/70 bg-card/80 p-4 shadow-sm">
