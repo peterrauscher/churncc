@@ -3,21 +3,13 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import CreditCardGrid from "@/components/cards/CreditCardGrid";
 import BankAccountGrid from "@/components/cards/BankAccountGrid";
 import { PageContainer } from "@/components/shared/PageContainer";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { LoadingCards } from "@/components/shared/LoadingCards";
 import { ResourceCard } from "@/components/resources/ResourceCard";
-import { ArrowRight, TrendingUp, Info, Calendar, BookOpen } from "lucide-react";
+import { ArrowRight, TrendingUp, Info, Calendar } from "lucide-react";
 import { CreditCard, BankAccount } from "@/types";
 import { fetchCreditCards, getMockBankAccounts } from "@/services/api";
 import { formatRewardValue } from "@/components/finance/CurrencyValue";
@@ -65,10 +57,6 @@ export default function HomePage() {
     loadFeaturedItems();
   }, []);
 
-  const topTableAccounts = [...allAccounts]
-    .sort((a, b) => b.offerAmount - a.offerAmount)
-    .slice(0, 5);
-
   const totalCardBonuses = allCards.reduce((sum, card) => {
     const best = card.offers.reduce((max, o) => {
       const amt = o.amount.reduce((s, a) => s + a.amount, 0);
@@ -97,8 +85,18 @@ export default function HomePage() {
             Beat the banks at their
             <br />
             own game with{" "}
-            <span className="relative inline-flex items-center rounded-md bg-white px-2.5 py-0.5 text-secondary shadow-sm ring-1 ring-secondary/30">
-              Churnable
+            <span className="relative z-0 mx-2 inline-block whitespace-nowrap px-1">
+              <span className="relative z-20 text-slate-900">Churnable</span>
+              <svg
+                className="absolute top-1/2 left-1/2 -z-10 h-[1.3em] w-[110%] -translate-x-1/2 -translate-y-1/2 -rotate-1 text-[#FFB020]"
+                viewBox="0 0 418 42"
+                preserveAspectRatio="none"
+              >
+                <path
+                  fill="currentColor"
+                  d="M203.371.916c-26.013-2.078-76.686 1.963-124.738 4.144-41.25 1.867-68.995 1.706-74.954 6.848-2.924 2.525-2.067 8.018 3.011 11.666 5.865 4.212 18.069 6.884 39.014 8.528 20.366 1.599 71.748 4.298 106.883 4.298 12.016 0 101.446-2.062 165.253-5.59 21.05-1.164 54.341-3.615 68.614-7.859 13.921-4.14 18.471-11.838 7.377-17.153-6.501-3.111-20.931-4.997-40.407-5.549-33.15-1.109-114.717.387-149.98 2.658-20.144 1.305-65.02 4.416-83.67 6.45-1.31.144-2.833 0-4.045-.446-2.096-.776-3.832-2.316-5.83-4.156-5.46-5.018-20.672-9.697-51.587-11.968z"
+                />
+              </svg>
             </span>
           </h1>
           <p className="mt-3 max-w-2xl text-base text-primary-foreground/85 md:text-lg">
@@ -183,63 +181,6 @@ export default function HomePage() {
             </div>
           </PageContainer>
         </div>
-      )}
-
-      {!isLoading && topTableAccounts.length > 0 && (
-        <section className="py-12 md:py-16">
-          <PageContainer>
-            <SectionHeading
-              title="Top Bank Account Bonuses"
-              description="Best available checking and savings promos right now."
-              action={
-                <Button asChild variant="outline" size="sm">
-                  <Link href="/bank-accounts">
-                    View all <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              }
-            />
-            <div className="rounded-xl border border-border/70 bg-card/95 shadow-sm">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Account</TableHead>
-                    <TableHead>Bonus</TableHead>
-                    <TableHead className="hidden sm:table-cell">
-                      Requirement
-                    </TableHead>
-                    <TableHead className="text-right">Action</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {topTableAccounts.map((account) => (
-                    <TableRow key={account.id}>
-                      <TableCell>
-                        <div className="font-medium">{account.name}</div>
-                        <span className="text-muted-foreground text-xs">
-                          {account.institution}
-                        </span>
-                      </TableCell>
-                      <TableCell className="font-semibold text-secondary">
-                        {formatRewardValue(account.offerAmount, "USD")}
-                      </TableCell>
-                      <TableCell className="hidden max-w-[200px] truncate text-muted-foreground sm:table-cell">
-                        {account.requirements}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <Button asChild size="sm" variant="ghost">
-                          <Link href={`/bank-accounts/${account.id}`}>
-                            View
-                          </Link>
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          </PageContainer>
-        </section>
       )}
 
       <section className="py-12 md:py-16">
