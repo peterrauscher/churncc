@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation"; // Changed from react-router-dom
 import CreditCardGrid from "@/components/cards/CreditCardGrid";
 import CreditCardFilters from "@/components/filters/CreditCardFilters";
@@ -10,7 +10,7 @@ import { LoadingCards } from "@/components/shared/LoadingCards";
 import { CreditCard, FilterOptions, SortOptions } from "@/types";
 import { fetchCreditCards } from "@/services/api";
 
-export default function CreditCardsPage() {
+function CreditCardsPageContent() {
   // Renamed for clarity
   const searchParams = useSearchParams(); // From next/navigation
   // We are not using setSearchParams directly in this component,
@@ -181,5 +181,15 @@ export default function CreditCardsPage() {
         </>
       )}
     </PageContainer>
+  );
+}
+
+export default function CreditCardsPage() {
+  return (
+    <Suspense
+      fallback={<PageContainer className="py-8">Loading...</PageContainer>}
+    >
+      <CreditCardsPageContent />
+    </Suspense>
   );
 }

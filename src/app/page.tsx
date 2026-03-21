@@ -211,7 +211,7 @@ export default function HomePage() {
         </PageContainer>
       </section>
 
-      <section className="border-y border-border/60 bg-card/60 py-12 md:py-16">
+      <section className="py-12 md:py-16">
         <PageContainer>
           <SectionHeading
             title="Top Bank Account Bonuses"
