@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { CreditCard } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -7,24 +6,20 @@ const Footer = () => {
       <div className="container px-4 py-14 md:px-6">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
           <div className="flex flex-col gap-2">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="bg-primary/10 border-primary/20 rounded-lg border p-2">
-                <CreditCard className="text-primary h-5 w-5" />
-              </div>
-              <span className="font-serif text-2xl font-semibold">
-                Churnable
-              </span>
+            <Link
+              href="/"
+              className="font-serif text-xl font-semibold tracking-tight"
+            >
+              Churnable
             </Link>
-            <p className="text-muted-foreground mt-3 max-w-sm">
+            <p className="text-muted-foreground mt-1 max-w-sm text-sm">
               Beat the banks at their own acquisition game with smarter credit
               card and bank bonus decisions.
             </p>
           </div>
 
           <div className="flex flex-col gap-2">
-            <h3 className="text-sm font-semibold tracking-wide uppercase">
-              Explore
-            </h3>
+            <h3 className="text-sm font-semibold">Explore</h3>
             <nav className="flex flex-col gap-2">
               <Link
                 href="/credit-cards"
@@ -48,9 +43,7 @@ const Footer = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <h3 className="text-sm font-semibold tracking-wide uppercase">
-              Popular Card Issuers
-            </h3>
+            <h3 className="text-sm font-semibold">Popular Card Issuers</h3>
             <nav className="flex flex-col gap-2">
               <Link
                 href="/credit-cards?issuer=CHASE"
@@ -80,9 +73,7 @@ const Footer = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <h3 className="text-sm font-semibold tracking-wide uppercase">
-              Legal
-            </h3>
+            <h3 className="text-sm font-semibold">Legal</h3>
             <nav className="flex flex-col gap-2">
               <Link
                 href="/privacy"
