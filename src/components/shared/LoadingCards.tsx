@@ -12,7 +12,7 @@ export function LoadingCards({
   return (
     <div className={`grid gap-6 ${columns}`}>
       {Array.from({ length: count }).map((_, index) => (
-        <div key={index} className="rounded-2xl border bg-card p-4 shadow-sm">
+        <div key={index} className="rounded-2xl bg-card p-4">
           <Skeleton className="h-40 w-full rounded-xl" />
           <Skeleton className="mt-4 h-6 w-2/3" />
           <Skeleton className="mt-3 h-4 w-5/6" />

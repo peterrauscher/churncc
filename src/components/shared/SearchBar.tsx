@@ -57,7 +57,7 @@ export function SearchBar() {
   return (
     <div className="relative mt-5 max-w-xl">
       <div
-        className="flex cursor-text items-center rounded-xl bg-white shadow-lg focus-within:ring-0"
+        className="flex cursor-text items-center rounded-xl bg-white transition-all duration-200 hover:bg-muted hover:shadow-md"
         onClick={() => inputRef.current?.focus()}
       >
         <Search className="ml-4 h-5 w-5 shrink-0 text-muted-foreground" />

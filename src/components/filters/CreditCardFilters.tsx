@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import {
@@ -25,6 +24,7 @@ interface CreditCardFiltersProps {
   onSortChange: (sort: SortOptions) => void;
   issuers: string[];
   networks: string[];
+  initialIssuer?: string;
 }
 
 const CreditCardFilters = ({
@@ -32,6 +32,7 @@ const CreditCardFilters = ({
   onSortChange,
   issuers,
   networks,
+  initialIssuer,
 }: CreditCardFiltersProps) => {
   const [filters, setFilters] = useState<FilterOptions>({});
   const [annualFee, setAnnualFee] = useState<number>(700);

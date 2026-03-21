@@ -17,34 +17,26 @@ interface BankAccountItemProps {
 
 const BankAccountItem = ({ account }: BankAccountItemProps) => {
   return (
-    <Card className="h-full overflow-hidden border-border/70 bg-card/95 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
-      <div className="relative overflow-hidden bg-gradient-to-br from-primary via-primary/95 to-secondary p-4 text-primary-foreground">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-10 -left-10 h-32 w-32 rounded-full bg-white/25 blur-3xl" />
-          <div className="absolute -right-12 top-2 h-36 w-36 rounded-full bg-secondary/45 blur-3xl" />
-          <div className="absolute bottom-0 left-1/3 h-28 w-28 rounded-full bg-accent/45 blur-3xl" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(255,255,255,0.32),transparent_42%),radial-gradient(circle_at_82%_30%,rgba(255,255,255,0.2),transparent_44%),radial-gradient(circle_at_50%_88%,rgba(255,255,255,0.14),transparent_40%)]" />
+    <Card className="h-full overflow-hidden border-b-4 border-primary bg-card transition-all duration-200 hover:-translate-y-0.5">
+      <div className="bg-accent/30 p-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-semibold tracking-tight">
+            {account.institution}
+          </h3>
+          <Badge variant="outline">{account.type}</Badge>
         </div>
-        <div className="relative">
-          <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold tracking-tight">
-              {account.institution}
-            </h3>
-            <Badge className="bg-white/20 text-primary-foreground">
-              {account.type}
-            </Badge>
+        <h2 className="font-serif mt-2 text-2xl font-semibold leading-tight">
+          {account.name}
+        </h2>
+        <div className="mt-4 flex items-center">
+          <div className="rounded-full bg-primary/10 p-2">
+            <BanknoteIcon className="text-primary h-6 w-6" />
           </div>
-          <h2 className="font-serif mt-2 text-2xl font-semibold leading-tight">
-            {account.name}
-          </h2>
-          <div className="mt-4 flex items-center">
-            <div className="rounded-full bg-white/20 p-2">
-              <BanknoteIcon className="h-6 w-6" />
-            </div>
-            <div className="ml-3">
-              <p className="text-sm text-primary-foreground/85">Bonus Amount</p>
-              <p className="text-2xl font-bold">${account.offerAmount}</p>
-            </div>
+          <div className="ml-3">
+            <p className="text-muted-foreground text-sm">Bonus Amount</p>
+            <p className="text-2xl font-bold text-primary">
+              ${account.offerAmount}
+            </p>
           </div>
         </div>
       </div>

@@ -17,6 +17,14 @@ export interface CreditCard {
   offers: Offer[];
   historicalOffers: Offer[];
   discontinued: boolean;
+  rewardMultipliers: {
+    category: string;
+    multiplier: number;
+    details: string;
+  }[];
+  insurances: string[];
+  pros: string[];
+  cons: string[];
 }
 
 export interface Credit {
@@ -59,6 +67,10 @@ export interface BankAccount {
   url: string;
   expirationDate?: string;
   description?: string;
+  imageUrl?: string;
+  offerType?: string;
+  availability?: string;
+  additionalInfo?: string;
 }
 
 // Filter Types

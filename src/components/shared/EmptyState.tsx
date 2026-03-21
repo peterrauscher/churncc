@@ -18,7 +18,7 @@ export function EmptyState({
   actionLabel,
 }: EmptyStateProps) {
   return (
-    <div className="rounded-2xl border border-dashed bg-card/70 px-6 py-12 text-center shadow-sm">
+    <div className="rounded-2xl bg-card/70 px-6 py-12 text-center">
       <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-accent">
         <Icon className="h-6 w-6 text-primary" />
       </div>
