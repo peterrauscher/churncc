@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -9,12 +10,12 @@ import { Separator } from "@/components/ui/separator";
 import { BankAccount } from "@/types";
 import { fetchBankAccountById } from "@/services/api";
 import {
-  BanknoteIcon as BanknoteIconDetail,
-  DollarSign,
-  Calendar,
+  Bank as BankIcon,
+  CurrencyDollar,
+  CalendarBlank,
   Check,
   Info,
-} from "lucide-react";
+} from "@phosphor-icons/react";
 import { PageContainer } from "@/components/shared/PageContainer";
 import { BackLink } from "@/components/shared/BackLink";
 import { EmptyState } from "@/components/shared/EmptyState";
@@ -62,7 +63,7 @@ export default function BankAccountDetailPage() {
           <BackLink href="/bank-accounts" label="Back to Bank Accounts" />
         </div>
         <EmptyState
-          icon={BanknoteIconDetail}
+          icon={BankIcon}
           title="Account Not Found"
           description={`The bank account you are looking for (ID: ${id || "N/A"}) does not exist or could not be loaded.`}
           actionHref="/bank-accounts"
@@ -133,7 +134,10 @@ export default function BankAccountDetailPage() {
                   {account.directDepositRequired && (
                     <div className="flex items-start gap-3">
                       <div className="bg-primary/10 mt-1 rounded-full p-1">
-                        <DollarSign className="text-primary h-5 w-5" />
+                        <CurrencyDollar
+                          weight="light"
+                          className="h-5 w-5 text-gold"
+                        />
                       </div>
                       <div>
                         <p className="font-medium">Direct Deposit Required</p>
@@ -150,7 +154,10 @@ export default function BankAccountDetailPage() {
                     account.minimumBalance > 0 && (
                       <div className="flex items-start gap-3">
                         <div className="bg-ring/10 mt-1 rounded-full p-1">
-                          <DollarSign className="text-ring h-5 w-5" />
+                          <CurrencyDollar
+                            weight="light"
+                            className="h-5 w-5 text-gold"
+                          />
                         </div>
                         <div>
                           <p className="font-medium">Minimum Balance</p>
@@ -165,7 +172,10 @@ export default function BankAccountDetailPage() {
                   {account.expirationDate && (
                     <div className="flex items-start gap-3">
                       <div className="bg-destructive/10 mt-1 rounded-full p-1">
-                        <Calendar className="text-destructive h-5 w-5" />
+                        <CalendarBlank
+                          weight="light"
+                          className="h-5 w-5 text-gold"
+                        />
                       </div>
                       <div>
                         <p className="font-medium">Offer Expiration</p>
@@ -190,10 +200,9 @@ export default function BankAccountDetailPage() {
                     ? `$${account.monthlyFee.toLocaleString()}`
                     : "No Monthly Fee"}
                 </p>
-                {account.monthlyFee &&
-                  account.monthlyFee > 0 &&
+                {(account.monthlyFee ?? 0) > 0 &&
                   account.isMonthlyFeeWaivable && (
-                    <p className="text-primary text-sm">Fee can be waived</p>
+                    <p className="text-sm text-gold">Fee can be waived</p>
                   )}
               </div>
 
@@ -223,17 +232,20 @@ export default function BankAccountDetailPage() {
         <div className="flex flex-col rounded-lg border border-border/70 bg-card/90 p-6 md:p-8">
           {/* Card Image or Placeholder */}
           {account.imageUrl ? (
-            <img
+            <Image
               src={account.imageUrl}
               alt={`${account.name} from ${account.institution}`}
-              className="mb-6 h-auto max-h-[200px] w-auto self-center rounded-lg shadow-md" // Adjusted styling
-              onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-                (e.target as HTMLImageElement).src = "/placeholder-bank.svg"; // Specific placeholder for banks
-              }}
+              width={320}
+              height={200}
+              unoptimized
+              className="mb-6 h-auto max-h-[200px] w-auto self-center rounded-lg shadow-md"
             />
           ) : (
             <div className="mb-6 flex h-[200px] w-full items-center justify-center rounded-lg bg-muted/55">
-              <BanknoteIconDetail className="text-muted-foreground h-24 w-24" />
+              <BankIcon
+                weight="light"
+                className="h-24 w-24 text-muted-foreground"
+              />
             </div>
           )}
 
@@ -286,8 +298,7 @@ export default function BankAccountDetailPage() {
                   {account.monthlyFee
                     ? `$${account.monthlyFee.toLocaleString()}`
                     : "None"}
-                  {account.monthlyFee &&
-                    account.monthlyFee > 0 &&
+                  {(account.monthlyFee ?? 0) > 0 &&
                     account.isMonthlyFeeWaivable &&
                     " (Can be waived)"}
                 </p>

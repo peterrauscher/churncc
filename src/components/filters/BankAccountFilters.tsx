@@ -16,7 +16,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Filter, ArrowDownWideNarrow } from "lucide-react";
+import { Funnel, ArrowsDownUp } from "@phosphor-icons/react";
 
 interface BankAccountFilterState {
   institutions?: string[];
@@ -100,8 +100,8 @@ const BankAccountFilters = ({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Filter className="h-5 w-5" />
-          <h3 className="text-lg font-medium">Filters</h3>
+          <Funnel weight="light" className="h-5 w-5" />
+          <h3 className="font-serif text-xl tracking-tight">Filters</h3>
         </div>
         <Button variant="outline" size="sm" onClick={clearFilters}>
           Clear All
@@ -110,7 +110,7 @@ const BankAccountFilters = ({
 
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex items-center gap-2">
-          <ArrowDownWideNarrow className="h-5 w-5" />
+          <ArrowsDownUp weight="light" className="h-5 w-5" />
           <Label htmlFor="sort">Sort By</Label>
           <Select value={sortOption} onValueChange={handleSortChange}>
             <SelectTrigger id="sort" className="w-[180px]">

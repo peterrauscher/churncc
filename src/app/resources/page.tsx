@@ -9,32 +9,39 @@ import {
 } from "@/components/ui/accordion";
 import {
   CreditCard,
-  BanknoteIcon,
+  Bank,
   Info,
-  TrendingUp,
-  Calendar,
-} from "lucide-react";
+  ChartLineUp,
+  CalendarBlank,
+} from "@phosphor-icons/react";
 import { PageContainer } from "@/components/shared/PageContainer";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { ResourceCard } from "@/components/resources/ResourceCard";
 
 const Resources = () => {
   return (
-    <PageContainer className="py-8">
+    <PageContainer className="py-8 md:py-16">
       <PageHeader
-        title="Resources & Guides"
-        description="Winning playbooks and FAQs to help you outmaneuver bank rules and lock in more bonuses."
+        eyebrow="Field notes"
+        title="Resources & guides"
+        description="Playbooks and FAQs to help you outmaneuver bank rules and lock in more bonuses."
       />
 
       <Tabs defaultValue="creditcards" className="mb-12">
-        <TabsList className="grid w-full grid-cols-2 rounded-xl border border-border/70 bg-card/70">
-          <TabsTrigger value="creditcards" className="flex items-center gap-2">
-            <CreditCard className="h-4 w-4" />
-            Credit Card Strategies
+        <TabsList className="grid h-auto w-full grid-cols-2 rounded-full bg-foreground/[0.04] p-1.5 ring-1 ring-foreground/10">
+          <TabsTrigger
+            value="creditcards"
+            className="flex items-center gap-2 rounded-full data-[state=active]:bg-card"
+          >
+            <CreditCard weight="light" className="h-4 w-4" />
+            Credit card strategies
           </TabsTrigger>
-          <TabsTrigger value="banks" className="flex items-center gap-2">
-            <BanknoteIcon className="h-4 w-4" />
-            Bank Bonus Tips
+          <TabsTrigger
+            value="banks"
+            className="flex items-center gap-2 rounded-full data-[state=active]:bg-card"
+          >
+            <Bank weight="light" className="h-4 w-4" />
+            Bank bonus tips
           </TabsTrigger>
         </TabsList>
 
@@ -46,12 +53,12 @@ const Resources = () => {
               description="Learn how issuers structure offers so you can extract maximum value with minimum waste."
             />
             <ResourceCard
-              icon={TrendingUp}
+              icon={ChartLineUp}
               title="Maximizing Point Values"
               description="Turn points into outsized wins with smarter transfer and redemption strategy."
             />
             <ResourceCard
-              icon={Calendar}
+              icon={CalendarBlank}
               title="Timing Your Applications"
               description="Apply at the right moments to beat tighter rules and capture elevated offers."
             />
@@ -210,12 +217,12 @@ const Resources = () => {
               description="Master direct deposit, balance, and timeline rules so banks have to pay you."
             />
             <ResourceCard
-              icon={BanknoteIcon}
+              icon={Bank}
               title="Understanding Direct Deposits"
               description="Know what counts and satisfy requirements efficiently to secure the payout."
             />
             <ResourceCard
-              icon={Calendar}
+              icon={CalendarBlank}
               title="Timing Multiple Bank Bonuses"
               description="Run multiple bonus cycles without missing deadlines, fees, or key milestones."
             />

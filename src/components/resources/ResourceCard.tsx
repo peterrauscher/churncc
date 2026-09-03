@@ -1,8 +1,7 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { LucideIcon } from "lucide-react";
+import { Bezel } from "@/components/shared/Bezel";
 
 interface ResourceCardProps {
-  icon: LucideIcon;
+  icon: React.ComponentType<{ className?: string; weight?: "light" }>;
   title: string;
   description: string;
 }
@@ -13,16 +12,16 @@ export function ResourceCard({
   description,
 }: ResourceCardProps) {
   return (
-    <Card className="h-full border-border/70 bg-card/90 shadow-sm">
-      <CardContent className="p-6">
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-accent/80">
-          <Icon className="h-5 w-5 text-primary" />
+    <Bezel className="h-full">
+      <div className="flex h-full flex-col p-7">
+        <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-foreground/5">
+          <Icon weight="light" className="h-5 w-5 text-foreground" />
         </div>
         <h3 className="font-serif text-2xl tracking-tight text-foreground">
           {title}
         </h3>
-        <p className="text-muted-foreground mt-2">{description}</p>
-      </CardContent>
-    </Card>
+        <p className="mt-3 text-muted-foreground">{description}</p>
+      </div>
+    </Bezel>
   );
 }

@@ -17,14 +17,13 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { FilterOptions, SortOptions } from "@/types";
-import { Filter, ArrowDownWideNarrow } from "lucide-react";
+import { Funnel, ArrowsDownUp } from "@phosphor-icons/react";
 
 interface CreditCardFiltersProps {
   onFilterChange: (filters: FilterOptions) => void;
   onSortChange: (sort: SortOptions) => void;
   issuers: string[];
   networks: string[];
-  initialIssuer?: string;
 }
 
 const CreditCardFilters = ({
@@ -32,7 +31,6 @@ const CreditCardFilters = ({
   onSortChange,
   issuers,
   networks,
-  initialIssuer,
 }: CreditCardFiltersProps) => {
   const [filters, setFilters] = useState<FilterOptions>({});
   const [annualFee, setAnnualFee] = useState<number>(700);
@@ -45,32 +43,25 @@ const CreditCardFilters = ({
     onFilterChange(updatedFilters);
   };
 
-  const handleIssuerToggle = (issuer: string, checked: boolean) => {
-    const currentIssuers = filters.issuer || [];
-    let newIssuers: string[];
-
+  const getToggledValues = (
+    currentValues: string[] | undefined,
+    value: string,
+    checked: boolean,
+  ) => {
+    const values = currentValues ?? [];
     if (checked) {
-      newIssuers = [...currentIssuers, issuer];
-    } else {
-      newIssuers = currentIssuers.filter((i) => i !== issuer);
+      return [...values, value];
     }
-
-    handleFilterChange({ issuer: newIssuers.length ? newIssuers : undefined });
+    return values.filter((item) => item !== value);
   };
 
-  const handleNetworkToggle = (network: string, checked: boolean) => {
-    const currentNetworks = filters.network || [];
-    let newNetworks: string[];
-
-    if (checked) {
-      newNetworks = [...currentNetworks, network];
-    } else {
-      newNetworks = currentNetworks.filter((n) => n !== network);
-    }
-
-    handleFilterChange({
-      network: newNetworks.length ? newNetworks : undefined,
-    });
+  const handleMultiSelectToggle = (
+    key: "issuer" | "network",
+    value: string,
+    checked: boolean,
+  ) => {
+    const nextValues = getToggledValues(filters[key], value, checked);
+    handleFilterChange({ [key]: nextValues.length ? nextValues : undefined });
   };
 
   const handleSortChange = (value: string) => {
@@ -100,8 +91,8 @@ const CreditCardFilters = ({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Filter className="h-5 w-5" />
-          <h3 className="text-lg font-medium">Filters</h3>
+          <Funnel weight="light" className="h-5 w-5" />
+          <h3 className="font-serif text-xl tracking-tight">Filters</h3>
         </div>
         <Button variant="outline" size="sm" onClick={clearFilters}>
           Clear All
@@ -110,7 +101,7 @@ const CreditCardFilters = ({
 
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex items-center gap-2">
-          <ArrowDownWideNarrow className="h-5 w-5" />
+          <ArrowsDownUp weight="light" className="h-5 w-5" />
           <Label htmlFor="sort">Sort By</Label>
           <Select value={sortOption} onValueChange={handleSortChange}>
             <SelectTrigger id="sort" className="w-[180px]">
@@ -171,7 +162,11 @@ const CreditCardFilters = ({
                     id={`issuer-${issuer}`}
                     checked={filters.issuer?.includes(issuer)}
                     onCheckedChange={(checked) =>
-                      handleIssuerToggle(issuer, checked as boolean)
+                      handleMultiSelectToggle(
+                        "issuer",
+                        issuer,
+                        checked as boolean,
+                      )
                     }
                   />
                   <Label htmlFor={`issuer-${issuer}`}>
@@ -193,7 +188,11 @@ const CreditCardFilters = ({
                     id={`network-${network}`}
                     checked={filters.network?.includes(network)}
                     onCheckedChange={(checked) =>
-                      handleNetworkToggle(network, checked as boolean)
+                      handleMultiSelectToggle(
+                        "network",
+                        network,
+                        checked as boolean,
+                      )
                     }
                   />
                   <Label htmlFor={`network-${network}`}>

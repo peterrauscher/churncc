@@ -8,6 +8,7 @@ import { getMockBankAccounts } from "@/services/api";
 import { PageContainer } from "@/components/shared/PageContainer";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { LoadingCards } from "@/components/shared/LoadingCards";
+import { Bezel } from "@/components/shared/Bezel";
 
 // Define a more specific type for filter options based on usage
 interface BankAccountFilterState {
@@ -122,19 +123,22 @@ export default function BankAccountsPage() {
   };
 
   return (
-    <PageContainer className="py-8">
+    <PageContainer className="py-8 md:py-16">
       <PageHeader
-        title="Bank Account Bonuses"
+        eyebrow="Banks"
+        title="Bank account bonuses"
         description="Find checking and savings promos that put bank acquisition cash in your hands."
       />
 
-      <div className="mb-6 rounded-2xl border border-border/70 bg-card/80 p-4 shadow-sm">
-        <BankAccountFilters
-          onFilterChange={handleFilterChange}
-          onSortChange={handleSortChange}
-          institutions={institutions}
-        />
-      </div>
+      <Bezel className="mb-10">
+        <div className="p-5 md:p-6">
+          <BankAccountFilters
+            onFilterChange={handleFilterChange}
+            onSortChange={handleSortChange}
+            institutions={institutions}
+          />
+        </div>
+      </Bezel>
 
       {isLoading ? (
         <LoadingCards
@@ -144,7 +148,7 @@ export default function BankAccountsPage() {
       ) : (
         <>
           <div className="mb-6">
-            <p className="text-muted-foreground">
+            <p className="text-sm text-muted-foreground">
               Showing {filteredAccounts.length} of {bankAccounts.length} bank
               accounts
             </p>

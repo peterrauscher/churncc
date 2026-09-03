@@ -2,9 +2,9 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
-import { AlertTriangle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { WarningCircle } from "@phosphor-icons/react";
+import { IslandLink } from "@/components/shared/IslandLink";
+import { Bezel } from "@/components/shared/Bezel";
 
 const NotFound = () => {
   const pathname = usePathname();
@@ -16,19 +16,24 @@ const NotFound = () => {
   }, [pathname]);
 
   return (
-    <div className="flex min-h-[70vh] items-center justify-center px-4">
-      <div className="w-full max-w-xl rounded-2xl border border-border/70 bg-card/90 p-10 text-center shadow-sm">
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-accent">
-          <AlertTriangle className="h-6 w-6 text-primary" />
+    <div className="flex min-h-[70vh] items-center justify-center px-4 py-16">
+      <Bezel className="w-full max-w-xl">
+        <div className="px-8 py-14 text-center md:px-12">
+          <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-foreground/5">
+            <WarningCircle weight="light" className="h-6 w-6 text-gold" />
+          </div>
+          <p className="mb-3 text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
+            Missing page
+          </p>
+          <h1 className="font-serif text-6xl tracking-tight">404</h1>
+          <p className="mx-auto mt-4 max-w-md text-lg text-muted-foreground">
+            This page got lost, but the next bonus is still on the table.
+          </p>
+          <div className="mt-8 flex justify-center">
+            <IslandLink href="/">Back to offers</IslandLink>
+          </div>
         </div>
-        <h1 className="font-serif text-5xl tracking-tight">404</h1>
-        <p className="text-muted-foreground mt-3 text-lg">
-          This page got lost, but your next bonus win is still waiting.
-        </p>
-        <Button asChild className="mt-6">
-          <Link href="/">Back to Winning Offers</Link>
-        </Button>
-      </div>
+      </Bezel>
     </div>
   );
 };

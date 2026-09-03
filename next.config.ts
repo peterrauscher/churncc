@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    // Keep image behavior aligned with prior <img> usage during refactor.
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;

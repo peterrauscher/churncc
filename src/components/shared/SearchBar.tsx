@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Search } from "lucide-react";
+import { MagnifyingGlass } from "@phosphor-icons/react";
 
 const suggestions = [
   "Chase Sapphire Preferred bonus...",
@@ -55,26 +55,31 @@ export function SearchBar() {
   }, [charIndex, phase, suggestionIndex, focused]);
 
   return (
-    <div className="relative mt-5 max-w-xl">
+    <div className="relative mt-8 max-w-xl">
       <div
-        className="flex cursor-text items-center rounded-xl bg-white transition-all duration-200 hover:bg-muted hover:shadow-md"
+        className="rounded-full bg-white/40 p-1.5 ring-1 ring-white/20"
         onClick={() => inputRef.current?.focus()}
       >
-        <Search className="ml-4 h-5 w-5 shrink-0 text-muted-foreground" />
-        <input
-          ref={inputRef}
-          type="text"
-          className="w-full bg-transparent py-3 pl-3 pr-4 text-base text-foreground outline-none ring-0 placeholder-transparent focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-          placeholder="Search cards, banks, bonuses..."
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-        />
-        {!focused && (
-          <div className="pointer-events-none absolute left-12 select-none text-base text-muted-foreground">
-            {displayText}
-            <span className="ml-px inline-block h-5 w-[2px] animate-pulse bg-muted-foreground/60 align-middle" />
-          </div>
-        )}
+        <div className="flex cursor-text items-center rounded-full bg-[#fbf6ec] px-2 py-1 shadow-[inset_0_1px_1px_rgba(255,255,255,0.7)]">
+          <MagnifyingGlass
+            weight="light"
+            className="ml-3 h-5 w-5 shrink-0 text-muted-foreground"
+          />
+          <input
+            ref={inputRef}
+            type="text"
+            className="w-full bg-transparent py-3 pl-3 pr-4 text-base text-foreground outline-none ring-0 placeholder-transparent focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+            placeholder="Search cards, banks, bonuses..."
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
+          />
+          {!focused && (
+            <div className="pointer-events-none absolute left-14 select-none text-base text-muted-foreground">
+              {displayText}
+              <span className="ml-px inline-block h-5 w-[2px] animate-pulse bg-muted-foreground/60 align-middle" />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

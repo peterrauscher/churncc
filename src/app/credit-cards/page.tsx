@@ -7,6 +7,7 @@ import CreditCardFilters from "@/components/filters/CreditCardFilters";
 import { PageContainer } from "@/components/shared/PageContainer";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { LoadingCards } from "@/components/shared/LoadingCards";
+import { Bezel } from "@/components/shared/Bezel";
 import { CreditCard, FilterOptions, SortOptions } from "@/types";
 import { fetchCreditCards } from "@/services/api";
 
@@ -143,22 +144,23 @@ function CreditCardsPageContent() {
   };
 
   return (
-    <PageContainer className="py-8">
+    <PageContainer className="py-8 md:py-16">
       <PageHeader
-        title="Credit Card Offers"
+        eyebrow="Cards"
+        title="Credit card offers"
         description="Compare bonus offers side by side and capture the value banks use to buy new customers."
       />
 
-      <div className="mb-6 rounded-2xl border border-border/70 bg-card/80 p-4 shadow-sm">
-        <CreditCardFilters
-          onFilterChange={handleFilterChange}
-          onSortChange={handleSortChange}
-          issuers={issuers}
-          networks={networks}
-          // Pass initial searchParam for issuer if needed by CreditCardFilters
-          initialIssuer={urlIssuer || undefined}
-        />
-      </div>
+      <Bezel className="mb-10">
+        <div className="p-5 md:p-6">
+          <CreditCardFilters
+            onFilterChange={handleFilterChange}
+            onSortChange={handleSortChange}
+            issuers={issuers}
+            networks={networks}
+          />
+        </div>
+      </Bezel>
 
       {isLoading ? (
         <LoadingCards
@@ -168,7 +170,7 @@ function CreditCardsPageContent() {
       ) : (
         <>
           <div className="mb-6">
-            <p className="text-muted-foreground">
+            <p className="text-sm text-muted-foreground">
               Showing {filteredCards.length} of {creditCards.length} credit
               cards
             </p>
@@ -187,7 +189,7 @@ function CreditCardsPageContent() {
 export default function CreditCardsPage() {
   return (
     <Suspense
-      fallback={<PageContainer className="py-8">Loading...</PageContainer>}
+      fallback={<PageContainer className="py-8">Loading offers…</PageContainer>}
     >
       <CreditCardsPageContent />
     </Suspense>

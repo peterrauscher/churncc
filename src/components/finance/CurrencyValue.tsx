@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+
 interface CurrencyValueProps {
   amount: number;
   currency: string;
@@ -19,6 +21,8 @@ export function CurrencyValue({
   className,
 }: CurrencyValueProps) {
   return (
-    <span className={className}>{formatRewardValue(amount, currency)}</span>
+    <span className={cn("tabular-nums", className)}>
+      {formatRewardValue(amount, currency)}
+    </span>
   );
 }

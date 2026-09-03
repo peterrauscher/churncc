@@ -1,15 +1,13 @@
 import { BankAccount } from "@/types";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
-  BanknoteIcon,
-  ArrowRight,
-  DollarSign,
-  Calendar,
+  Bank as BankIcon,
+  CalendarBlank,
+  CurrencyDollar,
   Info,
-} from "lucide-react";
+} from "@phosphor-icons/react/dist/ssr";
+import { IslandLink } from "@/components/shared/IslandLink";
+import { Bezel } from "@/components/shared/Bezel";
 
 interface BankAccountItemProps {
   account: BankAccount;
@@ -17,105 +15,107 @@ interface BankAccountItemProps {
 
 const BankAccountItem = ({ account }: BankAccountItemProps) => {
   return (
-    <Card className="h-full overflow-hidden border-b-4 border-primary bg-card transition-all duration-200 hover:-translate-y-0.5">
-      <div className="bg-accent/30 p-4">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold tracking-tight">
-            {account.institution}
-          </h3>
-          <Badge variant="outline">{account.type}</Badge>
-        </div>
-        <h2 className="font-serif mt-2 text-2xl font-semibold leading-tight">
-          {account.name}
-        </h2>
-        <div className="mt-4 flex items-center">
-          <div className="rounded-full bg-primary/10 p-2">
-            <BanknoteIcon className="text-primary h-6 w-6" />
-          </div>
-          <div className="ml-3">
-            <p className="text-muted-foreground text-sm">Bonus Amount</p>
-            <p className="text-2xl font-bold text-primary">
-              ${account.offerAmount}
+    <Bezel className="h-full">
+      <article className="flex h-full flex-col overflow-hidden">
+        <div className="p-6 pb-0">
+          <div className="flex items-center justify-between gap-3">
+            <p className="text-[10px] font-medium tracking-[0.2em] uppercase text-muted-foreground">
+              {account.institution}
             </p>
-          </div>
-        </div>
-      </div>
-
-      <CardContent className="p-4">
-        <div className="space-y-3">
-          <div className="flex items-start gap-2">
-            <Info className="text-primary mt-0.5 h-4 w-4 flex-shrink-0" />
-            <p className="text-sm">{account.requirements}</p>
-          </div>
-
-          {account.directDepositRequired && (
-            <div className="flex items-center gap-2">
-              <DollarSign className="text-primary h-4 w-4" />
-              <span className="text-sm">
-                Direct Deposit Required:
-                {account.directDepositAmount
-                  ? ` $${account.directDepositAmount.toLocaleString()}`
-                  : " Yes"}
-              </span>
-            </div>
-          )}
-
-          {account.minimumBalance !== undefined && (
-            <div className="flex items-center gap-2">
-              <DollarSign className="text-primary h-4 w-4" />
-              <span className="text-sm">
-                Min Balance: ${account.minimumBalance.toLocaleString()}
-              </span>
-            </div>
-          )}
-
-          {account.expirationDate && (
-            <div className="flex items-center gap-2">
-              <Calendar className="text-primary h-4 w-4" />
-              <span className="text-sm">
-                Expires: {new Date(account.expirationDate).toLocaleDateString()}
-              </span>
-            </div>
-          )}
-        </div>
-
-        <div className="mt-4 rounded-lg bg-muted/55 p-3">
-          <div className="flex items-center justify-between text-sm">
-            <span>Monthly Fee</span>
-            <span className="font-semibold">
-              {account.monthlyFee ? `$${account.monthlyFee}` : "No Fee"}
+            <span className="rounded-full px-2.5 py-1 text-[10px] tracking-[0.16em] uppercase text-muted-foreground ring-1 ring-foreground/10">
+              {account.type}
             </span>
           </div>
-
-          {account.monthlyFee &&
-            account.monthlyFee > 0 &&
-            account.isMonthlyFeeWaivable && (
-              <p className="text-muted-foreground mt-1 text-xs">
-                Fee can be waived with qualifying activity
+          <h2 className="font-serif mt-3 text-2xl leading-tight tracking-tight">
+            {account.name}
+          </h2>
+          <div className="mt-5 flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-foreground/5">
+              <BankIcon weight="light" className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="text-[11px] tracking-wide text-muted-foreground">
+                Bonus amount
               </p>
-            )}
+              <p className="font-serif text-3xl tracking-tight text-gold">
+                ${account.offerAmount.toLocaleString()}
+              </p>
+            </div>
+          </div>
         </div>
-      </CardContent>
 
-      <CardFooter className="flex items-center justify-between p-4 pt-0">
-        <Link
-          href={`/bank-accounts/${account.id}`}
-          className="text-primary text-sm font-medium hover:underline"
-        >
-          View Details
-        </Link>
+        <div className="flex flex-1 flex-col p-6">
+          <div className="space-y-3">
+            <div className="flex items-start gap-2">
+              <Info
+                weight="light"
+                className="mt-0.5 h-4 w-4 shrink-0 text-gold"
+              />
+              <p className="text-sm leading-relaxed">{account.requirements}</p>
+            </div>
 
-        <Button
-          asChild
-          size="sm"
-          className="bg-secondary text-secondary-foreground hover:bg-secondary/90"
-        >
-          <a href={account.url} target="_blank" rel="noopener noreferrer">
-            Claim Bonus <ArrowRight className="ml-1 h-4 w-4" />
-          </a>
-        </Button>
-      </CardFooter>
-    </Card>
+            {account.directDepositRequired && (
+              <div className="flex items-center gap-2">
+                <CurrencyDollar weight="light" className="h-4 w-4 text-gold" />
+                <span className="text-sm">
+                  Direct deposit
+                  {account.directDepositAmount
+                    ? `: $${account.directDepositAmount.toLocaleString()}`
+                    : " required"}
+                </span>
+              </div>
+            )}
+
+            {account.minimumBalance !== undefined && (
+              <div className="flex items-center gap-2">
+                <CurrencyDollar weight="light" className="h-4 w-4 text-gold" />
+                <span className="text-sm">
+                  Min balance: ${account.minimumBalance.toLocaleString()}
+                </span>
+              </div>
+            )}
+
+            {account.expirationDate && (
+              <div className="flex items-center gap-2">
+                <CalendarBlank weight="light" className="h-4 w-4 text-gold" />
+                <span className="text-sm">
+                  Expires:{" "}
+                  {new Date(account.expirationDate).toLocaleDateString()}
+                </span>
+              </div>
+            )}
+          </div>
+
+          <div className="mt-5 rounded-[1.1rem] bg-muted/60 p-3">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">Monthly fee</span>
+              <span className="font-medium">
+                {account.monthlyFee ? `$${account.monthlyFee}` : "No fee"}
+              </span>
+            </div>
+            {!!account.monthlyFee &&
+              account.monthlyFee > 0 &&
+              account.isMonthlyFeeWaivable && (
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Waivable with qualifying activity
+                </p>
+              )}
+          </div>
+
+          <div className="mt-auto flex items-center justify-between pt-6">
+            <Link
+              href={`/bank-accounts/${account.id}`}
+              className="text-sm tracking-tight text-muted-foreground transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-foreground"
+            >
+              Details
+            </Link>
+            <IslandLink href={account.url} external>
+              Claim
+            </IslandLink>
+          </div>
+        </div>
+      </article>
+    </Bezel>
   );
 };
 

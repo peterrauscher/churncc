@@ -1,7 +1,7 @@
 import { CreditCard } from "@/types";
 import CreditCardItem from "./CreditCardItem";
 import { EmptyState } from "@/components/shared/EmptyState";
-import { CreditCard as CreditCardIcon } from "lucide-react";
+import { CreditCard as CreditCardIcon } from "@phosphor-icons/react/dist/ssr";
 
 interface CreditCardGridProps {
   cards: CreditCard[];

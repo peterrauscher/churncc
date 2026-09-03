@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { useParams } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
   Table,
@@ -18,15 +17,17 @@ import { CreditCard } from "@/types";
 import { fetchCreditCardById } from "@/services/api";
 import {
   CreditCard as CreditCardIcon,
-  DollarSign,
+  CurrencyDollar,
   Check,
   Info,
-} from "lucide-react";
+} from "@phosphor-icons/react";
 import { PageContainer } from "@/components/shared/PageContainer";
 import { BackLink } from "@/components/shared/BackLink";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { CurrencyValue } from "@/components/finance/CurrencyValue";
 import { OfferSummary } from "@/components/finance/OfferSummary";
+import { Bezel } from "@/components/shared/Bezel";
+import { IslandLink } from "@/components/shared/IslandLink";
 
 export default function CreditCardDetailPage() {
   const params = useParams<{ id: string }>();
@@ -58,15 +59,17 @@ export default function CreditCardDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto flex min-h-[70vh] items-center justify-center px-4 py-8 md:px-6">
-        <div className="border-primary h-12 w-12 animate-spin rounded-full border-4 border-t-transparent" />
-      </div>
+      <PageContainer className="flex min-h-[70vh] items-center justify-center py-16">
+        <p className="font-serif text-2xl tracking-tight text-muted-foreground">
+          Loading offer…
+        </p>
+      </PageContainer>
     );
   }
 
   if (!card) {
     return (
-      <PageContainer className="py-8">
+      <PageContainer className="py-8 md:py-16">
         <div className="mb-6">
           <BackLink href="/credit-cards" label="Back to Credit Cards" />
         </div>
@@ -84,9 +87,9 @@ export default function CreditCardDetailPage() {
   const bestOffer = card.offers.length > 0 ? card.offers[0] : null;
 
   return (
-    <PageContainer className="py-8">
-      <div className="mb-6">
-        <BackLink href="/credit-cards" label="Back to Credit Cards" />
+    <PageContainer className="py-8 md:py-16">
+      <div className="mb-10">
+        <BackLink href="/credit-cards" label="Back to credit cards" />
       </div>
 
       <div className="mb-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
@@ -104,7 +107,7 @@ export default function CreditCardDetailPage() {
               )}
             </div>
 
-            <h1 className="mb-4 text-3xl font-bold md:text-4xl">
+            <h1 className="font-serif mb-4 text-4xl tracking-tight md:text-5xl">
               {card.issuer.replace("_", " ")} {card.name}
             </h1>
 
@@ -138,22 +141,28 @@ export default function CreditCardDetailPage() {
           </div>
 
           {bestOffer && (
-            <Card className="border-primary/40 border-2 bg-card/90">
-              <CardContent className="p-6">
-                <h3 className="font-serif mb-4 text-3xl">Current Offer</h3>
+            <Bezel>
+              <div className="p-6 md:p-8">
+                <p className="mb-2 text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
+                  Current offer
+                </p>
+                <h3 className="font-serif mb-6 text-3xl tracking-tight">
+                  Welcome bonus
+                </h3>
 
                 <div className="mb-6 flex items-center">
-                  <div className="bg-primary/10 mr-4 rounded-full p-3">
-                    <DollarSign className="text-primary h-8 w-8" />
+                  <div className="mr-4 rounded-full bg-foreground/5 p-3">
+                    <CurrencyDollar
+                      weight="light"
+                      className="h-8 w-8 text-gold"
+                    />
                   </div>
                   <div>
-                    <p className="text-muted-foreground text-sm">
-                      Welcome Bonus
-                    </p>
+                    <p className="text-sm text-muted-foreground">Payout</p>
                     <CurrencyValue
                       amount={bestOffer.amount[0]?.amount || 0}
                       currency={bestOffer.amount[0]?.currency || "USD"}
-                      className="text-primary text-2xl font-bold"
+                      className="font-serif text-3xl text-gold"
                     />
                   </div>
                 </div>
@@ -167,44 +176,43 @@ export default function CreditCardDetailPage() {
 
                   {bestOffer.details && (
                     <div className="flex items-start gap-2">
-                      <div className="bg-primary/10 rounded-full p-2">
-                        <Info className="text-primary mt-0.5 h-4 w-4" />
+                      <div className="rounded-full bg-foreground/5 p-2">
+                        <Info
+                          weight="light"
+                          className="mt-0.5 h-4 w-4 text-gold"
+                        />
                       </div>
                       <span>{bestOffer.details}</span>
                     </div>
                   )}
                 </div>
 
-                <Button
-                  asChild
-                  className="bg-primary hover:bg-secondary mt-6 w-full"
-                >
-                  <a
-                    href={bestOffer.url || card.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Apply Now
-                  </a>
-                </Button>
-              </CardContent>
-            </Card>
+                <div className="mt-6">
+                  <IslandLink href={bestOffer.url || card.url} external>
+                    Apply now
+                  </IslandLink>
+                </div>
+              </div>
+            </Bezel>
           )}
         </div>
 
-        <div className="flex flex-col items-center justify-start rounded-lg border border-border/70 bg-card/90 p-6 md:p-8">
+        <Bezel>
           {card.imageUrl ? (
-            <img
+            <Image
               src={card.imageUrl}
               alt={`${card.name} Card`}
+              width={320}
+              height={250}
+              unoptimized
               className="mb-6 h-auto max-h-[250px] w-auto"
-              onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-                (e.target as HTMLImageElement).src = "/placeholder.svg";
-              }}
             />
           ) : (
-            <div className="mb-6 flex h-[250px] w-full items-center justify-center rounded bg-muted/55">
-              <CreditCardIcon className="text-muted-foreground h-24 w-24" />
+            <div className="mb-6 flex h-[250px] w-full items-center justify-center rounded-[1.4rem] bg-muted/55">
+              <CreditCardIcon
+                weight="light"
+                className="h-24 w-24 text-muted-foreground"
+              />
             </div>
           )}
 
@@ -227,9 +235,12 @@ export default function CreditCardDetailPage() {
                 {card.credits.map((credit, index) => (
                   <div
                     key={index}
-                    className="flex items-start gap-2 rounded-lg border p-3"
+                    className="flex items-start gap-2 rounded-[1.1rem] bg-muted/50 p-3"
                   >
-                    <Check className="text-primary mt-0.5 h-4 w-4" />
+                    <Check
+                      weight="light"
+                      className="mt-0.5 h-4 w-4 text-gold"
+                    />
                     <div>
                       <p className="font-medium">{credit.description}</p>
                       {credit.value && (
@@ -279,16 +290,19 @@ export default function CreditCardDetailPage() {
                 {card.insurances.map((insurance, index) => (
                   <div
                     key={index}
-                    className="flex items-start gap-2 rounded-lg border p-3"
+                    className="flex items-start gap-2 rounded-[1.1rem] bg-muted/50 p-3"
                   >
-                    <Check className="text-primary mt-0.5 h-4 w-4 flex-shrink-0" />
+                    <Check
+                      weight="light"
+                      className="mt-0.5 h-4 w-4 shrink-0 text-gold"
+                    />
                     <span>{insurance}</span>
                   </div>
                 ))}
               </div>
             </div>
           )}
-        </div>
+        </Bezel>
       </div>
 
       {(card.pros.length > 0 || card.cons.length > 0) && (
@@ -301,7 +315,10 @@ export default function CreditCardDetailPage() {
                 <ul className="space-y-2">
                   {card.pros.map((pro, index) => (
                     <li key={index} className="flex items-start gap-2">
-                      <Check className="mt-1 h-4 w-4 flex-shrink-0 text-green-500" />
+                      <Check
+                        weight="light"
+                        className="mt-1 h-4 w-4 shrink-0 text-secondary"
+                      />
                       <span>{pro}</span>
                     </li>
                   ))}
@@ -314,7 +331,10 @@ export default function CreditCardDetailPage() {
                 <ul className="space-y-2">
                   {card.cons.map((con, index) => (
                     <li key={index} className="flex items-start gap-2">
-                      <Info className="mt-1 h-4 w-4 flex-shrink-0 text-red-500" />
+                      <Info
+                        weight="light"
+                        className="mt-1 h-4 w-4 shrink-0 text-gold"
+                      />
                       <span>{con}</span>
                     </li>
                   ))}
