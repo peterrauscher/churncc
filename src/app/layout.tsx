@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { IBM_Plex_Sans, IBM_Plex_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { AppProviders } from "./app-providers";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { cn } from "@/lib/utils";
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+});
 
 const ibmPlexSans = IBM_Plex_Sans({
   variable: "--font-ibm-plex-sans",
@@ -44,6 +49,7 @@ export default function RootLayout({
         className={cn(
           ibmPlexSans.variable,
           ibmPlexMono.variable,
+          inter.variable,
           "flex min-h-[100dvh] flex-col bg-background font-sans text-foreground antialiased",
         )}
       >

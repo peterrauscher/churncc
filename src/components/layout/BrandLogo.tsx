@@ -11,9 +11,9 @@ interface BrandLogoProps {
 }
 
 const dimensions = {
-  sm: { height: 28, width: 93, iconSize: 28 },
-  md: { height: 34, width: 113, iconSize: 34 },
-  lg: { height: 42, width: 140, iconSize: 42 },
+  sm: { iconSize: 26, textSize: "text-lg" },
+  md: { iconSize: 32, textSize: "text-xl" },
+  lg: { iconSize: 40, textSize: "text-2xl" },
 };
 
 export function LogoIcon({
@@ -26,12 +26,13 @@ export function LogoIcon({
   return (
     <Image
       src="/logo-icon.svg"
-      alt="Churnable icon"
+      alt="Churnable logo icon"
       width={size}
       height={size}
       unoptimized
-      className={cn("shrink-0 object-contain", className)}
       priority
+      className={cn("shrink-0 object-contain", className)}
+      style={{ width: `${size}px`, height: `${size}px` }}
     />
   );
 }
@@ -45,40 +46,27 @@ export function BrandLogo({
   const dim = dimensions[size];
 
   const content = (
-    <div className={cn("inline-flex items-center", className)}>
-      {showText ? (
-        <>
-          {/* Official Light Mode Logo */}
-          <Image
-            src="/logo-light.svg"
-            alt="Churnable"
-            width={dim.width}
-            height={dim.height}
-            unoptimized
-            priority
-            className={cn(
-              "w-auto object-contain dark:hidden",
-              `h-[${dim.height}px]`,
-            )}
-            style={{ height: `${dim.height}px` }}
-          />
-          {/* Official Dark Mode Logo */}
-          <Image
-            src="/logo-dark.svg"
-            alt="Churnable"
-            width={dim.width}
-            height={dim.height}
-            unoptimized
-            priority
-            className={cn(
-              "hidden w-auto object-contain dark:block",
-              `h-[${dim.height}px]`,
-            )}
-            style={{ height: `${dim.height}px` }}
-          />
-        </>
-      ) : (
-        <LogoIcon size={dim.iconSize} />
+    <div className={cn("inline-flex items-center gap-2.5", className)}>
+      <Image
+        src="/logo-icon.svg"
+        alt="Churnable icon"
+        width={dim.iconSize}
+        height={dim.iconSize}
+        unoptimized
+        priority
+        className="shrink-0 object-contain"
+        style={{ width: `${dim.iconSize}px`, height: `${dim.iconSize}px` }}
+      />
+      {showText && (
+        <span
+          className={cn(
+            "font-extrabold tracking-tight text-slate-900 dark:text-white select-none",
+            dim.textSize,
+          )}
+          style={{ fontFamily: "var(--font-inter), sans-serif" }}
+        >
+          Churnable
+        </span>
       )}
     </div>
   );
