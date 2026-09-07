@@ -7,25 +7,21 @@ import BankAccountGrid from "@/components/cards/BankAccountGrid";
 import { LoadingCards } from "@/components/shared/LoadingCards";
 import { SearchBar } from "@/components/shared/SearchBar";
 import { BonusCalculator } from "@/components/finance/BonusCalculator";
+import { BankLogoCarousel } from "@/components/layout/BankLogoCarousel";
 import {
-  CreditCard as CreditCardIcon,
   Bank as BankIcon,
   ShieldCheck,
   ArrowRight,
   TrendUp,
   AirplaneTilt,
   Coins,
-  Buildings,
 } from "@phosphor-icons/react";
 import { CreditCard, BankAccount } from "@/types";
 import { fetchCreditCards, getMockBankAccounts } from "@/services/api";
-import { formatRewardValue } from "@/components/finance/CurrencyValue";
 
 export default function HomePage() {
-  const [allCards, setAllCards] = useState<CreditCard[]>([]);
   const [featuredCards, setFeaturedCards] = useState<CreditCard[]>([]);
   const [featuredAccounts, setFeaturedAccounts] = useState<BankAccount[]>([]);
-  const [allAccounts, setAllAccounts] = useState<BankAccount[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -36,7 +32,6 @@ export default function HomePage() {
         const activeCards = cards.filter(
           (card) => !card.discontinued && card.offers.length > 0,
         );
-        setAllCards(activeCards);
 
         const topCards = [...activeCards]
           .sort((a, b) => {
@@ -48,7 +43,6 @@ export default function HomePage() {
         setFeaturedCards(topCards);
 
         const accounts = getMockBankAccounts();
-        setAllAccounts(accounts);
         const topAccounts = [...accounts]
           .sort((a, b) => b.offerAmount - a.offerAmount)
           .slice(0, 3);
@@ -62,19 +56,6 @@ export default function HomePage() {
 
     loadFeaturedItems();
   }, []);
-
-  const totalCardBonuses = allCards.reduce((sum, card) => {
-    const best = card.offers.reduce((max, o) => {
-      const amt = o.amount.reduce((s, a) => s + a.amount, 0);
-      return amt > max ? amt : max;
-    }, 0);
-    return sum + best;
-  }, 0);
-
-  const totalBankBonuses = allAccounts.reduce(
-    (sum, a) => sum + a.offerAmount,
-    0,
-  );
 
   const leadCard = featuredCards[0];
   const stackedCards = featuredCards.slice(1, 4);
@@ -117,40 +98,8 @@ export default function HomePage() {
                 </Link>
               </div>
 
-              {/* Trust Metric Strip */}
-              <div className="mt-8 grid grid-cols-3 gap-4 border-t border-slate-200/80 pt-6 text-left dark:border-slate-800">
-                <div>
-                  <p className="text-xl font-extrabold text-[#00a859] sm:text-2xl dark:text-emerald-400">
-                    {isLoading
-                      ? "..."
-                      : formatRewardValue(
-                          totalCardBonuses + totalBankBonuses,
-                          "USD",
-                        )}
-                  </p>
-                  <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
-                    Total tracked bonuses
-                  </p>
-                </div>
-                <div>
-                  <p className="text-xl font-extrabold text-slate-900 sm:text-2xl dark:text-white">
-                    {isLoading
-                      ? "..."
-                      : `${allCards.length + allAccounts.length}+`}
-                  </p>
-                  <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
-                    Verified live offers
-                  </p>
-                </div>
-                <div>
-                  <p className="text-xl font-extrabold text-[#0160c4] sm:text-2xl dark:text-[#38b6ff]">
-                    100%
-                  </p>
-                  <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
-                    Editorial independent
-                  </p>
-                </div>
-              </div>
+              {/* Infinite Scroll Bank Logo Carousel */}
+              <BankLogoCarousel />
             </div>
 
             {/* Right Column: Live Comparison Showcase Box */}
@@ -293,46 +242,6 @@ export default function HomePage() {
                   </Link>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 2: UNDER-HERO INSTITUTIONS & TRUST STRIP */}
-      <section className="px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-6 md:p-8 dark:border-slate-800 dark:bg-slate-900/50">
-            <p className="text-center text-xs font-bold tracking-wider text-slate-500 uppercase dark:text-slate-400">
-              Tracking Welcome Promos From Top Financial Institutions
-            </p>
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-8 text-sm font-bold text-slate-700 sm:gap-12 md:gap-16 dark:text-slate-300">
-              <span className="flex items-center gap-2">
-                <Buildings weight="bold" className="h-5 w-5 text-[#0160c4]" />
-                Chase
-              </span>
-              <span className="flex items-center gap-2">
-                <CreditCardIcon
-                  weight="bold"
-                  className="h-5 w-5 text-[#38b6ff]"
-                />
-                American Express
-              </span>
-              <span className="flex items-center gap-2">
-                <BankIcon weight="bold" className="h-5 w-5 text-[#00bf63]" />
-                Capital One
-              </span>
-              <span className="flex items-center gap-2">
-                <Buildings weight="bold" className="h-5 w-5 text-[#0160c4]" />
-                Citi
-              </span>
-              <span className="flex items-center gap-2">
-                <BankIcon weight="bold" className="h-5 w-5 text-[#00a859]" />
-                Wells Fargo
-              </span>
-              <span className="flex items-center gap-2">
-                <Coins weight="bold" className="h-5 w-5 text-[#38b6ff]" />
-                Discover
-              </span>
             </div>
           </div>
         </div>
