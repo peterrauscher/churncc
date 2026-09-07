@@ -11,7 +11,6 @@ import {
   CreditCard as CreditCardIcon,
   Bank as BankIcon,
   ShieldCheck,
-  Sparkle,
   ArrowRight,
   TrendUp,
   AirplaneTilt,
@@ -88,12 +87,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
             {/* Left Column: Headline, Value Prop, Search, CTAs */}
             <div className="lg:col-span-7">
-              <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50/80 px-3.5 py-1 text-xs font-semibold text-[#0160c4] dark:border-blue-900/60 dark:bg-blue-950/60 dark:text-[#38b6ff]">
-                <Sparkle weight="fill" className="h-3.5 w-3.5 text-[#00bf63]" />
-                <span>Verified Welcome Offers & Deposit Rewards</span>
-              </div>
-
-              <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl md:text-6xl dark:text-white">
+              <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl md:text-6xl dark:text-white">
                 Compare the best card and bank bonuses.
               </h1>
 

@@ -55,7 +55,7 @@ export default function RootLayout({
         </a>
         <Navbar />
         <AppProviders>
-          <main id="content" className="flex-1 pt-16 md:pt-20">
+          <main id="content" className="flex-1">
             {children}
           </main>
         </AppProviders>

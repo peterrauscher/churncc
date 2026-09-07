@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BrandLogo } from "./BrandLogo";
-import { ThemeToggle } from "./ThemeToggle";
 import {
   CreditCard,
   Bank,
@@ -88,18 +87,6 @@ const Navbar = () => {
 
           {/* Right Header Actions */}
           <div className="flex items-center gap-3">
-            {/* Live bonus badge - Bankrate/NerdWallet inspired */}
-            <div className="hidden items-center gap-1.5 rounded-full border border-emerald-200/80 bg-emerald-50/90 px-3 py-1 text-xs font-semibold text-emerald-800 lg:inline-flex dark:border-emerald-800/60 dark:bg-emerald-950/50 dark:text-emerald-300">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-              </span>
-              <span>Updated Daily</span>
-            </div>
-
-            {/* Theme Toggle */}
-            <ThemeToggle />
-
             {/* Desktop Primary CTA */}
             <Link
               href="/credit-cards"
