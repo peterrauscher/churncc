@@ -33,7 +33,7 @@ export function BonusCalculator({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8 dark:border-slate-800 dark:bg-slate-900",
+        "relative overflow-hidden rounded-2xl bg-white p-6 shadow-[0_4px_24px_rgba(15,23,42,0.06)] md:p-8 dark:bg-slate-900",
         className,
       )}
     >
@@ -75,7 +75,7 @@ export function BonusCalculator({ className }: { className?: string }) {
                 step="500"
                 value={monthlySpend}
                 onChange={(e) => setMonthlySpend(Number(e.target.value))}
-                className="mt-3 h-2 w-full cursor-pointer appearance-none rounded-lg bg-slate-200 accent-[#0160c4] dark:bg-slate-700"
+                className="mt-3 h-2 w-full cursor-pointer appearance-none rounded-lg bg-slate-100 accent-[#0160c4] dark:bg-slate-700"
               />
               <div className="mt-1 flex justify-between text-[11px] text-slate-400">
                 <span>$1,000</span>
@@ -85,7 +85,7 @@ export function BonusCalculator({ className }: { className?: string }) {
             </div>
 
             {/* Direct Deposit Toggle */}
-            <div className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50/80 p-3.5 dark:border-slate-800 dark:bg-slate-800/60">
+            <div className="flex items-center justify-between rounded-xl bg-slate-50 p-3.5 dark:bg-slate-800/60">
               <div className="pr-4">
                 <p className="text-sm font-semibold text-slate-900 dark:text-white">
                   Can set up qualifying direct deposit
@@ -117,9 +117,9 @@ export function BonusCalculator({ className }: { className?: string }) {
           </div>
         </div>
 
-        {/* Right Column: Estimated Payout Card */}
+        {/* Right Column: Estimated Payout Card - Solid emerald, no gradient, no border */}
         <div className="lg:col-span-5">
-          <div className="rounded-xl border border-emerald-200/90 bg-gradient-to-br from-emerald-50/90 via-emerald-50/50 to-white p-6 shadow-xs dark:border-emerald-900/60 dark:from-emerald-950/60 dark:via-slate-900 dark:to-slate-900">
+          <div className="rounded-xl bg-emerald-50/80 p-6 shadow-xs dark:bg-emerald-950/40">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold tracking-wider text-emerald-800 uppercase dark:text-emerald-400">
                 Projected 1-Year Upside
@@ -139,7 +139,7 @@ export function BonusCalculator({ className }: { className?: string }) {
               </p>
             </div>
 
-            <div className="mt-6 space-y-2.5 border-t border-emerald-200/60 pt-4 text-xs text-slate-700 dark:border-slate-800 dark:text-slate-300">
+            <div className="mt-6 space-y-2.5 pt-2 text-xs text-slate-700 dark:text-slate-300">
               <div className="flex justify-between">
                 <span className="text-slate-500 dark:text-slate-400">
                   Credit Card Bonuses:
@@ -161,7 +161,7 @@ export function BonusCalculator({ className }: { className?: string }) {
             <div className="mt-6">
               <Link
                 href="/credit-cards"
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#0160c4] py-3 text-center text-sm font-semibold text-white shadow-xs transition-colors hover:bg-[#0052cc] active:scale-[0.98]"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#0160c4] py-3 text-center text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#0052cc] active:scale-[0.98]"
               >
                 <span>Find Matching Offers</span>
                 <ArrowRight weight="bold" className="h-4 w-4" />

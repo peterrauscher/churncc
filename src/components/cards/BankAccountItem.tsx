@@ -15,14 +15,14 @@ interface BankAccountItemProps {
 
 const BankAccountItem = ({ account }: BankAccountItemProps) => {
   return (
-    <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-xs transition-all duration-200 hover:border-slate-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700">
-      {/* Card Header */}
-      <div className="border-b border-slate-100 bg-slate-50/70 p-5 sm:p-6 dark:border-slate-800 dark:bg-slate-950/40">
+    <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-[0_2px_12px_rgba(15,23,42,0.06)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_rgba(15,23,42,0.12)] dark:bg-slate-900">
+      {/* Card Header - Solid off-white, no border */}
+      <div className="bg-[#f8fafc] p-5 sm:p-6 dark:bg-slate-950/40">
         <div className="flex items-center justify-between gap-2">
           <span className="text-xs font-bold tracking-wider text-slate-500 uppercase dark:text-slate-400">
             {account.institution}
           </span>
-          <span className="rounded-full border border-blue-200 bg-blue-50 px-2.5 py-0.5 text-[11px] font-semibold text-[#0160c4] dark:border-blue-900/60 dark:bg-blue-950/60 dark:text-[#38b6ff]">
+          <span className="rounded-full bg-blue-50 px-2.5 py-0.5 text-[11px] font-semibold text-[#0160c4] dark:bg-blue-950/60 dark:text-[#38b6ff]">
             {account.type.toUpperCase()}
           </span>
         </div>
@@ -30,8 +30,8 @@ const BankAccountItem = ({ account }: BankAccountItemProps) => {
           <Link href={`/bank-accounts/${account.id}`}>{account.name}</Link>
         </h3>
 
-        {/* Bonus Highlight Box */}
-        <div className="mt-4 rounded-xl border border-emerald-200/80 bg-emerald-50/70 p-4 dark:border-emerald-900/50 dark:bg-emerald-950/40">
+        {/* Bonus Highlight Box - Solid emerald, no border */}
+        <div className="mt-4 rounded-xl bg-emerald-50/80 p-4 dark:bg-emerald-950/40">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold tracking-wider text-emerald-800 uppercase dark:text-emerald-400">
               Cash Bonus
@@ -100,8 +100,8 @@ const BankAccountItem = ({ account }: BankAccountItemProps) => {
           )}
         </div>
 
-        {/* Monthly Fee Indicator */}
-        <div className="mt-4 rounded-lg border border-slate-100 bg-slate-50/80 p-3 text-xs dark:border-slate-800 dark:bg-slate-800/60">
+        {/* Monthly Fee Indicator - Solid neutral background, no border */}
+        <div className="mt-4 rounded-lg bg-slate-50 p-3 text-xs dark:bg-slate-800/60">
           <div className="flex items-center justify-between">
             <span className="text-slate-500 dark:text-slate-400">
               Monthly Fee
@@ -120,7 +120,7 @@ const BankAccountItem = ({ account }: BankAccountItemProps) => {
         </div>
 
         {/* Action Row */}
-        <div className="mt-auto flex items-center justify-between gap-3 border-t border-slate-100 pt-4 dark:border-slate-800">
+        <div className="mt-auto flex items-center justify-between gap-3 pt-4">
           <Link
             href={`/bank-accounts/${account.id}`}
             className="inline-flex items-center gap-1 text-xs font-semibold text-slate-700 hover:text-[#0160c4] dark:text-slate-300 dark:hover:text-[#38b6ff]"
@@ -132,7 +132,7 @@ const BankAccountItem = ({ account }: BankAccountItemProps) => {
             href={account.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 rounded-lg bg-[#0160c4] px-4 py-2 text-xs font-semibold text-white shadow-xs transition-all hover:bg-[#0052cc] active:scale-[0.98]"
+            className="inline-flex items-center gap-1 rounded-lg bg-[#0160c4] px-4 py-2 text-xs font-semibold text-white shadow-sm transition-all hover:bg-[#0052cc] active:scale-[0.98]"
           >
             <span>Claim Bonus</span>
             <ArrowUpRight weight="bold" className="h-3.5 w-3.5" />

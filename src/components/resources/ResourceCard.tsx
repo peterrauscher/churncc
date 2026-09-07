@@ -13,7 +13,7 @@ export function ResourceCard({
   description,
 }: ResourceCardProps) {
   return (
-    <div className="flex h-full flex-col rounded-2xl border border-slate-200/90 bg-white p-6 shadow-xs transition-all hover:border-slate-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700">
+    <div className="flex h-full flex-col rounded-2xl bg-white p-6 shadow-[0_2px_12px_rgba(15,23,42,0.06)] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(15,23,42,0.1)] dark:bg-slate-900">
       <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-[#0160c4] dark:bg-blue-950 dark:text-[#38b6ff]">
         <Icon weight="bold" className="h-5 w-5" />
       </div>

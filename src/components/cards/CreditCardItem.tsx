@@ -24,14 +24,14 @@ const CreditCardItem = ({ card, featured = false }: CreditCardItemProps) => {
   return (
     <div
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-xs transition-all duration-200 hover:border-slate-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700",
+        "group relative flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-[0_2px_12px_rgba(15,23,42,0.06)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_rgba(15,23,42,0.12)] dark:bg-slate-900",
         featured ? "md:col-span-7" : "",
       )}
     >
-      {/* Top Media / Card Art Area */}
+      {/* Top Media / Card Art Area - Solid curated off-white, no gradient, no border */}
       <div
         className={cn(
-          "relative flex items-center justify-center border-b border-slate-100 bg-gradient-to-b from-slate-50 to-slate-100/60 p-6 dark:border-slate-800 dark:from-slate-900 dark:to-slate-950/60",
+          "relative flex items-center justify-center bg-[#f8fafc] p-6 dark:bg-slate-950/60",
           featured ? "h-60 md:h-72" : "h-48",
         )}
       >
@@ -58,13 +58,13 @@ const CreditCardItem = ({ card, featured = false }: CreditCardItemProps) => {
         {/* Status badges */}
         <div className="absolute top-3 right-3 flex flex-wrap gap-1.5">
           {featured && (
-            <span className="inline-flex items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-2.5 py-0.5 text-[11px] font-bold text-[#0160c4] dark:border-blue-800 dark:bg-blue-950/80 dark:text-[#38b6ff]">
+            <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-0.5 text-[11px] font-bold text-[#0160c4] shadow-xs dark:bg-blue-950/80 dark:text-[#38b6ff]">
               <Sparkle weight="fill" className="h-3 w-3" />
               <span>Top Pick</span>
             </span>
           )}
           {card.isAnnualFeeWaived && (
-            <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-800 dark:border-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300">
+            <span className="rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-800 shadow-xs dark:bg-emerald-950/80 dark:text-emerald-300">
               Fee waived yr 1
             </span>
           )}
@@ -89,15 +89,15 @@ const CreditCardItem = ({ card, featured = false }: CreditCardItemProps) => {
             </h3>
           </div>
           {card.network && card.network !== card.issuer ? (
-            <span className="shrink-0 rounded-md border border-slate-200 bg-slate-50 px-2 py-1 text-[10px] font-semibold tracking-wider text-slate-600 uppercase dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300">
+            <span className="shrink-0 rounded-md bg-slate-100 px-2 py-1 text-[10px] font-semibold tracking-wider text-slate-600 uppercase dark:bg-slate-800 dark:text-slate-300">
               {card.network.replaceAll("_", " ")}
             </span>
           ) : null}
         </div>
 
-        {/* Welcome Bonus Callout Box - High visual prominence like Bankrate/NerdWallet */}
+        {/* Welcome Bonus Callout Box - Solid emerald background, no border */}
         {bestOffer ? (
-          <div className="mt-4 rounded-xl border border-emerald-200/80 bg-emerald-50/60 p-4 dark:border-emerald-900/50 dark:bg-emerald-950/40">
+          <div className="mt-4 rounded-xl bg-emerald-50/80 p-4 dark:bg-emerald-950/40">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold tracking-wider text-emerald-800 uppercase dark:text-emerald-400">
                 Welcome Bonus
@@ -126,9 +126,9 @@ const CreditCardItem = ({ card, featured = false }: CreditCardItemProps) => {
           </div>
         ) : null}
 
-        {/* Quick Specs Grid */}
+        {/* Quick Specs Grid - Solid neutral backgrounds, no border */}
         <div className="mt-4 grid grid-cols-2 gap-2.5 text-xs">
-          <div className="rounded-lg border border-slate-100 bg-slate-50/80 p-2.5 dark:border-slate-800 dark:bg-slate-800/60">
+          <div className="rounded-lg bg-slate-50 p-2.5 dark:bg-slate-800/60">
             <span className="text-slate-500 dark:text-slate-400">
               Annual Fee
             </span>
@@ -136,7 +136,7 @@ const CreditCardItem = ({ card, featured = false }: CreditCardItemProps) => {
               {card.annualFee > 0 ? `$${card.annualFee}` : "No Annual Fee"}
             </p>
           </div>
-          <div className="rounded-lg border border-slate-100 bg-slate-50/80 p-2.5 dark:border-slate-800 dark:bg-slate-800/60">
+          <div className="rounded-lg bg-slate-50 p-2.5 dark:bg-slate-800/60">
             <span className="text-slate-500 dark:text-slate-400">
               Cashback / Rate
             </span>
@@ -147,7 +147,7 @@ const CreditCardItem = ({ card, featured = false }: CreditCardItemProps) => {
         </div>
 
         {/* Action Row */}
-        <div className="mt-6 flex items-center justify-between gap-3 border-t border-slate-100 pt-4 dark:border-slate-800">
+        <div className="mt-6 flex items-center justify-between gap-3 pt-2">
           <Link
             href={`/credit-cards/${card.cardId}`}
             className="inline-flex items-center gap-1 text-xs font-semibold text-slate-700 hover:text-[#0160c4] dark:text-slate-300 dark:hover:text-[#38b6ff]"
@@ -159,7 +159,7 @@ const CreditCardItem = ({ card, featured = false }: CreditCardItemProps) => {
             href={bestOffer?.url || card.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 rounded-lg bg-[#0160c4] px-4 py-2 text-xs font-semibold text-white shadow-xs transition-all hover:bg-[#0052cc] active:scale-[0.98]"
+            className="inline-flex items-center gap-1 rounded-lg bg-[#0160c4] px-4 py-2 text-xs font-semibold text-white shadow-sm transition-all hover:bg-[#0052cc] active:scale-[0.98]"
           >
             <span>Apply Now</span>
             <ArrowUpRight weight="bold" className="h-3.5 w-3.5" />

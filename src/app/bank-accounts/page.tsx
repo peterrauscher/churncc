@@ -150,52 +150,54 @@ function BankAccountsPageContent() {
   };
 
   return (
-    <PageContainer className="py-8 md:py-12">
-      <PageHeader
-        eyebrow="Banking"
-        title="Compare Bank Account Bonuses"
-        description="Find checking and savings promotions that pay you cash for moving your everyday deposits."
-        badge={
-          <span className="inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 dark:border-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300">
-            <ShieldCheck weight="bold" className="h-3.5 w-3.5" />
-            <span>FDIC / NCUA Insured Products</span>
-          </span>
-        }
-      />
-
-      {/* Filter Surface */}
-      <div className="mb-10 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900 md:p-6">
-        <BankAccountFilters
-          onFilterChange={handleFilterChange}
-          onSortChange={handleSortChange}
-          institutions={institutions}
+    <div className="min-h-[calc(100vh-4rem)] bg-[#f4f6f8] py-8 md:py-12 dark:bg-slate-950">
+      <PageContainer>
+        <PageHeader
+          eyebrow="Banking"
+          title="Compare Bank Account Bonuses"
+          description="Find checking and savings promotions that pay you cash for moving your everyday deposits."
+          badge={
+            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300">
+              <ShieldCheck weight="bold" className="h-3.5 w-3.5" />
+              <span>FDIC / NCUA Insured Products</span>
+            </span>
+          }
         />
-      </div>
 
-      {isLoading ? (
-        <LoadingCards
-          count={6}
-          columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-        />
-      ) : (
-        <>
-          <div className="mb-6 flex items-center justify-between">
-            <p className="text-sm font-semibold text-slate-600 dark:text-slate-400">
-              Showing{" "}
-              <span className="font-bold text-slate-900 dark:text-white">
-                {filteredAccounts.length}
-              </span>{" "}
-              of {bankAccounts.length} accounts
-            </p>
-          </div>
-
-          <BankAccountGrid
-            accounts={filteredAccounts}
-            emptyMessage="No bank accounts match your current criteria. Try resetting filters."
+        {/* Filter Surface - Pure white, borderless, soft shadow */}
+        <div className="mb-10 rounded-2xl bg-white p-5 shadow-[0_2px_16px_rgba(15,23,42,0.06)] md:p-6 dark:bg-slate-900">
+          <BankAccountFilters
+            onFilterChange={handleFilterChange}
+            onSortChange={handleSortChange}
+            institutions={institutions}
           />
-        </>
-      )}
-    </PageContainer>
+        </div>
+
+        {isLoading ? (
+          <LoadingCards
+            count={6}
+            columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+          />
+        ) : (
+          <>
+            <div className="mb-6 flex items-center justify-between">
+              <p className="text-sm font-semibold text-slate-600 dark:text-slate-400">
+                Showing{" "}
+                <span className="font-bold text-slate-900 dark:text-white">
+                  {filteredAccounts.length}
+                </span>{" "}
+                of {bankAccounts.length} accounts
+              </p>
+            </div>
+
+            <BankAccountGrid
+              accounts={filteredAccounts}
+              emptyMessage="No bank accounts match your current criteria. Try resetting filters."
+            />
+          </>
+        )}
+      </PageContainer>
+    </div>
   );
 }
 

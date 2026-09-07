@@ -75,10 +75,10 @@ export function SearchBar({ className }: { className?: string }) {
     >
       <div
         className={cn(
-          "flex items-center rounded-xl border border-slate-200 bg-white p-1.5 shadow-xs transition-all dark:border-slate-800 dark:bg-slate-900",
+          "flex items-center rounded-xl bg-white p-1.5 shadow-[0_2px_14px_rgba(15,23,42,0.08)] transition-all dark:bg-slate-900",
           focused
-            ? "border-[#0160c4] ring-3 ring-[#0160c4]/15 dark:border-[#38b6ff] dark:ring-[#38b6ff]/20"
-            : "hover:border-slate-300 dark:hover:border-slate-700",
+            ? "ring-2 ring-[#0160c4] dark:ring-[#38b6ff]"
+            : "hover:shadow-[0_4px_18px_rgba(15,23,42,0.12)]",
         )}
         onClick={() => inputRef.current?.focus()}
       >
@@ -107,7 +107,7 @@ export function SearchBar({ className }: { className?: string }) {
 
         <button
           type="submit"
-          className="inline-flex items-center gap-1 rounded-lg bg-[#0160c4] px-3.5 py-1.5 text-xs font-semibold text-white shadow-xs transition-colors hover:bg-[#0052cc] active:scale-[0.98]"
+          className="inline-flex items-center gap-1 rounded-lg bg-[#0160c4] px-4 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-[#0052cc] active:scale-[0.98]"
         >
           <span>Search</span>
           <ArrowRight weight="bold" className="h-3 w-3" />
