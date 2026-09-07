@@ -13,6 +13,7 @@ import {
   Info,
   ChartLineUp,
   CalendarBlank,
+  BookOpen,
 } from "@phosphor-icons/react";
 import { PageContainer } from "@/components/shared/PageContainer";
 import { PageHeader } from "@/components/shared/PageHeader";
@@ -20,188 +21,131 @@ import { ResourceCard } from "@/components/resources/ResourceCard";
 
 const Resources = () => {
   return (
-    <PageContainer className="py-8 md:py-16">
+    <PageContainer className="py-8 md:py-12">
       <PageHeader
-        eyebrow="Field notes"
-        title="Resources & guides"
-        description="Playbooks and FAQs to help you outmaneuver bank rules and lock in more bonuses."
+        eyebrow="Guides & Resources"
+        title="Bonus Playbooks & Strategy Guides"
+        description="Learn how to maximize credit card welcome offers and bank account promos while keeping your credit score strong."
+        badge={
+          <span className="inline-flex items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-[#0160c4] dark:border-blue-800 dark:bg-blue-950/60 dark:text-[#38b6ff]">
+            <BookOpen weight="bold" className="h-3.5 w-3.5" />
+            <span>Updated for 2026</span>
+          </span>
+        }
       />
 
       <Tabs defaultValue="creditcards" className="mb-12">
-        <TabsList className="grid h-auto w-full grid-cols-2 rounded-full bg-foreground/[0.04] p-1.5 ring-1 ring-foreground/10">
+        <TabsList className="grid h-12 w-full max-w-md grid-cols-2 rounded-xl border border-slate-200 bg-slate-100/80 p-1 dark:border-slate-800 dark:bg-slate-900">
           <TabsTrigger
             value="creditcards"
-            className="flex items-center gap-2 rounded-full data-[state=active]:bg-card"
+            className="flex items-center justify-center gap-2 rounded-lg text-xs font-bold transition-all data-[state=active]:bg-white data-[state=active]:text-[#0160c4] data-[state=active]:shadow-xs dark:data-[state=active]:bg-slate-800 dark:data-[state=active]:text-white"
           >
-            <CreditCard weight="light" className="h-4 w-4" />
-            Credit card strategies
+            <CreditCard weight="bold" className="h-4 w-4" />
+            <span>Credit Cards</span>
           </TabsTrigger>
           <TabsTrigger
             value="banks"
-            className="flex items-center gap-2 rounded-full data-[state=active]:bg-card"
+            className="flex items-center justify-center gap-2 rounded-lg text-xs font-bold transition-all data-[state=active]:bg-white data-[state=active]:text-[#0160c4] data-[state=active]:shadow-xs dark:data-[state=active]:bg-slate-800 dark:data-[state=active]:text-white"
           >
-            <Bank weight="light" className="h-4 w-4" />
-            Bank bonus tips
+            <Bank weight="bold" className="h-4 w-4" />
+            <span>Bank Bonuses</span>
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="creditcards" className="mt-6">
+        <TabsContent value="creditcards" className="mt-8">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             <ResourceCard
               icon={Info}
-              title="Understanding Credit Card Bonuses"
-              description="Learn how issuers structure offers so you can extract maximum value with minimum waste."
+              title="Understanding Welcome Bonuses"
+              description="Learn how issuers structure incentives so you can extract maximum value with minimal friction."
             />
             <ResourceCard
               icon={ChartLineUp}
-              title="Maximizing Point Values"
-              description="Turn points into outsized wins with smarter transfer and redemption strategy."
+              title="Maximizing Point Valuations"
+              description="Turn points into outsized wins with transfer partners and high-yield redemptions."
             />
             <ResourceCard
               icon={CalendarBlank}
-              title="Timing Your Applications"
-              description="Apply at the right moments to beat tighter rules and capture elevated offers."
+              title="Timing Applications & Cycles"
+              description="Apply at the right moments to stay under issuer limits and capture elevated historical offers."
             />
           </div>
 
-          <div className="mt-8">
-            <h2 className="mb-4 font-serif text-3xl">Credit Card Bonus FAQs</h2>
+          <div className="mt-12 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900 sm:p-8">
+            <h2 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl dark:text-white">
+              Credit Card Churning FAQs
+            </h2>
+            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+              Essential rules, credit score considerations, and best practices
+            </p>
 
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="chase524">
-                <AccordionTrigger>
+            <Accordion
+              type="single"
+              collapsible
+              className="mt-6 w-full divide-y divide-slate-100 dark:divide-slate-800"
+            >
+              <AccordionItem value="chase524" className="border-b-0 py-1">
+                <AccordionTrigger className="text-sm font-semibold text-slate-900 hover:no-underline hover:text-[#0160c4] dark:text-white dark:hover:text-[#38b6ff]">
                   What is the Chase 5/24 rule?
                 </AccordionTrigger>
-                <AccordionContent>
-                  <p className="mb-3">
+                <AccordionContent className="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+                  <p className="mb-2.5">
                     The Chase 5/24 rule is an unwritten policy where Chase will
-                    automatically reject your credit card application if
-                    you&apos;ve opened 5 or more personal credit cards across
-                    all banks in the past 24 months.
+                    automatically reject your credit card application if you
+                    have opened 5 or more personal credit cards across all banks
+                    in the past 24 months.
                   </p>
-                  <p className="mb-3">
-                    This rule applies to most Chase credit cards, though there
-                    are some exceptions. Business credit cards from most issuers
-                    (except Capital One and Discover) typically don&apos;t count
-                    toward your 5/24 status.
+                  <p className="mb-2.5">
+                    This rule applies to most Chase credit cards. Business
+                    credit cards from most issuers (except Capital One and
+                    Discover) typically do not count toward your 5/24 status
+                    because they do not appear on personal credit reports.
                   </p>
                   <p>
                     To check your 5/24 status, count how many personal credit
-                    cards you&apos;ve opened in the last 24 months across all
-                    banks. If you&apos;re at or over 5, you&apos;ll likely be
-                    denied for a new Chase card.
+                    cards you have opened in the last 24 months across all
+                    banks. If you are at 5 or more, wait until your oldest cards
+                    age past the 24-month mark before applying for a new Chase
+                    card.
                   </p>
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="churning">
-                <AccordionTrigger>
-                  What is credit card churning?
+              <AccordionItem value="churning" className="border-b-0 py-1">
+                <AccordionTrigger className="text-sm font-semibold text-slate-900 hover:no-underline hover:text-[#0160c4] dark:text-white dark:hover:text-[#38b6ff]">
+                  What is credit card churning and is it legal?
                 </AccordionTrigger>
-                <AccordionContent>
-                  <p className="mb-3">
-                    Credit card churning refers to the practice of repeatedly
-                    opening and closing credit cards to earn welcome bonuses,
-                    rewards, and perks multiple times.
-                  </p>
-                  <p className="mb-3">
-                    However, many issuers have implemented rules to prevent
-                    churning. For example, American Express typically has a
-                    once-per-lifetime rule for welcome bonuses, while Chase
-                    often requires 24-48 months between card welcome bonuses for
-                    the same product.
+                <AccordionContent className="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+                  <p className="mb-2.5">
+                    Credit card churning is the practice of strategically
+                    opening new credit cards to earn substantial welcome
+                    bonuses, statement credits, and points. It is 100% legal.
                   </p>
                   <p>
-                    While churning can be profitable, it may impact your credit
-                    score through hard inquiries and reduced average account
-                    age. It&apos;s important to approach churning strategically
-                    and to understand the potential impact on your credit
-                    profile.
+                    Card issuers budget billions of dollars annually for
+                    customer acquisition. Responsible churners simply take
+                    advantage of these incentives by paying statement balances
+                    in full every month to avoid interest charges.
                   </p>
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="manufactured">
-                <AccordionTrigger>
-                  What is manufactured spending?
+              <AccordionItem value="creditscore" className="border-b-0 py-1">
+                <AccordionTrigger className="text-sm font-semibold text-slate-900 hover:no-underline hover:text-[#0160c4] dark:text-white dark:hover:text-[#38b6ff]">
+                  Does applying for multiple cards hurt my credit score?
                 </AccordionTrigger>
-                <AccordionContent>
-                  <p className="mb-3">
-                    Manufactured spending refers to techniques used to generate
-                    credit card spending (to meet minimum spend requirements) in
-                    ways that don&apos;t represent actual expenses by converting
-                    credit card purchases into cash or cash equivalents.
-                  </p>
-                  <p className="mb-3">
-                    Common methods include purchasing gift cards, money orders,
-                    or prepaid debit cards with a credit card, then liquidating
-                    them to recoup the funds.
+                <AccordionContent className="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+                  <p className="mb-2.5">
+                    A new card application creates a hard inquiry, which
+                    typically causes a temporary dip of 3 to 5 points. However,
+                    as your new credit line opens, your total available credit
+                    increases, which lowers your overall credit utilization
+                    ratio.
                   </p>
                   <p>
-                    While not illegal, many credit card issuers consider
-                    manufactured spending against their terms of service and may
-                    close accounts they suspect of engaging in this practice. We
-                    don&apos;t recommend manufactured spending as it carries
-                    significant risks.
-                  </p>
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="business">
-                <AccordionTrigger>
-                  Can I apply for business credit cards as an individual?
-                </AccordionTrigger>
-                <AccordionContent>
-                  <p className="mb-3">
-                    Yes, you can apply for business credit cards as a sole
-                    proprietor even if you don&apos;t have a formal business
-                    entity. Many people qualify for business credit cards
-                    through side hustles, freelancing, selling items online, or
-                    other small-scale income-generating activities.
-                  </p>
-                  <p className="mb-3">
-                    When applying as a sole proprietor, you typically use your
-                    Social Security Number instead of an EIN, and your legal
-                    name as the business name. You&apos;ll need to provide
-                    honest estimates of your business revenue and years in
-                    business.
-                  </p>
-                  <p>
-                    Business credit cards often have higher welcome bonuses and
-                    don&apos;t typically report to personal credit reports
-                    (except in cases of default), making them attractive for
-                    maximizing rewards.
-                  </p>
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="points">
-                <AccordionTrigger>
-                  What are the most valuable types of points?
-                </AccordionTrigger>
-                <AccordionContent>
-                  <p className="mb-3">
-                    Transferable points are generally considered the most
-                    valuable because of their flexibility. The main transferable
-                    points currencies are:
-                  </p>
-                  <ul className="mb-3 list-disc pl-6">
-                    <li>Chase Ultimate Rewards</li>
-                    <li>American Express Membership Rewards</li>
-                    <li>Capital One Miles</li>
-                    <li>Citi ThankYou Points</li>
-                  </ul>
-                  <p className="mb-3">
-                    These points can be transferred to various airline and hotel
-                    partners, often at a 1:1 ratio, which allows you to book
-                    premium travel experiences that would cost much more if
-                    purchased directly.
-                  </p>
-                  <p>
-                    Airline and hotel-specific points can also be valuable,
-                    particularly for frequent travelers loyal to specific
-                    brands, but they lack the flexibility of transferable points
-                    and are subject to devaluations.
+                    Over time, responsible churners who pay on time and keep
+                    utilization low often see their credit scores increase into
+                    the 780 to 820+ range.
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -209,156 +153,90 @@ const Resources = () => {
           </div>
         </TabsContent>
 
-        <TabsContent value="banks" className="mt-6">
+        <TabsContent value="banks" className="mt-8">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             <ResourceCard
               icon={Info}
               title="Bank Account Bonus Basics"
-              description="Master direct deposit, balance, and timeline rules so banks have to pay you."
+              description="Master direct deposit, minimum balance, and timeline rules so institutions pay you promptly."
             />
             <ResourceCard
               icon={Bank}
               title="Understanding Direct Deposits"
-              description="Know what counts and satisfy requirements efficiently to secure the payout."
+              description="Learn what qualifies as direct deposit and satisfy criteria without changing employer payroll."
             />
             <ResourceCard
               icon={CalendarBlank}
-              title="Timing Multiple Bank Bonuses"
-              description="Run multiple bonus cycles without missing deadlines, fees, or key milestones."
+              title="Timing Multiple Bank Promos"
+              description="Run multiple deposit cycles efficiently without missing deadlines or incurring monthly maintenance fees."
             />
           </div>
 
-          <div className="mt-8">
-            <h2 className="mb-4 font-serif text-3xl">
+          <div className="mt-12 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900 sm:p-8">
+            <h2 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl dark:text-white">
               Bank Account Bonus FAQs
             </h2>
+            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+              Tax rules, ChexSystems insights, and early closure avoidance
+            </p>
 
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="taxes">
-                <AccordionTrigger>
+            <Accordion
+              type="single"
+              collapsible
+              className="mt-6 w-full divide-y divide-slate-100 dark:divide-slate-800"
+            >
+              <AccordionItem value="taxes" className="border-b-0 py-1">
+                <AccordionTrigger className="text-sm font-semibold text-slate-900 hover:no-underline hover:text-[#0160c4] dark:text-white dark:hover:text-[#38b6ff]">
                   Are bank account bonuses taxable?
                 </AccordionTrigger>
-                <AccordionContent>
-                  <p className="mb-3">
-                    Yes, unlike credit card bonuses (which are considered
-                    rebates), bank account bonuses are treated as interest
-                    income by the IRS and are taxable. Banks will issue a
-                    1099-INT form for any bonuses you receive.
-                  </p>
-                  <p className="mb-3">
-                    You&apos;ll need to report this income when you file your
-                    taxes, even if you don&apos;t receive a 1099-INT form from
-                    the bank (which typically happens if the bonus is under
-                    $10).
+                <AccordionContent className="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+                  <p className="mb-2.5">
+                    Yes. Unlike credit card rewards (which the IRS considers
+                    non-taxable purchase rebates), bank account bonuses are
+                    treated as interest income. Banks issue a Form 1099-INT for
+                    bonuses of $10 or more.
                   </p>
                   <p>
-                    This tax treatment is an important consideration when
-                    evaluating bank bonuses, as it effectively reduces the value
-                    of the bonus by your marginal tax rate.
+                    You should report this interest on your federal and state
+                    tax returns. Factor your marginal tax rate into your
+                    expected net profit calculations.
                   </p>
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="directdeposit">
-                <AccordionTrigger>
-                  What counts as a direct deposit?
-                </AccordionTrigger>
-                <AccordionContent>
-                  <p className="mb-3">
-                    Technically, a direct deposit is an ACH transfer from your
-                    employer or a government benefit provider directly to your
-                    bank account. However, many banks have different methods for
-                    identifying direct deposits.
-                  </p>
-                  <p className="mb-3">
-                    In some cases, ACH transfers from other banks, payment
-                    services, or investment platforms may code as direct
-                    deposits and satisfy bonus requirements. However, this
-                    varies by bank and can change over time.
-                  </p>
-                  <p>
-                    The safest approach is to use an actual employer or
-                    government direct deposit when possible. If that&apos;s not
-                    an option, research current data points from other users
-                    about which transfers are working for the specific bank
-                    you&apos;re targeting.
-                  </p>
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="chexsystems">
-                <AccordionTrigger>
+              <AccordionItem value="chexsystems" className="border-b-0 py-1">
+                <AccordionTrigger className="text-sm font-semibold text-slate-900 hover:no-underline hover:text-[#0160c4] dark:text-white dark:hover:text-[#38b6ff]">
                   What is ChexSystems and how does it affect bank bonuses?
                 </AccordionTrigger>
-                <AccordionContent>
-                  <p className="mb-3">
+                <AccordionContent className="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+                  <p className="mb-2.5">
                     ChexSystems is a consumer reporting agency that banks use to
-                    verify the banking history of potential customers. It&apos;s
-                    similar to a credit bureau but specifically for banking
-                    activities.
-                  </p>
-                  <p className="mb-3">
-                    When you open and close multiple bank accounts in a short
-                    period (as many bank bonus seekers do), these actions are
-                    recorded in ChexSystems. Some banks are sensitive to having
-                    many recent inquiries and may deny your application if you
-                    have too many.
+                    verify checking and savings account history. It tracks how
+                    many accounts you have recently opened or closed.
                   </p>
                   <p>
-                    The sensitivity to ChexSystems inquiries varies greatly
-                    between banks. Some are very sensitive and may deny
-                    applications with just a few recent inquiries, while others
-                    are much more lenient. Research a bank&apos;s ChexSystems
-                    sensitivity before applying.
+                    Some banks are inquiry-sensitive and may reject applications
+                    if you have opened many accounts recently, while other banks
+                    do not check ChexSystems at all. Spacing out applications by
+                    30 to 60 days helps minimize friction.
                   </p>
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="earlyclosure">
-                <AccordionTrigger>
-                  Can I close a bank account soon after getting a bonus?
+              <AccordionItem value="earlyclosure" className="border-b-0 py-1">
+                <AccordionTrigger className="text-sm font-semibold text-slate-900 hover:no-underline hover:text-[#0160c4] dark:text-white dark:hover:text-[#38b6ff]">
+                  Can I close an account right after receiving the bonus?
                 </AccordionTrigger>
-                <AccordionContent>
-                  <p className="mb-3">
-                    Most banks have terms and conditions specifying how long an
-                    account must remain open to keep the bonus, often 90 days,
-                    180 days, or even longer. Closing an account before this
-                    period may result in the bonus being clawed back.
-                  </p>
-                  <p className="mb-3">
-                    Additionally, some banks charge early account closure fees
-                    if an account is closed within a certain timeframe (e.g., 6
-                    months or a year) from opening, regardless of bonus terms.
+                <AccordionContent className="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+                  <p className="mb-2.5">
+                    Most banks require you to keep the account open for 90 to
+                    180 days to avoid early account closure fees or bonus
+                    clawbacks.
                   </p>
                   <p>
-                    Always read the fine print of the bonus offer and the
-                    bank&apos;s account agreement carefully. It&apos;s generally
-                    best practice to keep accounts open for at least 6 months to
-                    avoid issues, even if the bonus terms are shorter.
-                  </p>
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="multipleaccounts">
-                <AccordionTrigger>
-                  Can I open multiple accounts at the same bank for bonuses?
-                </AccordionTrigger>
-                <AccordionContent>
-                  <p className="mb-3">
-                    This depends on the bank&apos;s specific terms. Some banks
-                    allow you to earn bonuses for different types of accounts
-                    (e.g., a checking bonus and a savings bonus). Others may
-                    limit bonuses to one per customer or one per household.
-                  </p>
-                  <p className="mb-3">
-                    Banks often have &quot;new customer&quot; requirements,
-                    meaning you can&apos;t have had an account with them
-                    recently (e.g., within the last 12 months or longer) to be
-                    eligible for a bonus.
-                  </p>
-                  <p>
-                    Always check the offer terms. Attempting to circumvent these
-                    rules can lead to bonus denial or account closure.
+                    Always note the required retention period on your calendar.
+                    Once the retention period passes, you can cleanly close or
+                    downgrade the account with zero penalties.
                   </p>
                 </AccordionContent>
               </AccordionItem>

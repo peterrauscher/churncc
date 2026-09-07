@@ -1,113 +1,208 @@
 import Link from "next/link";
+import { BrandLogo } from "./BrandLogo";
+import { ShieldCheck, Sparkle } from "@phosphor-icons/react/dist/ssr";
 
 const Footer = () => {
   return (
-    <footer className="mt-24 px-4 pb-8 md:px-8">
-      <div className="mx-auto max-w-[1400px] rounded-[2rem] bg-foreground/[0.04] p-1.5 ring-1 ring-foreground/5">
-        <div className="rounded-[calc(2rem-0.375rem)] bg-[#1c1612] px-6 py-16 text-[#f7f1e6] shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)] md:px-12 md:py-20">
-          <div className="grid grid-cols-1 gap-12 md:grid-cols-12">
-            <div className="md:col-span-5">
-              <p className="mb-4 inline-flex rounded-full px-3 py-1 text-[10px] font-medium tracking-[0.2em] uppercase ring-1 ring-white/10">
-                Churnable
-              </p>
-              <p className="font-serif max-w-md text-4xl leading-[1.05] tracking-tight md:text-5xl">
-                Take the acquisition budget back.
-              </p>
-              <p className="mt-5 max-w-sm text-sm leading-relaxed text-[#f7f1e6]/65">
-                Compare live card and bank bonuses, then claim the money issuers
-                already budgeted to buy you.
-              </p>
-            </div>
+    <footer className="mt-20 border-t border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
+          {/* Brand Column */}
+          <div className="lg:col-span-2">
+            <BrandLogo size="md" href="/" />
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              The premier bonus optimization platform. We track live credit card
+              welcome bonuses and bank account promotions so you can keep more
+              money from every paycheck.
+            </p>
 
-            <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 md:col-span-7">
-              <div className="flex flex-col gap-3">
-                <p className="text-[10px] tracking-[0.2em] uppercase text-[#f7f1e6]/45">
-                  Explore
-                </p>
-                <Link
-                  href="/credit-cards"
-                  className="text-sm text-[#f7f1e6]/80 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-[#f7f1e6]"
-                >
-                  Credit cards
-                </Link>
-                <Link
-                  href="/bank-accounts"
-                  className="text-sm text-[#f7f1e6]/80 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-[#f7f1e6]"
-                >
-                  Bank accounts
-                </Link>
-                <Link
-                  href="/resources"
-                  className="text-sm text-[#f7f1e6]/80 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-[#f7f1e6]"
-                >
-                  Guides
-                </Link>
-              </div>
-
-              <div className="flex flex-col gap-3">
-                <p className="text-[10px] tracking-[0.2em] uppercase text-[#f7f1e6]/45">
-                  Issuers
-                </p>
-                <Link
-                  href="/credit-cards?issuer=CHASE"
-                  className="text-sm text-[#f7f1e6]/80 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-[#f7f1e6]"
-                >
-                  Chase
-                </Link>
-                <Link
-                  href="/credit-cards?issuer=AMERICAN_EXPRESS"
-                  className="text-sm text-[#f7f1e6]/80 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-[#f7f1e6]"
-                >
-                  American Express
-                </Link>
-                <Link
-                  href="/credit-cards?issuer=CAPITAL_ONE"
-                  className="text-sm text-[#f7f1e6]/80 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-[#f7f1e6]"
-                >
-                  Capital One
-                </Link>
-                <Link
-                  href="/credit-cards?issuer=CITI"
-                  className="text-sm text-[#f7f1e6]/80 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-[#f7f1e6]"
-                >
-                  Citi
-                </Link>
-              </div>
-
-              <div className="flex flex-col gap-3">
-                <p className="text-[10px] tracking-[0.2em] uppercase text-[#f7f1e6]/45">
-                  Legal
-                </p>
-                <Link
-                  href="/privacy"
-                  className="text-sm text-[#f7f1e6]/80 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-[#f7f1e6]"
-                >
-                  Privacy
-                </Link>
-                <Link
-                  href="/terms"
-                  className="text-sm text-[#f7f1e6]/80 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-[#f7f1e6]"
-                >
-                  Terms
-                </Link>
-                <Link
-                  href="/affiliates"
-                  className="text-sm text-[#f7f1e6]/80 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-[#f7f1e6]"
-                >
-                  Affiliates
-                </Link>
-              </div>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800 dark:border-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300">
+                <ShieldCheck
+                  weight="bold"
+                  className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400"
+                />
+                <span>100% Unbiased Rankings</span>
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-800 dark:border-blue-800 dark:bg-blue-950/60 dark:text-blue-300">
+                <Sparkle
+                  weight="bold"
+                  className="h-3.5 w-3.5 text-[#0160c4] dark:text-[#38b6ff]"
+                />
+                <span>Daily Rate Tracking</span>
+              </span>
             </div>
           </div>
 
-          <div className="mt-16 flex flex-col gap-3 border-t border-white/10 pt-8 md:flex-row md:items-center md:justify-between">
-            <p className="text-xs text-[#f7f1e6]/45">
-              © {new Date().getFullYear()} Churnable. All rights reserved.
+          {/* Column 1: Cards */}
+          <div>
+            <p className="text-xs font-bold tracking-wider text-slate-900 uppercase dark:text-white">
+              Credit Cards
             </p>
-            <p className="text-xs text-[#f7f1e6]/45">
-              Banks update promos constantly. Verify current terms before you
-              apply.
+            <ul className="mt-4 space-y-2.5 text-sm">
+              <li>
+                <Link
+                  href="/credit-cards"
+                  className="text-slate-600 transition-colors hover:text-[#0160c4] dark:text-slate-400 dark:hover:text-[#38b6ff]"
+                >
+                  All Credit Card Offers
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/credit-cards?fee=0"
+                  className="text-slate-600 transition-colors hover:text-[#0160c4] dark:text-slate-400 dark:hover:text-[#38b6ff]"
+                >
+                  No Annual Fee Cards
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/credit-cards?type=travel"
+                  className="text-slate-600 transition-colors hover:text-[#0160c4] dark:text-slate-400 dark:hover:text-[#38b6ff]"
+                >
+                  Travel Rewards Cards
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/credit-cards?type=cashback"
+                  className="text-slate-600 transition-colors hover:text-[#0160c4] dark:text-slate-400 dark:hover:text-[#38b6ff]"
+                >
+                  Cash Back Cards
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 2: Bank Accounts */}
+          <div>
+            <p className="text-xs font-bold tracking-wider text-slate-900 uppercase dark:text-white">
+              Banking
             </p>
+            <ul className="mt-4 space-y-2.5 text-sm">
+              <li>
+                <Link
+                  href="/bank-accounts"
+                  className="text-slate-600 transition-colors hover:text-[#0160c4] dark:text-slate-400 dark:hover:text-[#38b6ff]"
+                >
+                  All Bank Account Bonuses
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/bank-accounts?type=checking"
+                  className="text-slate-600 transition-colors hover:text-[#0160c4] dark:text-slate-400 dark:hover:text-[#38b6ff]"
+                >
+                  Checking Account Promos
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/bank-accounts?type=savings"
+                  className="text-slate-600 transition-colors hover:text-[#0160c4] dark:text-slate-400 dark:hover:text-[#38b6ff]"
+                >
+                  High-Yield Savings Bonuses
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/bank-accounts?fee=0"
+                  className="text-slate-600 transition-colors hover:text-[#0160c4] dark:text-slate-400 dark:hover:text-[#38b6ff]"
+                >
+                  No Monthly Fee Accounts
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: Resources */}
+          <div>
+            <p className="text-xs font-bold tracking-wider text-slate-900 uppercase dark:text-white">
+              Guides & Tools
+            </p>
+            <ul className="mt-4 space-y-2.5 text-sm">
+              <li>
+                <Link
+                  href="/resources"
+                  className="text-slate-600 transition-colors hover:text-[#0160c4] dark:text-slate-400 dark:hover:text-[#38b6ff]"
+                >
+                  Beginner Churning Guide
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/resources"
+                  className="text-slate-600 transition-colors hover:text-[#0160c4] dark:text-slate-400 dark:hover:text-[#38b6ff]"
+                >
+                  Chase 5/24 Rule Explained
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/resources"
+                  className="text-slate-600 transition-colors hover:text-[#0160c4] dark:text-slate-400 dark:hover:text-[#38b6ff]"
+                >
+                  Direct Deposit Requirements
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/resources"
+                  className="text-slate-600 transition-colors hover:text-[#0160c4] dark:text-slate-400 dark:hover:text-[#38b6ff]"
+                >
+                  Bonus Tax Rules (1099-INT)
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Editorial Disclosure and Legal Notes */}
+        <div className="mt-12 rounded-xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+          <p className="text-xs font-semibold text-slate-900 uppercase dark:text-white">
+            Editorial Disclosure & Disclaimer
+          </p>
+          <p className="mt-2 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+            Churnable is an independent comparison service. We may receive
+            compensation from card issuers or financial institutions when you
+            click links to products. However, this compensation does not impact
+            our editorial rankings, recommendations, or calculations. Offers and
+            promotional rates are subject to change without notice. Please
+            review the official terms on the issuer or bank website before
+            applying.
+          </p>
+          <p className="mt-2 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+            Deposit products from partner institutions are FDIC or NCUA insured
+            up to the allowable limits. Churnable is not an investment advisor
+            or depository institution.
+          </p>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-8 sm:flex-row dark:border-slate-800">
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            (c) {new Date().getFullYear()} Churnable. All rights reserved.
+          </p>
+          <div className="flex flex-wrap items-center gap-6 text-xs text-slate-500 dark:text-slate-400">
+            <Link
+              href="/resources"
+              className="hover:text-slate-900 dark:hover:text-white"
+            >
+              Terms of Service
+            </Link>
+            <Link
+              href="/resources"
+              className="hover:text-slate-900 dark:hover:text-white"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/resources"
+              className="hover:text-slate-900 dark:hover:text-white"
+            >
+              Editorial Policy
+            </Link>
           </div>
         </div>
       </div>

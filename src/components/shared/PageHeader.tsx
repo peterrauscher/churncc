@@ -5,29 +5,36 @@ interface PageHeaderProps {
   description?: string;
   eyebrow?: string;
   className?: string;
+  badge?: React.ReactNode;
 }
 
 export function PageHeader({
   title,
   description,
   eyebrow,
+  badge,
   className,
 }: PageHeaderProps) {
   return (
-    <header className={cn("mb-12 max-w-3xl md:mb-16", className)}>
-      {eyebrow ? (
-        <p className="mb-4 inline-flex rounded-full px-3 py-1 text-[10px] font-medium tracking-[0.2em] uppercase ring-1 ring-foreground/10">
-          {eyebrow}
-        </p>
-      ) : null}
-      <h1 className="font-serif text-4xl leading-[1.05] tracking-tight text-foreground md:text-6xl">
+    <header className={cn("mb-8 max-w-3xl md:mb-12", className)}>
+      <div className="flex flex-wrap items-center gap-3">
+        {eyebrow ? (
+          <p className="text-xs font-bold tracking-wider text-[#0160c4] uppercase dark:text-[#38b6ff]">
+            {eyebrow}
+          </p>
+        ) : null}
+        {badge}
+      </div>
+      <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl md:text-5xl dark:text-white">
         {title}
       </h1>
       {description ? (
-        <p className="mt-4 max-w-[42rem] text-base leading-relaxed text-muted-foreground md:text-lg">
+        <p className="mt-3 max-w-[44rem] text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-400">
           {description}
         </p>
       ) : null}
     </header>
   );
 }
+
+export default PageHeader;

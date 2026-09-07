@@ -1,33 +1,29 @@
 import type { Metadata } from "next";
-import { Fraunces, Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { AppProviders } from "./app-providers";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { cn } from "@/lib/utils";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
-  subsets: ["latin"],
-  axes: ["SOFT", "WONK", "opsz"],
-});
-
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
   subsets: ["latin"],
+  display: "swap",
 });
 
 const ibmPlexMono = IBM_Plex_Mono({
   variable: "--font-ibm-plex-mono",
-  weight: ["400", "500"],
+  weight: ["400", "500", "600"],
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Churnable: Earn More With Banking & Credit Card Bonuses",
+  title: "Churnable: Compare Credit Card & Bank Account Bonuses",
   description:
-    "Find the latest and greatest bank account and credit card bonus offers to earn more money from your paycheck. Flip the script and profit like the banks do.",
+    "Find and compare the latest credit card welcome offers and bank account bonuses. Maximize your rewards with unbiased, data-driven financial tools.",
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
@@ -43,24 +39,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          fraunces.variable,
           plusJakarta.variable,
           ibmPlexMono.variable,
-          "flex min-h-[100dvh] flex-col font-sans antialiased",
+          "flex min-h-[100dvh] flex-col bg-background font-sans text-foreground antialiased",
         )}
       >
         <a
           href="#content"
-          className="bg-primary text-primary-foreground sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[var(--z-overlay)] focus:rounded-full focus:px-4 focus:py-2"
+          className="bg-primary text-primary-foreground sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[var(--z-overlay)] focus:rounded-md focus:px-4 focus:py-2 focus:shadow-md"
         >
           Skip to content
         </a>
         <Navbar />
         <AppProviders>
-          <main id="content" className="flex-1 pt-28">
+          <main id="content" className="flex-1 pt-16 md:pt-20">
             {children}
           </main>
         </AppProviders>

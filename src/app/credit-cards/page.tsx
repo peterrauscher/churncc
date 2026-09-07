@@ -1,21 +1,18 @@
 "use client";
 
 import { Suspense, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation"; // Changed from react-router-dom
+import { useSearchParams } from "next/navigation";
 import CreditCardGrid from "@/components/cards/CreditCardGrid";
 import CreditCardFilters from "@/components/filters/CreditCardFilters";
 import { PageContainer } from "@/components/shared/PageContainer";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { LoadingCards } from "@/components/shared/LoadingCards";
-import { Bezel } from "@/components/shared/Bezel";
 import { CreditCard, FilterOptions, SortOptions } from "@/types";
 import { fetchCreditCards } from "@/services/api";
+import { ShieldCheck } from "@phosphor-icons/react";
 
 function CreditCardsPageContent() {
-  // Renamed for clarity
-  const searchParams = useSearchParams(); // From next/navigation
-  // We are not using setSearchParams directly in this component,
-  // but CreditCardFilters might need to be updated to use Next.js navigation for URL updates.
+  const searchParams = useSearchParams();
   const [creditCards, setCreditCards] = useState<CreditCard[]>([]);
   const [filteredCards, setFilteredCards] = useState<CreditCard[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -23,6 +20,9 @@ function CreditCardsPageContent() {
   const [networks, setNetworks] = useState<string[]>([]);
 
   const urlIssuer = searchParams.get("issuer");
+  const urlQuery = searchParams.get("q");
+  const urlFee = searchParams.get("fee");
+  const urlType = searchParams.get("type");
 
   useEffect(() => {
     const loadCreditCards = async () => {
@@ -38,19 +38,57 @@ function CreditCardsPageContent() {
 
         const uniqueIssuers = Array.from(
           new Set(activeCards.map((card: CreditCard) => card.issuer)),
-        ) as string[]; // Explicit type assertion
+        ) as string[];
         setIssuers(uniqueIssuers);
 
         const uniqueNetworks = Array.from(
           new Set(activeCards.map((card: CreditCard) => card.network)),
-        ) as string[]; // Explicit type assertion
+        ) as string[];
         setNetworks(uniqueNetworks);
 
+        // Filter by URL parameters if present
         if (urlIssuer) {
-          initialDisplayCards = activeCards.filter(
+          initialDisplayCards = initialDisplayCards.filter(
             (card: CreditCard) => card.issuer === urlIssuer,
           );
         }
+
+        if (urlFee === "0") {
+          initialDisplayCards = initialDisplayCards.filter(
+            (card: CreditCard) => card.annualFee === 0,
+          );
+        }
+
+        if (urlType === "travel") {
+          initialDisplayCards = initialDisplayCards.filter(
+            (card: CreditCard) =>
+              card.name.toLowerCase().includes("travel") ||
+              card.name.toLowerCase().includes("sapphire") ||
+              card.name.toLowerCase().includes("venture") ||
+              card.name.toLowerCase().includes("platinum") ||
+              card.details?.toLowerCase().includes("miles") ||
+              card.details?.toLowerCase().includes("points"),
+          );
+        } else if (urlType === "cashback") {
+          initialDisplayCards = initialDisplayCards.filter(
+            (card: CreditCard) =>
+              card.universalCashbackPercent > 1.5 ||
+              card.name.toLowerCase().includes("cash") ||
+              card.name.toLowerCase().includes("freedom") ||
+              card.name.toLowerCase().includes("quicksilver"),
+          );
+        }
+
+        if (urlQuery) {
+          const q = urlQuery.toLowerCase();
+          initialDisplayCards = initialDisplayCards.filter(
+            (card: CreditCard) =>
+              card.name.toLowerCase().includes(q) ||
+              card.issuer.toLowerCase().includes(q) ||
+              card.details?.toLowerCase().includes(q),
+          );
+        }
+
         setFilteredCards(initialDisplayCards);
       } catch (error) {
         console.error("Error loading credit cards:", error);
@@ -60,7 +98,7 @@ function CreditCardsPageContent() {
     };
 
     loadCreditCards();
-  }, [urlIssuer]);
+  }, [urlIssuer, urlQuery, urlFee, urlType]);
 
   const handleFilterChange = (filters: FilterOptions) => {
     let tempFiltered = [...creditCards];
@@ -144,23 +182,28 @@ function CreditCardsPageContent() {
   };
 
   return (
-    <PageContainer className="py-8 md:py-16">
+    <PageContainer className="py-8 md:py-12">
       <PageHeader
-        eyebrow="Cards"
-        title="Credit card offers"
-        description="Compare bonus offers side by side and capture the value banks use to buy new customers."
+        eyebrow="Credit Cards"
+        title="Compare Credit Card Bonus Offers"
+        description="Side-by-side welcome bonuses, spend requirements, and fee comparisons ranked by real net payout."
+        badge={
+          <span className="inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 dark:border-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300">
+            <ShieldCheck weight="bold" className="h-3.5 w-3.5" />
+            <span>Editorial Independent</span>
+          </span>
+        }
       />
 
-      <Bezel className="mb-10">
-        <div className="p-5 md:p-6">
-          <CreditCardFilters
-            onFilterChange={handleFilterChange}
-            onSortChange={handleSortChange}
-            issuers={issuers}
-            networks={networks}
-          />
-        </div>
-      </Bezel>
+      {/* Filter Surface */}
+      <div className="mb-10 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900 md:p-6">
+        <CreditCardFilters
+          onFilterChange={handleFilterChange}
+          onSortChange={handleSortChange}
+          issuers={issuers}
+          networks={networks}
+        />
+      </div>
 
       {isLoading ? (
         <LoadingCards
@@ -169,16 +212,20 @@ function CreditCardsPageContent() {
         />
       ) : (
         <>
-          <div className="mb-6">
-            <p className="text-sm text-muted-foreground">
-              Showing {filteredCards.length} of {creditCards.length} credit
-              cards
+          <div className="mb-6 flex items-center justify-between">
+            <p className="text-sm font-semibold text-slate-600 dark:text-slate-400">
+              Showing{" "}
+              <span className="font-bold text-slate-900 dark:text-white">
+                {filteredCards.length}
+              </span>{" "}
+              of {creditCards.length} cards
+              {urlQuery && ` matching "${urlQuery}"`}
             </p>
           </div>
 
           <CreditCardGrid
             cards={filteredCards}
-            emptyMessage="No credit cards match your filters. Try adjusting your criteria."
+            emptyMessage="No credit cards match your current criteria. Try resetting filters."
           />
         </>
       )}
@@ -189,7 +236,14 @@ function CreditCardsPageContent() {
 export default function CreditCardsPage() {
   return (
     <Suspense
-      fallback={<PageContainer className="py-8">Loading offers…</PageContainer>}
+      fallback={
+        <PageContainer className="py-8 md:py-12">
+          <LoadingCards
+            count={8}
+            columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          />
+        </PageContainer>
+      }
     >
       <CreditCardsPageContent />
     </Suspense>

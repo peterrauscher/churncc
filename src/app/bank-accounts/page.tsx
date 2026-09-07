@@ -1,35 +1,39 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import BankAccountGrid from "@/components/cards/BankAccountGrid";
 import BankAccountFilters from "@/components/filters/BankAccountFilters";
-import { BankAccount } from "@/types"; // Assuming BankAccount type is defined in @/types
+import { BankAccount } from "@/types";
 import { getMockBankAccounts } from "@/services/api";
 import { PageContainer } from "@/components/shared/PageContainer";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { LoadingCards } from "@/components/shared/LoadingCards";
-import { Bezel } from "@/components/shared/Bezel";
+import { ShieldCheck } from "@phosphor-icons/react";
 
-// Define a more specific type for filter options based on usage
 interface BankAccountFilterState {
   institutions?: string[];
-  accountTypes?: string[]; // Assuming account types are strings e.g., ['checking', 'savings']
+  accountTypes?: string[];
   minBonus?: number;
   noMonthlyFee?: boolean;
   directDepositRequired?: boolean;
 }
 
-// Define a type for sort options
 interface BankAccountSortState {
-  field: keyof Pick<BankAccount, "offerAmount" | "monthlyFee"> | string; // Allow known sortable fields or any string
+  field: keyof Pick<BankAccount, "offerAmount" | "monthlyFee"> | string;
   direction: "asc" | "desc";
 }
 
-export default function BankAccountsPage() {
+function BankAccountsPageContent() {
+  const searchParams = useSearchParams();
   const [bankAccounts, setBankAccounts] = useState<BankAccount[]>([]);
   const [filteredAccounts, setFilteredAccounts] = useState<BankAccount[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [institutions, setInstitutions] = useState<string[]>([]);
+
+  const urlType = searchParams.get("type");
+  const urlFee = searchParams.get("fee");
+  const urlQuery = searchParams.get("q");
 
   useEffect(() => {
     const loadBankAccounts = async () => {
@@ -37,7 +41,7 @@ export default function BankAccountsPage() {
       try {
         const accountsData = getMockBankAccounts();
         setBankAccounts(accountsData);
-        setFilteredAccounts(accountsData);
+        let initialDisplay = [...accountsData];
 
         const uniqueInstitutions = Array.from(
           new Set(
@@ -45,6 +49,31 @@ export default function BankAccountsPage() {
           ),
         ) as string[];
         setInstitutions(uniqueInstitutions);
+
+        if (urlType) {
+          const upperType = urlType.toUpperCase();
+          initialDisplay = initialDisplay.filter(
+            (a: BankAccount) => a.type.toUpperCase() === upperType,
+          );
+        }
+
+        if (urlFee === "0") {
+          initialDisplay = initialDisplay.filter(
+            (a: BankAccount) => !a.monthlyFee || a.monthlyFee === 0,
+          );
+        }
+
+        if (urlQuery) {
+          const q = urlQuery.toLowerCase();
+          initialDisplay = initialDisplay.filter(
+            (a: BankAccount) =>
+              a.name.toLowerCase().includes(q) ||
+              a.institution.toLowerCase().includes(q) ||
+              a.requirements.toLowerCase().includes(q),
+          );
+        }
+
+        setFilteredAccounts(initialDisplay);
       } catch (error) {
         console.error("Error loading bank accounts:", error);
       } finally {
@@ -53,7 +82,7 @@ export default function BankAccountsPage() {
     };
 
     loadBankAccounts();
-  }, []);
+  }, [urlType, urlFee, urlQuery]);
 
   const handleFilterChange = (filters: BankAccountFilterState) => {
     let tempFiltered = [...bankAccounts];
@@ -114,8 +143,6 @@ export default function BankAccountsPage() {
         break;
 
       default:
-        // Optionally log if an unexpected sort field is encountered
-        // console.warn(`Unsupported sort field: ${sort.field}`);
         break;
     }
 
@@ -123,22 +150,27 @@ export default function BankAccountsPage() {
   };
 
   return (
-    <PageContainer className="py-8 md:py-16">
+    <PageContainer className="py-8 md:py-12">
       <PageHeader
-        eyebrow="Banks"
-        title="Bank account bonuses"
-        description="Find checking and savings promos that put bank acquisition cash in your hands."
+        eyebrow="Banking"
+        title="Compare Bank Account Bonuses"
+        description="Find checking and savings promotions that pay you cash for moving your everyday deposits."
+        badge={
+          <span className="inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 dark:border-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300">
+            <ShieldCheck weight="bold" className="h-3.5 w-3.5" />
+            <span>FDIC / NCUA Insured Products</span>
+          </span>
+        }
       />
 
-      <Bezel className="mb-10">
-        <div className="p-5 md:p-6">
-          <BankAccountFilters
-            onFilterChange={handleFilterChange}
-            onSortChange={handleSortChange}
-            institutions={institutions}
-          />
-        </div>
-      </Bezel>
+      {/* Filter Surface */}
+      <div className="mb-10 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900 md:p-6">
+        <BankAccountFilters
+          onFilterChange={handleFilterChange}
+          onSortChange={handleSortChange}
+          institutions={institutions}
+        />
+      </div>
 
       {isLoading ? (
         <LoadingCards
@@ -147,19 +179,39 @@ export default function BankAccountsPage() {
         />
       ) : (
         <>
-          <div className="mb-6">
-            <p className="text-sm text-muted-foreground">
-              Showing {filteredAccounts.length} of {bankAccounts.length} bank
-              accounts
+          <div className="mb-6 flex items-center justify-between">
+            <p className="text-sm font-semibold text-slate-600 dark:text-slate-400">
+              Showing{" "}
+              <span className="font-bold text-slate-900 dark:text-white">
+                {filteredAccounts.length}
+              </span>{" "}
+              of {bankAccounts.length} accounts
             </p>
           </div>
 
           <BankAccountGrid
             accounts={filteredAccounts}
-            emptyMessage="No bank accounts match your filters. Try adjusting your criteria."
+            emptyMessage="No bank accounts match your current criteria. Try resetting filters."
           />
         </>
       )}
     </PageContainer>
+  );
+}
+
+export default function BankAccountsPage() {
+  return (
+    <Suspense
+      fallback={
+        <PageContainer className="py-8 md:py-12">
+          <LoadingCards
+            count={6}
+            columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+          />
+        </PageContainer>
+      }
+    >
+      <BankAccountsPageContent />
+    </Suspense>
   );
 }

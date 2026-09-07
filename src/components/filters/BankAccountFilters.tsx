@@ -1,5 +1,6 @@
+"use client";
+
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
@@ -16,7 +17,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Funnel, ArrowsDownUp } from "@phosphor-icons/react";
+import { Funnel, X } from "@phosphor-icons/react";
 
 interface BankAccountFilterState {
   institutions?: string[];
@@ -48,41 +49,29 @@ const BankAccountFilters = ({
   };
 
   const handleInstitutionToggle = (institution: string, checked: boolean) => {
-    const currentInstitutions = filters.institutions || [];
-    let newInstitutions: string[];
-
-    if (checked) {
-      newInstitutions = [...currentInstitutions, institution];
-    } else {
-      newInstitutions = currentInstitutions.filter(
-        (i: string) => i !== institution,
-      );
-    }
-
+    const current = filters.institutions || [];
+    const updated = checked
+      ? [...current, institution]
+      : current.filter((i) => i !== institution);
     handleFilterChange({
-      institutions: newInstitutions.length ? newInstitutions : undefined,
+      institutions: updated.length > 0 ? updated : undefined,
     });
   };
 
   const handleTypeToggle = (type: string, checked: boolean) => {
-    const currentTypes = filters.accountTypes || [];
-    let newTypes: string[];
-
-    if (checked) {
-      newTypes = [...currentTypes, type];
-    } else {
-      newTypes = currentTypes.filter((t: string) => t !== type);
-    }
-
+    const current = filters.accountTypes || [];
+    const updated = checked
+      ? [...current, type]
+      : current.filter((t) => t !== type);
     handleFilterChange({
-      accountTypes: newTypes.length ? newTypes : undefined,
+      accountTypes: updated.length > 0 ? updated : undefined,
     });
   };
 
   const handleSortChange = (value: string) => {
     setSortOption(value);
-    const [field, direction] = value.split("-");
-    onSortChange({ field, direction: direction as "asc" | "desc" });
+    const [field, direction] = value.split("-") as [string, "asc" | "desc"];
+    onSortChange({ field, direction });
   };
 
   const handleMinBonusChange = (value: number[]) => {
@@ -96,65 +85,116 @@ const BankAccountFilters = ({
     onFilterChange({});
   };
 
+  const hasActiveFilters =
+    Boolean(filters.noMonthlyFee) ||
+    Boolean(filters.directDepositRequired) ||
+    Boolean(filters.institutions?.length) ||
+    Boolean(filters.accountTypes?.length) ||
+    Boolean(filters.minBonus);
+
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
+    <div className="space-y-5">
+      {/* Header Bar */}
+      <div className="flex items-center justify-between border-b border-slate-100 pb-4 dark:border-slate-800">
         <div className="flex items-center gap-2">
-          <Funnel weight="light" className="h-5 w-5" />
-          <h3 className="font-serif text-xl tracking-tight">Filters</h3>
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-[#0160c4] dark:bg-blue-950 dark:text-[#38b6ff]">
+            <Funnel weight="bold" className="h-4 w-4" />
+          </span>
+          <div>
+            <h3 className="text-base font-bold text-slate-900 dark:text-white">
+              Filter & Sort Bank Accounts
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Narrow down by bonus amount, account type, and deposit criteria
+            </p>
+          </div>
         </div>
-        <Button variant="outline" size="sm" onClick={clearFilters}>
-          Clear All
-        </Button>
+
+        {hasActiveFilters && (
+          <button
+            type="button"
+            onClick={clearFilters}
+            className="inline-flex items-center gap-1 text-xs font-semibold text-rose-600 hover:text-rose-700 dark:text-rose-400"
+          >
+            <X weight="bold" className="h-3.5 w-3.5" />
+            <span>Reset All Filters</span>
+          </button>
+        )}
       </div>
 
+      {/* Primary Controls: Sort + Quick Filter Chips */}
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex items-center gap-2">
-          <ArrowsDownUp weight="light" className="h-5 w-5" />
-          <Label htmlFor="sort">Sort By</Label>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+            Sort by:
+          </span>
           <Select value={sortOption} onValueChange={handleSortChange}>
-            <SelectTrigger id="sort" className="w-[180px]">
+            <SelectTrigger
+              id="sort"
+              className="h-9 w-[190px] rounded-lg border-slate-200 text-xs font-semibold dark:border-slate-800"
+            >
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="offerAmount-desc">Highest Bonus</SelectItem>
-              <SelectItem value="offerAmount-asc">Lowest Bonus</SelectItem>
+              <SelectItem value="offerAmount-desc">
+                Highest Cash Bonus
+              </SelectItem>
+              <SelectItem value="offerAmount-asc">Lowest Cash Bonus</SelectItem>
+              <SelectItem value="monthlyFee-asc">Lowest Monthly Fee</SelectItem>
               <SelectItem value="monthlyFee-desc">
                 Highest Monthly Fee
               </SelectItem>
-              <SelectItem value="monthlyFee-asc">Lowest Monthly Fee</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
-        <div className="flex items-center gap-4">
-          <Checkbox
-            id="noMonthlyFee"
-            checked={filters.noMonthlyFee}
-            onCheckedChange={(checked) =>
-              handleFilterChange({ noMonthlyFee: checked ? true : undefined })
-            }
-          />
-          <Label htmlFor="noMonthlyFee">No Monthly Fee</Label>
+        {/* Quick Filter Checkboxes */}
+        <div className="flex flex-wrap items-center gap-4 text-xs">
+          <label className="flex cursor-pointer items-center gap-2 font-medium text-slate-700 dark:text-slate-300">
+            <Checkbox
+              id="noMonthlyFee"
+              checked={filters.noMonthlyFee}
+              onCheckedChange={(checked) =>
+                handleFilterChange({ noMonthlyFee: checked ? true : undefined })
+              }
+            />
+            <span>No Monthly Fee</span>
+          </label>
 
-          <Checkbox
-            id="directDepositRequired"
-            checked={filters.directDepositRequired}
-            onCheckedChange={(checked) =>
-              handleFilterChange({
-                directDepositRequired: checked ? true : undefined,
-              })
-            }
-          />
-          <Label htmlFor="directDepositRequired">Direct Deposit Required</Label>
+          <label className="flex cursor-pointer items-center gap-2 font-medium text-slate-700 dark:text-slate-300">
+            <Checkbox
+              id="directDepositRequired"
+              checked={filters.directDepositRequired}
+              onCheckedChange={(checked) =>
+                handleFilterChange({
+                  directDepositRequired: checked ? true : undefined,
+                })
+              }
+            />
+            <span>Direct Deposit Required</span>
+          </label>
         </div>
       </div>
 
-      <Accordion type="single" collapsible className="w-full">
-        <AccordionItem value="institutions">
-          <AccordionTrigger>Institutions</AccordionTrigger>
+      {/* Accordion Detailed Filter Panels */}
+      <Accordion
+        type="single"
+        collapsible
+        className="w-full border-t border-slate-100 pt-2 dark:border-slate-800"
+      >
+        <AccordionItem
+          value="institutions"
+          className="border-b border-slate-100 dark:border-slate-800"
+        >
+          <AccordionTrigger className="text-xs font-bold text-slate-900 uppercase hover:no-underline dark:text-white">
+            Banks & Institutions (
+            {filters.institutions?.length
+              ? `${filters.institutions.length} selected`
+              : "All"}
+            )
+          </AccordionTrigger>
           <AccordionContent>
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
+            <div className="grid grid-cols-2 gap-3 pt-1 md:grid-cols-3 lg:grid-cols-4">
               {institutions.map((institution) => (
                 <div key={institution} className="flex items-center space-x-2">
                   <Checkbox
@@ -164,7 +204,10 @@ const BankAccountFilters = ({
                       handleInstitutionToggle(institution, checked as boolean)
                     }
                   />
-                  <Label htmlFor={`institution-${institution}`}>
+                  <Label
+                    htmlFor={`institution-${institution}`}
+                    className="text-xs font-medium cursor-pointer"
+                  >
                     {institution}
                   </Label>
                 </div>
@@ -173,10 +216,19 @@ const BankAccountFilters = ({
           </AccordionContent>
         </AccordionItem>
 
-        <AccordionItem value="account-types">
-          <AccordionTrigger>Account Types</AccordionTrigger>
+        <AccordionItem
+          value="account-types"
+          className="border-b border-slate-100 dark:border-slate-800"
+        >
+          <AccordionTrigger className="text-xs font-bold text-slate-900 uppercase hover:no-underline dark:text-white">
+            Account Types (
+            {filters.accountTypes?.length
+              ? `${filters.accountTypes.length} selected`
+              : "All"}
+            )
+          </AccordionTrigger>
           <AccordionContent>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3 pt-1 sm:grid-cols-4">
               {["CHECKING", "SAVINGS", "BROKERAGE", "HYBRID"].map((type) => (
                 <div key={type} className="flex items-center space-x-2">
                   <Checkbox
@@ -186,7 +238,10 @@ const BankAccountFilters = ({
                       handleTypeToggle(type, checked as boolean)
                     }
                   />
-                  <Label htmlFor={`type-${type}`}>
+                  <Label
+                    htmlFor={`type-${type}`}
+                    className="text-xs font-medium cursor-pointer"
+                  >
                     {type.charAt(0) + type.slice(1).toLowerCase()}
                   </Label>
                 </div>
@@ -195,10 +250,12 @@ const BankAccountFilters = ({
           </AccordionContent>
         </AccordionItem>
 
-        <AccordionItem value="bonus-amount">
-          <AccordionTrigger>Minimum Bonus Amount</AccordionTrigger>
+        <AccordionItem value="bonus-amount" className="border-b-0">
+          <AccordionTrigger className="text-xs font-bold text-slate-900 uppercase hover:no-underline dark:text-white">
+            Minimum Cash Bonus: ${minBonus}
+          </AccordionTrigger>
           <AccordionContent>
-            <div className="space-y-4 px-1">
+            <div className="space-y-3 px-1 pt-2">
               <Slider
                 value={[minBonus]}
                 min={0}
@@ -206,9 +263,11 @@ const BankAccountFilters = ({
                 step={50}
                 onValueChange={handleMinBonusChange}
               />
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between text-xs text-slate-500">
                 <span>$0</span>
-                <span className="font-medium">Min: ${minBonus}</span>
+                <span className="font-semibold text-slate-900 dark:text-white">
+                  At least ${minBonus}
+                </span>
                 <span>$1,000+</span>
               </div>
             </div>

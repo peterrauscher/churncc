@@ -8,23 +8,38 @@ interface OfferSummaryProps {
 
 export function OfferSummary({ spend, days, expiration }: OfferSummaryProps) {
   return (
-    <div className="space-y-2 text-sm text-muted-foreground">
-      <div className="flex items-center gap-2">
-        <CurrencyDollar weight="light" className="h-4 w-4 text-gold" />
+    <div className="space-y-1.5 text-xs text-slate-600 dark:text-slate-400">
+      <div className="flex items-center gap-1.5">
+        <CurrencyDollar
+          weight="bold"
+          className="h-4 w-4 shrink-0 text-[#0160c4] dark:text-[#38b6ff]"
+        />
         <span>
           Spend{" "}
-          <strong className="font-medium text-foreground">
+          <strong className="font-semibold text-slate-900 dark:text-white">
             ${spend.toLocaleString()}
           </strong>{" "}
           in {days} days
         </span>
       </div>
       {expiration ? (
-        <div className="flex items-center gap-2">
-          <CalendarBlank weight="light" className="h-4 w-4 text-gold" />
-          <span>Expires {new Date(expiration).toLocaleDateString()}</span>
+        <div className="flex items-center gap-1.5">
+          <CalendarBlank
+            weight="bold"
+            className="h-4 w-4 shrink-0 text-slate-400"
+          />
+          <span>
+            Expires{" "}
+            {new Date(expiration).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            })}
+          </span>
         </div>
       ) : null}
     </div>
   );
 }
+
+export default OfferSummary;

@@ -1,13 +1,13 @@
 import { BankAccount } from "@/types";
 import Link from "next/link";
 import {
-  Bank as BankIcon,
   CalendarBlank,
   CurrencyDollar,
-  Info,
+  CheckCircle,
+  ArrowRight,
+  ArrowUpRight,
+  ShieldCheck,
 } from "@phosphor-icons/react/dist/ssr";
-import { IslandLink } from "@/components/shared/IslandLink";
-import { Bezel } from "@/components/shared/Bezel";
 
 interface BankAccountItemProps {
   account: BankAccount;
@@ -15,107 +15,131 @@ interface BankAccountItemProps {
 
 const BankAccountItem = ({ account }: BankAccountItemProps) => {
   return (
-    <Bezel className="h-full">
-      <article className="flex h-full flex-col overflow-hidden">
-        <div className="p-6 pb-0">
-          <div className="flex items-center justify-between gap-3">
-            <p className="text-[10px] font-medium tracking-[0.2em] uppercase text-muted-foreground">
-              {account.institution}
-            </p>
-            <span className="rounded-full px-2.5 py-1 text-[10px] tracking-[0.16em] uppercase text-muted-foreground ring-1 ring-foreground/10">
-              {account.type}
+    <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-xs transition-all duration-200 hover:border-slate-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700">
+      {/* Card Header */}
+      <div className="border-b border-slate-100 bg-slate-50/70 p-5 sm:p-6 dark:border-slate-800 dark:bg-slate-950/40">
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-xs font-bold tracking-wider text-slate-500 uppercase dark:text-slate-400">
+            {account.institution}
+          </span>
+          <span className="rounded-full border border-blue-200 bg-blue-50 px-2.5 py-0.5 text-[11px] font-semibold text-[#0160c4] dark:border-blue-900/60 dark:bg-blue-950/60 dark:text-[#38b6ff]">
+            {account.type.toUpperCase()}
+          </span>
+        </div>
+        <h3 className="mt-2 text-xl font-bold text-slate-900 transition-colors group-hover:text-[#0160c4] sm:text-2xl dark:text-white dark:group-hover:text-[#38b6ff]">
+          <Link href={`/bank-accounts/${account.id}`}>{account.name}</Link>
+        </h3>
+
+        {/* Bonus Highlight Box */}
+        <div className="mt-4 rounded-xl border border-emerald-200/80 bg-emerald-50/70 p-4 dark:border-emerald-900/50 dark:bg-emerald-950/40">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold tracking-wider text-emerald-800 uppercase dark:text-emerald-400">
+              Cash Bonus
+            </span>
+            <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-700 dark:text-emerald-400">
+              <ShieldCheck weight="bold" className="h-3 w-3" />
+              <span>FDIC Insured</span>
             </span>
           </div>
-          <h2 className="font-serif mt-3 text-2xl leading-tight tracking-tight">
-            {account.name}
-          </h2>
-          <div className="mt-5 flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-foreground/5">
-              <BankIcon weight="light" className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-[11px] tracking-wide text-muted-foreground">
-                Bonus amount
-              </p>
-              <p className="font-serif text-3xl tracking-tight text-gold">
-                ${account.offerAmount.toLocaleString()}
-              </p>
-            </div>
-          </div>
+          <p className="mt-1 text-3xl font-extrabold text-[#00a859] dark:text-emerald-400">
+            ${account.offerAmount.toLocaleString()}
+          </p>
         </div>
+      </div>
 
-        <div className="flex flex-1 flex-col p-6">
-          <div className="space-y-3">
-            <div className="flex items-start gap-2">
-              <Info
-                weight="light"
-                className="mt-0.5 h-4 w-4 shrink-0 text-gold"
-              />
-              <p className="text-sm leading-relaxed">{account.requirements}</p>
-            </div>
-
-            {account.directDepositRequired && (
-              <div className="flex items-center gap-2">
-                <CurrencyDollar weight="light" className="h-4 w-4 text-gold" />
-                <span className="text-sm">
-                  Direct deposit
-                  {account.directDepositAmount
-                    ? `: $${account.directDepositAmount.toLocaleString()}`
-                    : " required"}
-                </span>
-              </div>
-            )}
-
-            {account.minimumBalance !== undefined && (
-              <div className="flex items-center gap-2">
-                <CurrencyDollar weight="light" className="h-4 w-4 text-gold" />
-                <span className="text-sm">
-                  Min balance: ${account.minimumBalance.toLocaleString()}
-                </span>
-              </div>
-            )}
-
-            {account.expirationDate && (
-              <div className="flex items-center gap-2">
-                <CalendarBlank weight="light" className="h-4 w-4 text-gold" />
-                <span className="text-sm">
-                  Expires:{" "}
-                  {new Date(account.expirationDate).toLocaleDateString()}
-                </span>
-              </div>
-            )}
+      {/* Card Body - Requirements and Specs */}
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        <div className="space-y-2.5 text-xs text-slate-600 dark:text-slate-300">
+          <div className="flex items-start gap-2">
+            <CheckCircle
+              weight="fill"
+              className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400"
+            />
+            <p className="leading-snug">{account.requirements}</p>
           </div>
 
-          <div className="mt-5 rounded-[1.1rem] bg-muted/60 p-3">
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">Monthly fee</span>
-              <span className="font-medium">
-                {account.monthlyFee ? `$${account.monthlyFee}` : "No fee"}
+          {account.directDepositRequired && (
+            <div className="flex items-center gap-2">
+              <CurrencyDollar
+                weight="bold"
+                className="h-4 w-4 shrink-0 text-[#0160c4] dark:text-[#38b6ff]"
+              />
+              <span>
+                Direct deposit:{" "}
+                {account.directDepositAmount
+                  ? `$${account.directDepositAmount.toLocaleString()}`
+                  : "Required"}
               </span>
             </div>
-            {!!account.monthlyFee &&
-              account.monthlyFee > 0 &&
-              account.isMonthlyFeeWaivable && (
-                <p className="mt-1 text-xs text-muted-foreground">
-                  Waivable with qualifying activity
-                </p>
-              )}
-          </div>
+          )}
 
-          <div className="mt-auto flex items-center justify-between pt-6">
-            <Link
-              href={`/bank-accounts/${account.id}`}
-              className="text-sm tracking-tight text-muted-foreground transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-foreground"
-            >
-              Details
-            </Link>
-            <IslandLink href={account.url} external>
-              Claim
-            </IslandLink>
-          </div>
+          {account.minimumBalance !== undefined && (
+            <div className="flex items-center gap-2">
+              <CurrencyDollar
+                weight="bold"
+                className="h-4 w-4 shrink-0 text-[#0160c4] dark:text-[#38b6ff]"
+              />
+              <span>
+                Min balance: ${account.minimumBalance.toLocaleString()}
+              </span>
+            </div>
+          )}
+
+          {account.expirationDate && (
+            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+              <CalendarBlank weight="bold" className="h-4 w-4 shrink-0" />
+              <span>
+                Expires:{" "}
+                {new Date(account.expirationDate).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </span>
+            </div>
+          )}
         </div>
-      </article>
-    </Bezel>
+
+        {/* Monthly Fee Indicator */}
+        <div className="mt-4 rounded-lg border border-slate-100 bg-slate-50/80 p-3 text-xs dark:border-slate-800 dark:bg-slate-800/60">
+          <div className="flex items-center justify-between">
+            <span className="text-slate-500 dark:text-slate-400">
+              Monthly Fee
+            </span>
+            <span className="font-bold text-slate-900 dark:text-white">
+              {account.monthlyFee ? `$${account.monthlyFee}` : "$0 / No Fee"}
+            </span>
+          </div>
+          {!!account.monthlyFee &&
+            account.monthlyFee > 0 &&
+            account.isMonthlyFeeWaivable && (
+              <p className="mt-1 text-[11px] text-emerald-600 dark:text-emerald-400">
+                Waivable with qualifying deposit or balance
+              </p>
+            )}
+        </div>
+
+        {/* Action Row */}
+        <div className="mt-auto flex items-center justify-between gap-3 border-t border-slate-100 pt-4 dark:border-slate-800">
+          <Link
+            href={`/bank-accounts/${account.id}`}
+            className="inline-flex items-center gap-1 text-xs font-semibold text-slate-700 hover:text-[#0160c4] dark:text-slate-300 dark:hover:text-[#38b6ff]"
+          >
+            <span>Offer Details</span>
+            <ArrowRight weight="bold" className="h-3.5 w-3.5" />
+          </Link>
+          <a
+            href={account.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 rounded-lg bg-[#0160c4] px-4 py-2 text-xs font-semibold text-white shadow-xs transition-all hover:bg-[#0052cc] active:scale-[0.98]"
+          >
+            <span>Claim Bonus</span>
+            <ArrowUpRight weight="bold" className="h-3.5 w-3.5" />
+          </a>
+        </div>
+      </div>
+    </div>
   );
 };
 

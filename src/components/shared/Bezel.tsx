@@ -10,18 +10,17 @@ export function Bezel({ children, className, innerClassName }: BezelProps) {
   return (
     <div
       className={cn(
-        "rounded-[2rem] bg-foreground/[0.04] p-1.5 ring-1 ring-foreground/5",
+        "group relative rounded-2xl border border-slate-200/90 bg-white shadow-xs transition-all duration-200 hover:border-slate-300 hover:shadow-md dark:border-slate-800/90 dark:bg-slate-900 dark:hover:border-slate-700",
         className,
       )}
     >
       <div
-        className={cn(
-          "rounded-[calc(2rem-0.375rem)] bg-card shadow-[inset_0_1px_1px_rgba(255,255,255,0.55)]",
-          innerClassName,
-        )}
+        className={cn("h-full w-full rounded-[calc(1rem-1px)]", innerClassName)}
       >
         {children}
       </div>
     </div>
   );
 }
+
+export default Bezel;
