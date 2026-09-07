@@ -9,6 +9,7 @@ import { SearchBar } from "@/components/shared/SearchBar";
 import { BonusCalculator } from "@/components/finance/BonusCalculator";
 import { BankLogoCarousel } from "@/components/layout/BankLogoCarousel";
 import { HeroInfographic } from "@/components/layout/HeroInfographic";
+import { BankBonusEmailCourse } from "@/components/layout/BankBonusEmailCourse";
 import {
   Bank as BankIcon,
   ShieldCheck,
@@ -356,6 +357,13 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* SECTION 7: FREE BANK BONUS EMAIL COURSE - Curated off-white section */}
+      <section className="bg-[#f4f6f8] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 dark:bg-slate-900/50">
+        <div className="mx-auto max-w-7xl">
+          <BankBonusEmailCourse />
         </div>
       </section>
     </div>
