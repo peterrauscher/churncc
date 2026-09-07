@@ -92,7 +92,7 @@ const Navbar = () => {
               href="/credit-cards"
               className="hidden items-center gap-1.5 rounded-lg bg-[#0160c4] px-4 py-2 text-sm font-semibold text-white shadow-xs transition-all hover:bg-[#0052cc] active:scale-[0.98] sm:inline-flex"
             >
-              <span>Compare Offers</span>
+              <span>All Offers</span>
               <ArrowRight weight="bold" className="h-4 w-4" />
             </Link>
 
@@ -166,7 +166,7 @@ const Navbar = () => {
               onClick={() => setIsOpen(false)}
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#0160c4] py-3 text-center text-base font-semibold text-white shadow-xs transition-colors hover:bg-[#0052cc]"
             >
-              <span>Compare All Offers</span>
+              <span>All Offers</span>
               <ArrowRight weight="bold" className="h-4 w-4" />
             </Link>
             <p className="mt-4 text-center text-xs text-slate-400 dark:text-slate-500">

@@ -42,7 +42,7 @@
   --sidebar-border: #e2e8f0;
   --sidebar-ring: #0160c4;
   --font-sans:
-    var(--font-plus-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    var(--font-ibm-plex-sans), -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, sans-serif;
   --font-mono: var(--font-ibm-plex-mono), monospace;
   --radius: 0.875rem;
@@ -101,7 +101,7 @@
   --sidebar-border: #1e293b;
   --sidebar-ring: #38b6ff;
   --font-sans:
-    var(--font-plus-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    var(--font-ibm-plex-sans), -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, sans-serif;
   --font-mono: var(--font-ibm-plex-mono), monospace;
   --radius: 0.875rem;
