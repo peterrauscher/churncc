@@ -119,7 +119,7 @@ const Footer = () => {
           {/* Column 3: Resources */}
           <div>
             <p className="text-xs font-bold tracking-wider text-slate-900 uppercase dark:text-white">
-              Guides & Tools
+              Guides & Tips
             </p>
             <ul className="mt-4 space-y-2.5 text-sm">
               <li>

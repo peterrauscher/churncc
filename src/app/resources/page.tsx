@@ -23,7 +23,7 @@ const Resources = () => {
   return (
     <PageContainer className="py-8 md:py-12">
       <PageHeader
-        eyebrow="Guides & Resources"
+        eyebrow="Guides & Tips"
         title="Bonus Playbooks & Strategy Guides"
         description="Learn how to maximize credit card welcome offers and bank account promos while keeping your credit score strong."
         badge={

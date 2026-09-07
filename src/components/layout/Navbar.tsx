@@ -29,7 +29,7 @@ const navItems = [
   },
   {
     href: "/resources",
-    label: "Guides",
+    label: "Guides & Tips",
     description: "Playbooks, Chase 5/24 rules, and churning FAQs",
     icon: BookOpen,
   },

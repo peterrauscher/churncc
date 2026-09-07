@@ -479,7 +479,7 @@ export default function HomePage() {
                   href="/resources"
                   className="inline-flex items-center gap-2 rounded-xl bg-[#0160c4] px-6 py-3 text-sm font-semibold text-white shadow-xs transition-all hover:bg-[#0052cc] active:scale-[0.98]"
                 >
-                  <span>Read Churning Guides</span>
+                  <span>Read Guides & Tips</span>
                   <ArrowRight weight="bold" className="h-4 w-4" />
                 </Link>
                 <Link
