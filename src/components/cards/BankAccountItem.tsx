@@ -1,15 +1,13 @@
 import { BankAccount } from "@/types";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
-  BanknoteIcon,
+  CalendarBlank,
+  CurrencyDollar,
+  CheckCircle,
   ArrowRight,
-  DollarSign,
-  Calendar,
-  Info,
-} from "lucide-react";
+  ArrowUpRight,
+  ShieldCheck,
+} from "@phosphor-icons/react/dist/ssr";
 
 interface BankAccountItemProps {
   account: BankAccount;
@@ -17,113 +15,131 @@ interface BankAccountItemProps {
 
 const BankAccountItem = ({ account }: BankAccountItemProps) => {
   return (
-    <Card className="h-full overflow-hidden border-border/70 bg-card/95 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
-      <div className="relative overflow-hidden bg-gradient-to-br from-primary via-primary/95 to-secondary p-4 text-primary-foreground">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-10 -left-10 h-32 w-32 rounded-full bg-white/25 blur-3xl" />
-          <div className="absolute -right-12 top-2 h-36 w-36 rounded-full bg-secondary/45 blur-3xl" />
-          <div className="absolute bottom-0 left-1/3 h-28 w-28 rounded-full bg-accent/45 blur-3xl" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(255,255,255,0.32),transparent_42%),radial-gradient(circle_at_82%_30%,rgba(255,255,255,0.2),transparent_44%),radial-gradient(circle_at_50%_88%,rgba(255,255,255,0.14),transparent_40%)]" />
+    <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-[0_2px_12px_rgba(15,23,42,0.06)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_rgba(15,23,42,0.12)] dark:bg-slate-900">
+      {/* Card Header - Solid off-white, no border */}
+      <div className="bg-[#f8fafc] p-5 sm:p-6 dark:bg-slate-950/40">
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-xs font-bold tracking-wider text-slate-500 uppercase dark:text-slate-400">
+            {account.institution}
+          </span>
+          <span className="rounded-full bg-blue-50 px-2.5 py-0.5 text-[11px] font-semibold text-[#0160c4] dark:bg-blue-950/60 dark:text-[#38b6ff]">
+            {account.type.toUpperCase()}
+          </span>
         </div>
-        <div className="relative">
+        <h3 className="mt-2 text-xl font-bold text-slate-900 transition-colors group-hover:text-[#0160c4] sm:text-2xl dark:text-white dark:group-hover:text-[#38b6ff]">
+          <Link href={`/bank-accounts/${account.id}`}>{account.name}</Link>
+        </h3>
+
+        {/* Bonus Highlight Box - Solid emerald, no border */}
+        <div className="mt-4 rounded-xl bg-emerald-50/80 p-4 dark:bg-emerald-950/40">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold tracking-tight">
-              {account.institution}
-            </h3>
-            <Badge className="bg-white/20 text-primary-foreground">
-              {account.type}
-            </Badge>
+            <span className="text-xs font-bold tracking-wider text-emerald-800 uppercase dark:text-emerald-400">
+              Cash Bonus
+            </span>
+            <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-700 dark:text-emerald-400">
+              <ShieldCheck weight="bold" className="h-3 w-3" />
+              <span>FDIC Insured</span>
+            </span>
           </div>
-          <h2 className="font-serif mt-2 text-2xl font-semibold leading-tight">
-            {account.name}
-          </h2>
-          <div className="mt-4 flex items-center">
-            <div className="rounded-full bg-white/20 p-2">
-              <BanknoteIcon className="h-6 w-6" />
-            </div>
-            <div className="ml-3">
-              <p className="text-sm text-primary-foreground/85">Bonus Amount</p>
-              <p className="text-2xl font-bold">${account.offerAmount}</p>
-            </div>
-          </div>
+          <p className="mt-1 text-3xl font-extrabold text-[#00a859] dark:text-emerald-400">
+            ${account.offerAmount.toLocaleString()}
+          </p>
         </div>
       </div>
 
-      <CardContent className="p-4">
-        <div className="space-y-3">
+      {/* Card Body - Requirements and Specs */}
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        <div className="space-y-2.5 text-xs text-slate-600 dark:text-slate-300">
           <div className="flex items-start gap-2">
-            <Info className="text-primary mt-0.5 h-4 w-4 flex-shrink-0" />
-            <p className="text-sm">{account.requirements}</p>
+            <CheckCircle
+              weight="fill"
+              className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400"
+            />
+            <p className="leading-snug">{account.requirements}</p>
           </div>
 
           {account.directDepositRequired && (
             <div className="flex items-center gap-2">
-              <DollarSign className="text-primary h-4 w-4" />
-              <span className="text-sm">
-                Direct Deposit Required:
+              <CurrencyDollar
+                weight="bold"
+                className="h-4 w-4 shrink-0 text-[#0160c4] dark:text-[#38b6ff]"
+              />
+              <span>
+                Direct deposit:{" "}
                 {account.directDepositAmount
-                  ? ` $${account.directDepositAmount.toLocaleString()}`
-                  : " Yes"}
+                  ? `$${account.directDepositAmount.toLocaleString()}`
+                  : "Required"}
               </span>
             </div>
           )}
 
           {account.minimumBalance !== undefined && (
             <div className="flex items-center gap-2">
-              <DollarSign className="text-primary h-4 w-4" />
-              <span className="text-sm">
-                Min Balance: ${account.minimumBalance.toLocaleString()}
+              <CurrencyDollar
+                weight="bold"
+                className="h-4 w-4 shrink-0 text-[#0160c4] dark:text-[#38b6ff]"
+              />
+              <span>
+                Min balance: ${account.minimumBalance.toLocaleString()}
               </span>
             </div>
           )}
 
           {account.expirationDate && (
-            <div className="flex items-center gap-2">
-              <Calendar className="text-primary h-4 w-4" />
-              <span className="text-sm">
-                Expires: {new Date(account.expirationDate).toLocaleDateString()}
+            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+              <CalendarBlank weight="bold" className="h-4 w-4 shrink-0" />
+              <span>
+                Expires:{" "}
+                {new Date(account.expirationDate).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })}
               </span>
             </div>
           )}
         </div>
 
-        <div className="mt-4 rounded-lg bg-muted/55 p-3">
-          <div className="flex items-center justify-between text-sm">
-            <span>Monthly Fee</span>
-            <span className="font-semibold">
-              {account.monthlyFee ? `$${account.monthlyFee}` : "No Fee"}
+        {/* Monthly Fee Indicator - Solid neutral background, no border */}
+        <div className="mt-4 rounded-lg bg-slate-50 p-3 text-xs dark:bg-slate-800/60">
+          <div className="flex items-center justify-between">
+            <span className="text-slate-500 dark:text-slate-400">
+              Monthly Fee
+            </span>
+            <span className="font-bold text-slate-900 dark:text-white">
+              {account.monthlyFee ? `$${account.monthlyFee}` : "$0 / No Fee"}
             </span>
           </div>
-
-          {account.monthlyFee &&
+          {!!account.monthlyFee &&
             account.monthlyFee > 0 &&
             account.isMonthlyFeeWaivable && (
-              <p className="text-muted-foreground mt-1 text-xs">
-                Fee can be waived with qualifying activity
+              <p className="mt-1 text-[11px] text-emerald-600 dark:text-emerald-400">
+                Waivable with qualifying deposit or balance
               </p>
             )}
         </div>
-      </CardContent>
 
-      <CardFooter className="flex items-center justify-between p-4 pt-0">
-        <Link
-          href={`/bank-accounts/${account.id}`}
-          className="text-primary text-sm font-medium hover:underline"
-        >
-          View Details
-        </Link>
-
-        <Button
-          asChild
-          size="sm"
-          className="bg-secondary text-secondary-foreground hover:bg-secondary/90"
-        >
-          <a href={account.url} target="_blank" rel="noopener noreferrer">
-            Claim Bonus <ArrowRight className="ml-1 h-4 w-4" />
+        {/* Action Row */}
+        <div className="mt-auto flex items-center justify-between gap-3 pt-4">
+          <Link
+            href={`/bank-accounts/${account.id}`}
+            className="inline-flex items-center gap-1 text-xs font-semibold text-slate-700 hover:text-[#0160c4] dark:text-slate-300 dark:hover:text-[#38b6ff]"
+          >
+            <span>Offer Details</span>
+            <ArrowRight weight="bold" className="h-3.5 w-3.5" />
+          </Link>
+          <a
+            href={account.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 rounded-lg bg-[#0160c4] px-4 py-2 text-xs font-semibold text-white shadow-sm transition-all hover:bg-[#0052cc] active:scale-[0.98]"
+          >
+            <span>Claim Bonus</span>
+            <ArrowUpRight weight="bold" className="h-3.5 w-3.5" />
           </a>
-        </Button>
-      </CardFooter>
-    </Card>
+        </div>
+      </div>
+    </div>
   );
 };
 

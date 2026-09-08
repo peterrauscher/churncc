@@ -1,7 +1,7 @@
 import { BankAccount } from "@/types";
 import BankAccountItem from "./BankAccountItem";
 import { EmptyState } from "@/components/shared/EmptyState";
-import { BanknoteIcon } from "lucide-react";
+import { Bank } from "@phosphor-icons/react/dist/ssr";
 
 interface BankAccountGridProps {
   accounts: BankAccount[];
@@ -15,7 +15,7 @@ const BankAccountGrid = ({
   if (!accounts || accounts.length === 0) {
     return (
       <EmptyState
-        icon={BanknoteIcon}
+        icon={Bank}
         title="No bank accounts found"
         description={emptyMessage}
       />

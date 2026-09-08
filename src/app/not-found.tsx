@@ -3,8 +3,7 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { AlertTriangle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { WarningCircle, ArrowRight } from "@phosphor-icons/react";
 
 const NotFound = () => {
   const pathname = usePathname();
@@ -16,18 +15,30 @@ const NotFound = () => {
   }, [pathname]);
 
   return (
-    <div className="flex min-h-[70vh] items-center justify-center px-4">
-      <div className="w-full max-w-xl rounded-2xl border border-border/70 bg-card/90 p-10 text-center shadow-sm">
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-accent">
-          <AlertTriangle className="h-6 w-6 text-primary" />
+    <div className="flex min-h-[70vh] items-center justify-center px-4 py-16">
+      <div className="w-full max-w-lg rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-xs dark:border-slate-800 dark:bg-slate-900 md:p-12">
+        <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-[#0160c4] dark:bg-blue-950 dark:text-[#38b6ff]">
+          <WarningCircle weight="bold" className="h-7 w-7" />
         </div>
-        <h1 className="font-serif text-5xl tracking-tight">404</h1>
-        <p className="text-muted-foreground mt-3 text-lg">
-          This page got lost, but your next bonus win is still waiting.
+        <span className="text-xs font-bold tracking-wider text-slate-400 uppercase">
+          Error 404
+        </span>
+        <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl dark:text-white">
+          Page Not Found
+        </h1>
+        <p className="mx-auto mt-4 max-w-sm text-sm text-slate-600 dark:text-slate-400">
+          This page does not exist, but there are thousands of dollars in live
+          credit card and bank bonuses waiting for you.
         </p>
-        <Button asChild className="mt-6">
-          <Link href="/">Back to Winning Offers</Link>
-        </Button>
+        <div className="mt-8 flex justify-center">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#0160c4] px-6 py-3 text-sm font-semibold text-white shadow-xs transition-all hover:bg-[#0052cc] active:scale-[0.98]"
+          >
+            <span>Back to Homepage</span>
+            <ArrowRight weight="bold" className="h-4 w-4" />
+          </Link>
+        </div>
       </div>
     </div>
   );

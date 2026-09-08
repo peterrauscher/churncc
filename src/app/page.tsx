@@ -2,24 +2,26 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import CreditCardGrid from "@/components/cards/CreditCardGrid";
+import CreditCardItem from "@/components/cards/CreditCardItem";
 import BankAccountGrid from "@/components/cards/BankAccountGrid";
-import { PageContainer } from "@/components/shared/PageContainer";
-import { SectionHeading } from "@/components/shared/SectionHeading";
 import { LoadingCards } from "@/components/shared/LoadingCards";
-import { ResourceCard } from "@/components/resources/ResourceCard";
-import { ArrowRight, TrendingUp, Info, Calendar } from "lucide-react";
+import { BonusCalculator } from "@/components/finance/BonusCalculator";
+import { BankLogoCarousel } from "@/components/layout/BankLogoCarousel";
+import { HeroInfographic } from "@/components/layout/HeroInfographic";
+import { BankBonusEmailCourse } from "@/components/layout/BankBonusEmailCourse";
+import {
+  Bank as BankIcon,
+  ArrowRight,
+  TrendUp,
+  AirplaneTilt,
+  Coins,
+} from "@phosphor-icons/react";
 import { CreditCard, BankAccount } from "@/types";
 import { fetchCreditCards, getMockBankAccounts } from "@/services/api";
-import { formatRewardValue } from "@/components/finance/CurrencyValue";
-import { SearchBar } from "@/components/shared/SearchBar";
 
 export default function HomePage() {
-  const [allCards, setAllCards] = useState<CreditCard[]>([]);
   const [featuredCards, setFeaturedCards] = useState<CreditCard[]>([]);
   const [featuredAccounts, setFeaturedAccounts] = useState<BankAccount[]>([]);
-  const [allAccounts, setAllAccounts] = useState<BankAccount[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -30,7 +32,6 @@ export default function HomePage() {
         const activeCards = cards.filter(
           (card) => !card.discontinued && card.offers.length > 0,
         );
-        setAllCards(activeCards);
 
         const topCards = [...activeCards]
           .sort((a, b) => {
@@ -42,7 +43,6 @@ export default function HomePage() {
         setFeaturedCards(topCards);
 
         const accounts = getMockBankAccounts();
-        setAllAccounts(accounts);
         const topAccounts = [...accounts]
           .sort((a, b) => b.offerAmount - a.offerAmount)
           .slice(0, 3);
@@ -57,173 +57,248 @@ export default function HomePage() {
     loadFeaturedItems();
   }, []);
 
-  const totalCardBonuses = allCards.reduce((sum, card) => {
-    const best = card.offers.reduce((max, o) => {
-      const amt = o.amount.reduce((s, a) => s + a.amount, 0);
-      return amt > max ? amt : max;
-    }, 0);
-    return sum + best;
-  }, 0);
-
-  const totalBankBonuses = allAccounts.reduce(
-    (sum, a) => sum + a.offerAmount,
-    0,
-  );
+  const leadCard = featuredCards[0];
+  const stackedCards = featuredCards.slice(1, 4);
 
   return (
-    <>
-      <section className="relative overflow-hidden border-b border-border/70 text-primary-foreground">
-        <img
-          src="/pexels-karola-g-6328949.jpg"
-          alt=""
-          className="absolute top-0 right-0 h-full w-[60%] object-cover"
-        />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--primary)_0%,var(--primary)_25%,transparent_80%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_38%)]" />
-        <PageContainer className="relative pt-16 pb-20 md:pt-24 md:pb-28">
-          <h1 className="max-w-4xl font-serif font-bold text-4xl leading-tight tracking-tight md:text-5xl">
-            Beat the banks at their
-            <br />
-            own game with{" "}
-            <span className="relative z-0 mx-2 inline-block whitespace-nowrap px-1">
-              <span className="relative z-20 text-slate-900">Churnable</span>
-              <svg
-                className="absolute top-1/2 left-1/2 -z-10 h-[1.3em] w-[110%] -translate-x-1/2 -translate-y-1/2 -rotate-1 text-[#FFB020]"
-                viewBox="0 0 418 42"
-                preserveAspectRatio="none"
-              >
-                <path
-                  fill="currentColor"
-                  d="M203.371.916c-26.013-2.078-76.686 1.963-124.738 4.144-41.25 1.867-68.995 1.706-74.954 6.848-2.924 2.525-2.067 8.018 3.011 11.666 5.865 4.212 18.069 6.884 39.014 8.528 20.366 1.599 71.748 4.298 106.883 4.298 12.016 0 101.446-2.062 165.253-5.59 21.05-1.164 54.341-3.615 68.614-7.859 13.921-4.14 18.471-11.838 7.377-17.153-6.501-3.111-20.931-4.997-40.407-5.549-33.15-1.109-114.717.387-149.98 2.658-20.144 1.305-65.02 4.416-83.67 6.45-1.31.144-2.833 0-4.045-.446-2.096-.776-3.832-2.316-5.83-4.156-5.46-5.018-20.672-9.697-51.587-11.968z"
-                />
-              </svg>
-            </span>
-          </h1>
-          <p className="mt-3 max-w-2xl text-base text-primary-foreground/85 md:text-lg">
-            Banks spend billions to acquire customers. We help you claim that
-            money back through credit card and bank account bonuses.
-          </p>
+    <div className="flex flex-col">
+      {/* SECTION 1: HERO - Crisp white, no gradient, no border */}
+      <section className="relative overflow-hidden bg-white px-4 pt-12 pb-16 sm:px-6 md:pt-16 md:pb-20 lg:px-8 dark:bg-slate-950">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
+            {/* Left Column: Headline, Value Prop, Search, CTAs, Bank Logos */}
+            <div className="lg:col-span-7">
+              <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl md:text-6xl dark:text-white">
+                Compare the best card and bank bonuses.
+              </h1>
 
-          <SearchBar />
-        </PageContainer>
+              <p className="mt-4 max-w-xl text-base text-slate-600 sm:text-lg dark:text-slate-300">
+                Banks spend billions to acquire customers. We help you track
+                bonuses so you can capture your fair share of it.
+              </p>
+
+              {/* Quick Actions */}
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <Link
+                  href="/credit-cards"
+                  className="inline-flex items-center gap-2 rounded-xl bg-[#0160c4] px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#0052cc] active:scale-[0.98]"
+                >
+                  <span>Compare Cards</span>
+                  <ArrowRight weight="bold" className="h-4 w-4" />
+                </Link>
+                <Link
+                  href="/bank-accounts"
+                  className="inline-flex items-center gap-2 rounded-xl bg-slate-100 px-5 py-3 text-sm font-semibold text-slate-800 shadow-xs transition-all hover:bg-slate-200 active:scale-[0.98] dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                >
+                  <span>Explore Bank Promos</span>
+                  <ArrowRight weight="bold" className="h-4 w-4" />
+                </Link>
+              </div>
+
+              {/* Infinite Scroll Bank Logo Carousel - Greyscale, titled */}
+              <BankLogoCarousel />
+            </div>
+
+            {/* Right Column: Curated Fintech Hero Infographic */}
+            <div className="flex items-center justify-center lg:col-span-5">
+              <HeroInfographic />
+            </div>
+          </div>
+        </div>
       </section>
 
-      <div className="relative z-10 mx-auto -mt-8 mb-12 w-[70%] rounded-2xl bg-white p-4 shadow-xl md:mb-16">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <Link
-            href="/credit-cards"
-            className="group rounded-xl p-5 text-center transition-colors hover:bg-muted/50"
-          >
-            <img src="/cards.svg" alt="" className="mx-auto mb-3 h-10 w-10" />
-            <h3 className="font-semibold text-foreground">Credit Cards</h3>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Browse {allCards.length}+ card bonuses
-            </p>
-          </Link>
-          <Link
-            href="/bank-accounts"
-            className="group rounded-xl p-5 text-center transition-colors hover:bg-muted/50"
-          >
-            <img src="/banks.svg" alt="" className="mx-auto mb-3 h-10 w-10" />
-            <h3 className="font-semibold text-foreground">Bank Accounts</h3>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Claim checking &amp; savings bonuses
-            </p>
-          </Link>
-          <Link
-            href="/credit-cards"
-            className="group rounded-xl p-5 text-center transition-colors hover:bg-muted/50"
-          >
-            <img
-              src="/brokerages.svg"
-              alt=""
-              className="mx-auto mb-3 h-10 w-10"
-            />
-            <h3 className="font-semibold text-foreground">Brokerage</h3>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Investment account promotions
-            </p>
-          </Link>
+      {/* SECTION 2: INTERACTIVE BONUS CALCULATOR - Curated off-white background #f4f6f8 */}
+      <section className="bg-[#f4f6f8] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 dark:bg-slate-900/50">
+        <div className="mx-auto max-w-7xl">
+          <BonusCalculator />
         </div>
-      </div>
+      </section>
 
-      {!isLoading && allCards.length > 0 && (
-        <div className="bg-muted/50 py-12 md:py-16">
-          <PageContainer>
-            <div className="grid grid-cols-3 gap-4 text-center">
-              <div>
-                <p className="font-serif text-2xl font-semibold text-foreground md:text-3xl">
-                  {allCards.length}
-                </p>
-                <p className="text-muted-foreground text-xs md:text-sm">
-                  Credit cards tracked
-                </p>
-              </div>
-              <div>
-                <p className="font-serif text-2xl font-semibold text-secondary md:text-3xl">
-                  {formatRewardValue(
-                    totalCardBonuses + totalBankBonuses,
-                    "USD",
-                  )}
-                </p>
-                <p className="text-muted-foreground text-xs md:text-sm">
-                  Total bonus value available
-                </p>
-              </div>
-              <div>
-                <p className="font-serif text-2xl font-semibold text-foreground md:text-3xl">
-                  {allAccounts.length}
-                </p>
-                <p className="text-muted-foreground text-xs md:text-sm">
-                  Bank bonuses available
-                </p>
-              </div>
+      {/* SECTION 3: FEATURED CREDIT CARD OFFERS - Solid white background */}
+      <section className="bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-8 dark:bg-slate-950">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-2xl">
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl md:text-4xl dark:text-white">
+                Highest-upside credit card offers
+              </h2>
+              <p className="mt-2 text-base text-slate-600 dark:text-slate-400">
+                Issuer incentives ranked by net welcome payout and fee
+                structure.
+              </p>
             </div>
-          </PageContainer>
-        </div>
-      )}
-
-      <section className="py-12 md:py-16">
-        <PageContainer>
-          <SectionHeading
-            title="Featured Credit Card Offers"
-            description="High-upside card offers designed to put issuer incentives in your pocket."
-            action={
-              <Button asChild variant="outline">
-                <Link href="/credit-cards">
-                  View all <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            }
-          />
+            <Link
+              href="/credit-cards"
+              className="inline-flex items-center gap-1 text-sm font-semibold text-[#0160c4] hover:underline dark:text-[#38b6ff]"
+            >
+              <span>View all credit cards</span>
+              <ArrowRight weight="bold" className="h-4 w-4" />
+            </Link>
+          </div>
 
           {isLoading ? (
-            <LoadingCards
-              count={4}
-              columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
-            />
+            <LoadingCards count={4} columns="grid-cols-1 md:grid-cols-12" />
+          ) : leadCard ? (
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
+              <div className="md:col-span-7">
+                <CreditCardItem card={leadCard} featured />
+              </div>
+              <div className="flex flex-col gap-6 md:col-span-5">
+                {stackedCards.map((card) => (
+                  <CreditCardItem key={card.cardId} card={card} />
+                ))}
+              </div>
+            </div>
           ) : (
-            <CreditCardGrid
-              cards={featuredCards}
-              emptyMessage="No featured credit cards available at the moment."
-            />
+            <p className="text-slate-500">
+              No featured credit cards available at the moment.
+            </p>
           )}
-        </PageContainer>
+        </div>
       </section>
 
-      <section className="border-y border-border/60 bg-card/60 py-12 md:py-16">
-        <PageContainer>
-          <SectionHeading
-            title="Top Bank Account Bonuses"
-            description="Best available checking and savings promos to keep you in control, not the banks."
-            action={
-              <Button asChild variant="outline">
-                <Link href="/bank-accounts">
-                  View all <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            }
-          />
+      {/* SECTION 4: CATEGORY QUICK NAV BENTO - Curated off-white background #f4f6f8 */}
+      <section className="bg-[#f4f6f8] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 dark:bg-slate-900/50">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 max-w-2xl">
+            <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl dark:text-white">
+              Explore bonus categories
+            </h2>
+            <p className="mt-2 text-base text-slate-600 dark:text-slate-400">
+              Find exactly what matches your financial goals, from travel miles
+              to direct cash deposits.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {/* Card 1: Travel Cards - Pure white, borderless, soft shadow */}
+            <Link
+              href="/credit-cards?type=travel"
+              className="group relative flex flex-col justify-between rounded-2xl bg-white p-6 shadow-[0_2px_12px_rgba(15,23,42,0.06)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,23,42,0.12)] dark:bg-slate-900"
+            >
+              <div>
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-[#0160c4] dark:bg-blue-950 dark:text-[#38b6ff]">
+                  <AirplaneTilt weight="bold" className="h-6 w-6" />
+                </div>
+                <h3 className="mt-4 text-lg font-bold text-slate-900 group-hover:text-[#0160c4] dark:text-white dark:group-hover:text-[#38b6ff]">
+                  Travel Rewards
+                </h3>
+                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                  Airline miles and transferrable points with big initial
+                  bonuses.
+                </p>
+              </div>
+              <div className="mt-6 flex items-center justify-between pt-4 text-xs font-semibold text-[#0160c4] dark:text-[#38b6ff]">
+                <span>Browse Travel Cards</span>
+                <ArrowRight
+                  weight="bold"
+                  className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1"
+                />
+              </div>
+            </Link>
+
+            {/* Card 2: Cash Back - Pure white, borderless, soft shadow */}
+            <Link
+              href="/credit-cards?type=cashback"
+              className="group relative flex flex-col justify-between rounded-2xl bg-white p-6 shadow-[0_2px_12px_rgba(15,23,42,0.06)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,23,42,0.12)] dark:bg-slate-900"
+            >
+              <div>
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-50 text-[#00a859] dark:bg-emerald-950 dark:text-emerald-400">
+                  <Coins weight="bold" className="h-6 w-6" />
+                </div>
+                <h3 className="mt-4 text-lg font-bold text-slate-900 group-hover:text-[#0160c4] dark:text-white dark:group-hover:text-[#38b6ff]">
+                  Cash Back Cards
+                </h3>
+                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                  Straightforward dollar statement credits and zero complicated
+                  math.
+                </p>
+              </div>
+              <div className="mt-6 flex items-center justify-between pt-4 text-xs font-semibold text-[#0160c4] dark:text-[#38b6ff]">
+                <span>Browse Cash Back</span>
+                <ArrowRight
+                  weight="bold"
+                  className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1"
+                />
+              </div>
+            </Link>
+
+            {/* Card 3: Checking Accounts - Pure white, borderless, soft shadow */}
+            <Link
+              href="/bank-accounts?type=checking"
+              className="group relative flex flex-col justify-between rounded-2xl bg-white p-6 shadow-[0_2px_12px_rgba(15,23,42,0.06)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,23,42,0.12)] dark:bg-slate-900"
+            >
+              <div>
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-[#0ea5e9] dark:bg-blue-950 dark:text-[#38b6ff]">
+                  <BankIcon weight="bold" className="h-6 w-6" />
+                </div>
+                <h3 className="mt-4 text-lg font-bold text-slate-900 group-hover:text-[#0160c4] dark:text-white dark:group-hover:text-[#38b6ff]">
+                  Checking Promos
+                </h3>
+                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                  Earn $200 to $500 simply by routing your routine direct
+                  deposits.
+                </p>
+              </div>
+              <div className="mt-6 flex items-center justify-between pt-4 text-xs font-semibold text-[#0160c4] dark:text-[#38b6ff]">
+                <span>Browse Checking</span>
+                <ArrowRight
+                  weight="bold"
+                  className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1"
+                />
+              </div>
+            </Link>
+
+            {/* Card 4: Savings Accounts - Pure white, borderless, soft shadow */}
+            <Link
+              href="/bank-accounts?type=savings"
+              className="group relative flex flex-col justify-between rounded-2xl bg-white p-6 shadow-[0_2px_12px_rgba(15,23,42,0.06)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,23,42,0.12)] dark:bg-slate-900"
+            >
+              <div>
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-[#0160c4] dark:bg-blue-950 dark:text-[#38b6ff]">
+                  <TrendUp weight="bold" className="h-6 w-6" />
+                </div>
+                <h3 className="mt-4 text-lg font-bold text-slate-900 group-hover:text-[#0160c4] dark:text-white dark:group-hover:text-[#38b6ff]">
+                  Savings & CD Bonuses
+                </h3>
+                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                  Earn high yields plus cash bonuses for parking emergency
+                  funds.
+                </p>
+              </div>
+              <div className="mt-6 flex items-center justify-between pt-4 text-xs font-semibold text-[#0160c4] dark:text-[#38b6ff]">
+                <span>Browse Savings</span>
+                <ArrowRight
+                  weight="bold"
+                  className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1"
+                />
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 5: TOP BANK ACCOUNT BONUSES - Solid white background */}
+      <section className="bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-8 dark:bg-slate-950">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-2xl">
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl md:text-4xl dark:text-white">
+                Top bank account deposit bonuses
+              </h2>
+              <p className="mt-2 text-base text-slate-600 dark:text-slate-400">
+                Checking and savings promos that pay cash for funds you already
+                move.
+              </p>
+            </div>
+            <Link
+              href="/bank-accounts"
+              className="inline-flex items-center gap-1 text-sm font-semibold text-[#0160c4] hover:underline dark:text-[#38b6ff]"
+            >
+              <span>View all bank promos</span>
+              <ArrowRight weight="bold" className="h-4 w-4" />
+            </Link>
+          </div>
 
           {isLoading ? (
             <LoadingCards
@@ -236,69 +311,15 @@ export default function HomePage() {
               emptyMessage="No featured bank accounts available at the moment."
             />
           )}
-        </PageContainer>
+        </div>
       </section>
 
-      <section className="py-12 md:py-16">
-        <PageContainer>
-          <SectionHeading
-            title="Guides & Strategies"
-            description="Learn the basics and sharpen your approach."
-            action={
-              <Button asChild variant="outline">
-                <Link href="/resources">
-                  View all <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            }
-          />
-          <div className="grid gap-6 md:grid-cols-3">
-            <Link href="/resources" className="block">
-              <ResourceCard
-                icon={Info}
-                title="Credit Card Bonus Basics"
-                description="How welcome bonuses work, what to look for, and common mistakes to avoid."
-              />
-            </Link>
-            <Link href="/resources" className="block">
-              <ResourceCard
-                icon={TrendingUp}
-                title="Maximizing Point Values"
-                description="Strategies for getting the most value from your earned points and miles."
-              />
-            </Link>
-            <Link href="/resources" className="block">
-              <ResourceCard
-                icon={Calendar}
-                title="Timing Your Applications"
-                description="When to apply, how many cards to open, and managing your velocity."
-              />
-            </Link>
-          </div>
-        </PageContainer>
+      {/* SECTION 7: FREE BANK BONUS EMAIL COURSE - Curated off-white section */}
+      <section className="bg-[#f4f6f8] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 dark:bg-slate-900/50">
+        <div className="mx-auto max-w-7xl">
+          <BankBonusEmailCourse />
+        </div>
       </section>
-
-      <section className="py-12 md:py-16">
-        <PageContainer>
-          <div className="rounded-2xl border border-border/70 bg-gradient-to-br from-card via-card to-accent/45 p-8 text-center shadow-sm md:p-12">
-            <h2 className="font-serif text-4xl tracking-tight md:text-5xl">
-              Start Taking Money Back From The Banks
-            </h2>
-            <p className="text-muted-foreground mx-auto mt-4 max-w-2xl text-lg">
-              Browse verified offers, execute with confidence, and turn your
-              normal financial activity into a repeatable win.
-            </p>
-            <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-              <Button asChild size="lg">
-                <Link href="/credit-cards">Win With Credit Cards</Link>
-              </Button>
-              <Button asChild size="lg" variant="secondary">
-                <Link href="/bank-accounts">Win With Bank Bonuses</Link>
-              </Button>
-            </div>
-          </div>
-        </PageContainer>
-      </section>
-    </>
+    </div>
   );
 }

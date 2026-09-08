@@ -1,8 +1,6 @@
+"use client";
+
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import {
   Select,
@@ -11,27 +9,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { FilterOptions, SortOptions } from "@/types";
-import { Filter, ArrowDownWideNarrow } from "lucide-react";
+import {
+  FilterBar,
+  FilterCheckboxList,
+  FilterClearButton,
+  FilterMenuPill,
+  FilterTogglePill,
+  sortPillClass,
+} from "@/components/filters/FilterBar";
 
 interface CreditCardFiltersProps {
   onFilterChange: (filters: FilterOptions) => void;
   onSortChange: (sort: SortOptions) => void;
   issuers: string[];
-  networks: string[];
 }
 
 const CreditCardFilters = ({
   onFilterChange,
   onSortChange,
   issuers,
-  networks,
 }: CreditCardFiltersProps) => {
   const [filters, setFilters] = useState<FilterOptions>({});
   const [annualFee, setAnnualFee] = useState<number>(700);
@@ -44,38 +41,20 @@ const CreditCardFilters = ({
     onFilterChange(updatedFilters);
   };
 
-  const handleIssuerToggle = (issuer: string, checked: boolean) => {
-    const currentIssuers = filters.issuer || [];
-    let newIssuers: string[];
-
-    if (checked) {
-      newIssuers = [...currentIssuers, issuer];
-    } else {
-      newIssuers = currentIssuers.filter((i) => i !== issuer);
-    }
-
-    handleFilterChange({ issuer: newIssuers.length ? newIssuers : undefined });
-  };
-
-  const handleNetworkToggle = (network: string, checked: boolean) => {
-    const currentNetworks = filters.network || [];
-    let newNetworks: string[];
-
-    if (checked) {
-      newNetworks = [...currentNetworks, network];
-    } else {
-      newNetworks = currentNetworks.filter((n) => n !== network);
-    }
-
+  const handleIssuerToggle = (value: string, checked: boolean) => {
+    const current = filters.issuer ?? [];
+    const updated = checked
+      ? [...current, value]
+      : current.filter((item) => item !== value);
     handleFilterChange({
-      network: newNetworks.length ? newNetworks : undefined,
+      issuer: updated.length > 0 ? updated : undefined,
     });
   };
 
   const handleSortChange = (value: string) => {
     setSortOption(value);
-    const [field, direction] = value.split("-");
-    onSortChange({ field, direction: direction as "asc" | "desc" });
+    const [field, direction] = value.split("-") as [string, "asc" | "desc"];
+    onSortChange({ field, direction });
   };
 
   const handleAnnualFeeChange = (value: number[]) => {
@@ -95,156 +74,146 @@ const CreditCardFilters = ({
     onFilterChange({});
   };
 
-  return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Filter className="h-5 w-5" />
-          <h3 className="text-lg font-medium">Filters</h3>
-        </div>
-        <Button variant="outline" size="sm" onClick={clearFilters}>
-          Clear All
-        </Button>
-      </div>
+  const hasActiveFilters =
+    Boolean(filters.annualFeeMax !== undefined) ||
+    Boolean(filters.isBusiness) ||
+    Boolean(filters.isAnnualFeeWaived) ||
+    Boolean(filters.issuer?.length) ||
+    Boolean(filters.offerAmountMin);
 
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex items-center gap-2">
-          <ArrowDownWideNarrow className="h-5 w-5" />
-          <Label htmlFor="sort">Sort By</Label>
+  const annualFeeActive =
+    filters.annualFeeMax !== undefined && filters.annualFeeMax !== 0;
+  const annualFeeLabel = annualFeeActive
+    ? `Fee ≤ $${filters.annualFeeMax}`
+    : "Annual fee";
+
+  const bonusLabel = filters.offerAmountMin
+    ? `Bonus ≥ $${filters.offerAmountMin}`
+    : "Min bonus";
+
+  return (
+    <FilterBar
+      trailing={
+        <>
           <Select value={sortOption} onValueChange={handleSortChange}>
-            <SelectTrigger id="sort" className="w-[180px]">
+            <SelectTrigger id="sort" className={sortPillClass}>
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="offerAmount-desc">Highest Bonus</SelectItem>
-              <SelectItem value="offerAmount-asc">Lowest Bonus</SelectItem>
-              <SelectItem value="annualFee-desc">Highest Annual Fee</SelectItem>
+              <SelectItem value="offerAmount-desc">
+                Highest Welcome Bonus
+              </SelectItem>
+              <SelectItem value="offerAmount-asc">
+                Lowest Welcome Bonus
+              </SelectItem>
               <SelectItem value="annualFee-asc">Lowest Annual Fee</SelectItem>
+              <SelectItem value="annualFee-desc">Highest Annual Fee</SelectItem>
               <SelectItem value="universalCashbackPercent-desc">
-                Highest Cashback
+                Highest Base Cashback
               </SelectItem>
             </SelectContent>
           </Select>
+          {hasActiveFilters ? (
+            <FilterClearButton onClick={clearFilters} />
+          ) : null}
+        </>
+      }
+    >
+      <FilterTogglePill
+        active={filters.annualFeeMax === 0}
+        onClick={() =>
+          handleFilterChange({
+            annualFeeMax: filters.annualFeeMax === 0 ? undefined : 0,
+          })
+        }
+      >
+        No annual fee
+      </FilterTogglePill>
+
+      <FilterTogglePill
+        active={Boolean(filters.isBusiness)}
+        onClick={() =>
+          handleFilterChange({
+            isBusiness: filters.isBusiness ? undefined : true,
+          })
+        }
+      >
+        Business
+      </FilterTogglePill>
+
+      <FilterTogglePill
+        active={Boolean(filters.isAnnualFeeWaived)}
+        onClick={() =>
+          handleFilterChange({
+            isAnnualFeeWaived: filters.isAnnualFeeWaived ? undefined : true,
+          })
+        }
+      >
+        Fee waived yr 1
+      </FilterTogglePill>
+
+      <FilterMenuPill
+        label={
+          filters.issuer?.length === 1
+            ? filters.issuer[0].replaceAll("_", " ")
+            : "Issuer"
+        }
+        active={Boolean(filters.issuer?.length)}
+        count={filters.issuer?.length}
+      >
+        <FilterCheckboxList
+          options={issuers}
+          selected={filters.issuer}
+          onToggle={(value, checked) => handleIssuerToggle(value, checked)}
+          formatLabel={(value) => value.replaceAll("_", " ")}
+        />
+      </FilterMenuPill>
+
+      <FilterMenuPill label={annualFeeLabel} active={annualFeeActive}>
+        <div className="space-y-3">
+          <p className="text-xs font-semibold text-muted-foreground">
+            Max annual fee
+          </p>
+          <Slider
+            value={[annualFee]}
+            min={0}
+            max={700}
+            step={50}
+            onValueChange={handleAnnualFeeChange}
+          />
+          <div className="flex items-center justify-between text-xs text-muted-foreground">
+            <span>$0</span>
+            <span className="font-semibold text-foreground">${annualFee}</span>
+            <span>$700+</span>
+          </div>
         </div>
+      </FilterMenuPill>
 
-        <div className="flex items-center gap-4">
-          <Checkbox
-            id="noAnnualFee"
-            checked={filters.annualFeeMax === 0}
-            onCheckedChange={(checked) =>
-              handleFilterChange({ annualFeeMax: checked ? 0 : undefined })
-            }
+      <FilterMenuPill
+        label={bonusLabel}
+        active={Boolean(filters.offerAmountMin)}
+      >
+        <div className="space-y-3">
+          <p className="text-xs font-semibold text-muted-foreground">
+            Minimum bonus value
+          </p>
+          <Slider
+            value={[minOfferAmount]}
+            min={0}
+            max={2000}
+            step={100}
+            onValueChange={handleMinOfferChange}
           />
-          <Label htmlFor="noAnnualFee">No Annual Fee</Label>
-
-          <Checkbox
-            id="businessCards"
-            checked={filters.isBusiness}
-            onCheckedChange={(checked) =>
-              handleFilterChange({ isBusiness: checked ? true : undefined })
-            }
-          />
-          <Label htmlFor="businessCards">Business Cards</Label>
-
-          <Checkbox
-            id="feeWaived"
-            checked={filters.isAnnualFeeWaived}
-            onCheckedChange={(checked) =>
-              handleFilterChange({
-                isAnnualFeeWaived: checked ? true : undefined,
-              })
-            }
-          />
-          <Label htmlFor="feeWaived">Fee Waived Year 1</Label>
+          <div className="flex items-center justify-between text-xs text-muted-foreground">
+            <span>$0</span>
+            <span className="font-semibold text-foreground">
+              ${minOfferAmount}
+            </span>
+            <span>$2,000+</span>
+          </div>
         </div>
-      </div>
-
-      <Accordion type="single" collapsible className="w-full">
-        <AccordionItem value="issuers">
-          <AccordionTrigger>Card Issuers</AccordionTrigger>
-          <AccordionContent>
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
-              {issuers.map((issuer) => (
-                <div key={issuer} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`issuer-${issuer}`}
-                    checked={filters.issuer?.includes(issuer)}
-                    onCheckedChange={(checked) =>
-                      handleIssuerToggle(issuer, checked as boolean)
-                    }
-                  />
-                  <Label htmlFor={`issuer-${issuer}`}>
-                    {issuer.replace("_", " ")}
-                  </Label>
-                </div>
-              ))}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-
-        <AccordionItem value="networks">
-          <AccordionTrigger>Card Networks</AccordionTrigger>
-          <AccordionContent>
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
-              {networks.map((network) => (
-                <div key={network} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`network-${network}`}
-                    checked={filters.network?.includes(network)}
-                    onCheckedChange={(checked) =>
-                      handleNetworkToggle(network, checked as boolean)
-                    }
-                  />
-                  <Label htmlFor={`network-${network}`}>
-                    {network.replace("_", " ")}
-                  </Label>
-                </div>
-              ))}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-
-        <AccordionItem value="annual-fee">
-          <AccordionTrigger>Annual Fee</AccordionTrigger>
-          <AccordionContent>
-            <div className="space-y-4 px-1">
-              <Slider
-                value={[annualFee]}
-                min={0}
-                max={700}
-                step={50}
-                onValueChange={handleAnnualFeeChange}
-              />
-              <div className="flex items-center justify-between">
-                <span>$0</span>
-                <span className="font-medium">Max: ${annualFee}</span>
-                <span>$700+</span>
-              </div>
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-
-        <AccordionItem value="offer-amount">
-          <AccordionTrigger>Minimum Bonus Value</AccordionTrigger>
-          <AccordionContent>
-            <div className="space-y-4 px-1">
-              <Slider
-                value={[minOfferAmount]}
-                min={0}
-                max={2000}
-                step={100}
-                onValueChange={handleMinOfferChange}
-              />
-              <div className="flex items-center justify-between">
-                <span>$0</span>
-                <span className="font-medium">Min: ${minOfferAmount}</span>
-                <span>$2,000+</span>
-              </div>
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    </div>
+      </FilterMenuPill>
+    </FilterBar>
   );
 };
 

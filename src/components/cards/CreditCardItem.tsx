@@ -1,120 +1,172 @@
 import { CreditCard } from "@/types";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import Link from "next/link";
 import {
   CreditCard as CreditCardIcon,
+  Sparkle,
   ArrowRight,
-  Sparkles,
-} from "lucide-react";
+  ArrowUpRight,
+} from "@phosphor-icons/react/dist/ssr";
 import { CurrencyValue } from "@/components/finance/CurrencyValue";
 import { OfferSummary } from "@/components/finance/OfferSummary";
+import { cn } from "@/lib/utils";
 
 interface CreditCardItemProps {
   card: CreditCard;
+  featured?: boolean;
 }
 
-const CreditCardItem = ({ card }: CreditCardItemProps) => {
+const CreditCardItem = ({ card, featured = false }: CreditCardItemProps) => {
   const bestOffer = card.offers.length > 0 ? card.offers[0] : null;
   const offerAmount = bestOffer?.amount[0]?.amount || 0;
   const offerCurrency = bestOffer?.amount[0]?.currency || "USD";
 
   return (
-    <Card className="h-full overflow-hidden border-border/70 bg-card/95 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
-      <div className="relative h-48 bg-muted/40">
+    <div
+      className={cn(
+        "group relative flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-[0_2px_12px_rgba(15,23,42,0.06)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_rgba(15,23,42,0.12)] dark:bg-slate-900",
+        featured ? "md:col-span-7" : "",
+      )}
+    >
+      {/* Top Media / Card Art Area - Solid curated off-white, no gradient, no border */}
+      <div
+        className={cn(
+          "relative flex items-center justify-center bg-[#f8fafc] p-6 dark:bg-slate-950/60",
+          featured ? "h-60 md:h-72" : "h-48",
+        )}
+      >
         {card.imageUrl ? (
-          <img
-            src={card.imageUrl}
-            alt={`${card.name} Card`}
-            className="h-full w-full object-contain p-4"
-            onError={(e) => {
-              e.currentTarget.src = "/placeholder.svg";
-            }}
-          />
-        ) : (
-          <div className="flex h-full items-center justify-center">
-            <CreditCardIcon className="text-primary/40 h-16 w-16" />
+          <div className="relative h-full w-full">
+            <Image
+              src={card.imageUrl}
+              alt={`${card.name} Card`}
+              fill
+              unoptimized
+              sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              className="object-contain drop-shadow-md transition-transform duration-200 group-hover:scale-105"
+            />
           </div>
-        )}
-        {card.isAnnualFeeWaived && (
-          <Badge className="absolute top-2 right-2 bg-secondary text-secondary-foreground">
-            No Annual Fee Year 1
-          </Badge>
-        )}
-      </div>
-
-      <CardContent className="p-4">
-        <div className="flex items-start justify-between">
-          <h3 className="line-clamp-2 font-serif text-xl leading-tight text-foreground">
-            {card.issuer.replace("_", " ")} {card.name}
-          </h3>
-          {card.network && (
-            <Badge
-              variant="outline"
-              className="ml-2 text-xs tracking-wide uppercase"
-            >
-              {card.network.replace("_", " ")}
-            </Badge>
-          )}
-        </div>
-
-        {bestOffer && (
-          <div className="mt-4 rounded-xl border border-border/70 bg-accent/40 p-3">
-            <p className="text-muted-foreground mb-1 text-xs font-semibold tracking-wide uppercase">
-              Welcome bonus
-            </p>
-            <div className="mb-3 flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-secondary" />
-              <CurrencyValue
-                amount={offerAmount}
-                currency={offerCurrency}
-                className="text-xl font-semibold text-foreground"
-              />
-            </div>
-            <OfferSummary
-              spend={bestOffer.spend}
-              days={bestOffer.days}
-              expiration={bestOffer.expiration}
+        ) : (
+          <div className="flex h-full w-full items-center justify-center">
+            <CreditCardIcon
+              weight="duotone"
+              className="h-20 w-20 text-slate-300 dark:text-slate-700"
             />
           </div>
         )}
 
-        <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-          <div className="rounded-lg bg-muted/55 p-2">
-            <p className="text-muted-foreground">Annual Fee</p>
-            <p className="font-semibold text-foreground">
+        {/* Status badges */}
+        <div className="absolute top-3 right-3 flex flex-wrap gap-1.5">
+          {featured && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-0.5 text-[11px] font-bold text-[#0160c4] shadow-xs dark:bg-blue-950/80 dark:text-[#38b6ff]">
+              <Sparkle weight="fill" className="h-3 w-3" />
+              <span>Top Pick</span>
+            </span>
+          )}
+          {card.isAnnualFeeWaived && (
+            <span className="rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-800 shadow-xs dark:bg-emerald-950/80 dark:text-emerald-300">
+              Fee waived yr 1
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Card Content */}
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        {/* Issuer and Card Name */}
+        <div className="flex items-start justify-between gap-2">
+          <div>
+            <p className="text-xs font-bold tracking-wider text-slate-500 uppercase dark:text-slate-400">
+              {card.issuer.replaceAll("_", " ")}
+            </p>
+            <h3
+              className={cn(
+                "mt-1 font-bold text-slate-900 transition-colors group-hover:text-[#0160c4] dark:text-white dark:group-hover:text-[#38b6ff]",
+                featured ? "text-2xl sm:text-3xl" : "text-lg sm:text-xl",
+              )}
+            >
+              <Link href={`/credit-cards/${card.cardId}`}>{card.name}</Link>
+            </h3>
+          </div>
+          {card.network && card.network !== card.issuer ? (
+            <span className="shrink-0 rounded-md bg-slate-100 px-2 py-1 text-[10px] font-semibold tracking-wider text-slate-600 uppercase dark:bg-slate-800 dark:text-slate-300">
+              {card.network.replaceAll("_", " ")}
+            </span>
+          ) : null}
+        </div>
+
+        {/* Welcome Bonus Callout Box - Solid emerald background, no border */}
+        {bestOffer ? (
+          <div className="mt-4 rounded-xl bg-emerald-50/80 p-4 dark:bg-emerald-950/40">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold tracking-wider text-emerald-800 uppercase dark:text-emerald-400">
+                Welcome Bonus
+              </span>
+              <span className="text-[11px] font-medium text-emerald-700 dark:text-emerald-400">
+                Verified Offer
+              </span>
+            </div>
+            <div className="mt-1">
+              <CurrencyValue
+                amount={offerAmount}
+                currency={offerCurrency}
+                className={cn(
+                  "font-extrabold text-[#00a859] dark:text-emerald-400",
+                  featured ? "text-3xl sm:text-4xl" : "text-2xl sm:text-3xl",
+                )}
+              />
+            </div>
+            <div className="mt-2 text-xs text-slate-600 dark:text-slate-400">
+              <OfferSummary
+                spend={bestOffer.spend}
+                days={bestOffer.days}
+                expiration={bestOffer.expiration}
+              />
+            </div>
+          </div>
+        ) : null}
+
+        {/* Quick Specs Grid - Solid neutral backgrounds, no border */}
+        <div className="mt-4 grid grid-cols-2 gap-2.5 text-xs">
+          <div className="rounded-lg bg-slate-50 p-2.5 dark:bg-slate-800/60">
+            <span className="text-slate-500 dark:text-slate-400">
+              Annual Fee
+            </span>
+            <p className="mt-0.5 text-sm font-bold text-slate-900 dark:text-white">
               {card.annualFee > 0 ? `$${card.annualFee}` : "No Annual Fee"}
             </p>
           </div>
-          <div className="rounded-lg bg-muted/55 p-2">
-            <p className="text-muted-foreground">Base Cashback</p>
-            <p className="font-semibold text-foreground">
-              {card.universalCashbackPercent}%
+          <div className="rounded-lg bg-slate-50 p-2.5 dark:bg-slate-800/60">
+            <span className="text-slate-500 dark:text-slate-400">
+              Cashback / Rate
+            </span>
+            <p className="mt-0.5 text-sm font-bold text-slate-900 dark:text-white">
+              {card.universalCashbackPercent}% on all spend
             </p>
           </div>
         </div>
-      </CardContent>
 
-      <CardFooter className="flex items-center justify-between p-4 pt-0">
-        <Link
-          href={`/credit-cards/${card.cardId}`}
-          className="text-primary text-sm font-medium hover:underline"
-        >
-          View Details
-        </Link>
-
-        <Button
-          asChild
-          size="sm"
-          className="bg-primary text-primary-foreground hover:bg-primary/90"
-        >
-          <a href={card.url} target="_blank" rel="noopener noreferrer">
-            Claim Offer <ArrowRight className="ml-1 h-4 w-4" />
+        {/* Action Row */}
+        <div className="mt-6 flex items-center justify-between gap-3 pt-2">
+          <Link
+            href={`/credit-cards/${card.cardId}`}
+            className="inline-flex items-center gap-1 text-xs font-semibold text-slate-700 hover:text-[#0160c4] dark:text-slate-300 dark:hover:text-[#38b6ff]"
+          >
+            <span>See Card Details</span>
+            <ArrowRight weight="bold" className="h-3.5 w-3.5" />
+          </Link>
+          <a
+            href={bestOffer?.url || card.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 rounded-lg bg-[#0160c4] px-4 py-2 text-xs font-semibold text-white shadow-sm transition-all hover:bg-[#0052cc] active:scale-[0.98]"
+          >
+            <span>Apply Now</span>
+            <ArrowUpRight weight="bold" className="h-3.5 w-3.5" />
           </a>
-        </Button>
-      </CardFooter>
-    </Card>
+        </div>
+      </div>
+    </div>
   );
 };
 

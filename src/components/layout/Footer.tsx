@@ -1,110 +1,240 @@
 import Link from "next/link";
+import { BrandLogo } from "./BrandLogo";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  NewTwitterIcon,
+  Linkedin01Icon,
+  YoutubeIcon,
+  Facebook01Icon,
+} from "@hugeicons/core-free-icons";
+import { socialLinks } from "@/lib/socials";
+
+const footerIcons = {
+  x: NewTwitterIcon,
+  linkedin: Linkedin01Icon,
+  youtube: YoutubeIcon,
+  facebook: Facebook01Icon,
+} as const;
 
 const Footer = () => {
   return (
-    <footer className="mt-20 border-t border-border/80 bg-card/70">
-      <div className="container px-4 py-14 md:px-6">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
-          <div className="flex flex-col gap-2">
-            <Link
-              href="/"
-              className="font-serif text-xl font-semibold tracking-tight"
-            >
-              Churnable
-            </Link>
-            <p className="text-muted-foreground mt-1 max-w-sm text-sm">
-              Beat the banks at their own acquisition game with smarter credit
-              card and bank bonus decisions.
+    <footer className="border-t border-slate-800 bg-[#0f172a] text-slate-300">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
+        <div className="grid grid-cols-2 gap-10 sm:grid-cols-2 md:grid-cols-5">
+          {/* Brand Column - Logo only */}
+          <div className="col-span-2 md:col-span-1">
+            <BrandLogo size="md" href="/" className="[&_span]:text-white" />
+          </div>
+
+          {/* Column 1: Cards */}
+          <div>
+            <p className="text-xs font-bold tracking-wider text-white uppercase">
+              Credit Cards
             </p>
+            <ul className="mt-4 space-y-2.5 text-sm">
+              <li>
+                <Link
+                  href="/credit-cards"
+                  className="text-slate-400 transition-colors hover:text-white"
+                >
+                  All Credit Card Offers
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/credit-cards?fee=0"
+                  className="text-slate-400 transition-colors hover:text-white"
+                >
+                  No Annual Fee Cards
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/credit-cards?type=travel"
+                  className="text-slate-400 transition-colors hover:text-white"
+                >
+                  Travel Rewards Cards
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/credit-cards?type=cashback"
+                  className="text-slate-400 transition-colors hover:text-white"
+                >
+                  Cash Back Cards
+                </Link>
+              </li>
+            </ul>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <h3 className="text-sm font-semibold">Explore</h3>
-            <nav className="flex flex-col gap-2">
-              <Link
-                href="/credit-cards"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                Credit Cards
-              </Link>
-              <Link
-                href="/bank-accounts"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                Bank Accounts
-              </Link>
-              <Link
-                href="/resources"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                Resources
-              </Link>
-            </nav>
+          {/* Column 2: Bank Accounts */}
+          <div>
+            <p className="text-xs font-bold tracking-wider text-white uppercase">
+              Banking
+            </p>
+            <ul className="mt-4 space-y-2.5 text-sm">
+              <li>
+                <Link
+                  href="/bank-accounts"
+                  className="text-slate-400 transition-colors hover:text-white"
+                >
+                  All Bank Account Bonuses
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/bank-accounts?type=checking"
+                  className="text-slate-400 transition-colors hover:text-white"
+                >
+                  Checking Account Promos
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/bank-accounts?type=savings"
+                  className="text-slate-400 transition-colors hover:text-white"
+                >
+                  High-Yield Savings Bonuses
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/bank-accounts?fee=0"
+                  className="text-slate-400 transition-colors hover:text-white"
+                >
+                  No Monthly Fee Accounts
+                </Link>
+              </li>
+            </ul>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <h3 className="text-sm font-semibold">Popular Card Issuers</h3>
-            <nav className="flex flex-col gap-2">
-              <Link
-                href="/credit-cards?issuer=CHASE"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                Chase
-              </Link>
-              <Link
-                href="/credit-cards?issuer=AMERICAN_EXPRESS"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                American Express
-              </Link>
-              <Link
-                href="/credit-cards?issuer=CAPITAL_ONE"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                Capital One
-              </Link>
-              <Link
-                href="/credit-cards?issuer=CITI"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                Citi
-              </Link>
-            </nav>
+          {/* Column 3: Guides & Tips */}
+          <div>
+            <p className="text-xs font-bold tracking-wider text-white uppercase">
+              Guides & Tips
+            </p>
+            <ul className="mt-4 space-y-2.5 text-sm">
+              <li>
+                <Link
+                  href="/resources"
+                  className="text-slate-400 transition-colors hover:text-white"
+                >
+                  Beginner Churning Guide
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/resources"
+                  className="text-slate-400 transition-colors hover:text-white"
+                >
+                  Chase 5/24 Rule Explained
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/resources"
+                  className="text-slate-400 transition-colors hover:text-white"
+                >
+                  Direct Deposit Requirements
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/resources"
+                  className="text-slate-400 transition-colors hover:text-white"
+                >
+                  Bonus Tax Rules (1099-INT)
+                </Link>
+              </li>
+            </ul>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <h3 className="text-sm font-semibold">Legal</h3>
-            <nav className="flex flex-col gap-2">
-              <Link
-                href="/privacy"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                Privacy Policy
-              </Link>
-              <Link
-                href="/terms"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                Terms of Service
-              </Link>
-              <Link
-                href="/affiliates"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                Affiliate Disclosure
-              </Link>
-            </nav>
+          {/* Column 4: Help */}
+          <div>
+            <p className="text-xs font-bold tracking-wider text-white uppercase">
+              Help
+            </p>
+            <ul className="mt-4 space-y-2.5 text-sm">
+              <li>
+                <Link
+                  href="/how-we-are-paid"
+                  className="text-slate-400 transition-colors hover:text-white"
+                >
+                  How We&apos;re Paid
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/privacy-policy"
+                  className="text-slate-400 transition-colors hover:text-white"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/terms-of-use"
+                  className="text-slate-400 transition-colors hover:text-white"
+                >
+                  Terms of Use
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact"
+                  className="text-slate-400 transition-colors hover:text-white"
+                >
+                  Contact Us
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-center justify-center gap-4 border-t border-border/80 pt-6 md:flex-row md:justify-between">
-          <p className="text-muted-foreground text-center text-sm md:text-left">
+        {/* Bottom Bar without HR divider */}
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 sm:flex-row">
+          <p className="text-xs text-slate-500">
             © {new Date().getFullYear()} Churnable. All rights reserved.
           </p>
-          <p className="text-muted-foreground text-center text-sm md:text-right">
-            Banks update promos constantly. Verify current terms before you
-            apply.
-          </p>
+          <div className="flex items-center gap-2">
+            {socialLinks.map((social) => {
+              const icon = (
+                <HugeiconsIcon
+                  icon={footerIcons[social.id]}
+                  size={24}
+                  color="currentColor"
+                  strokeWidth={2}
+                />
+              );
+              const className =
+                "flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-800 hover:text-white";
+
+              if (!social.href) {
+                return (
+                  <span
+                    key={social.id}
+                    aria-label={social.ariaLabel}
+                    className={className}
+                  >
+                    {icon}
+                  </span>
+                );
+              }
+
+              return (
+                <a
+                  key={social.id}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.ariaLabel}
+                  className={className}
+                >
+                  {icon}
+                </a>
+              );
+            })}
+          </div>
         </div>
       </div>
     </footer>

@@ -1,27 +1,35 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation"; // Changed from react-router-dom
+import { Suspense, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import CreditCardGrid from "@/components/cards/CreditCardGrid";
 import CreditCardFilters from "@/components/filters/CreditCardFilters";
 import { PageContainer } from "@/components/shared/PageContainer";
 import { PageHeader } from "@/components/shared/PageHeader";
+import { PaginationControls } from "@/components/shared/PaginationControls";
 import { LoadingCards } from "@/components/shared/LoadingCards";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { CreditCard, FilterOptions, SortOptions } from "@/types";
 import { fetchCreditCards } from "@/services/api";
 
-export default function CreditCardsPage() {
-  // Renamed for clarity
-  const searchParams = useSearchParams(); // From next/navigation
-  // We are not using setSearchParams directly in this component,
-  // but CreditCardFilters might need to be updated to use Next.js navigation for URL updates.
+function CreditCardsPageContent() {
+  const searchParams = useSearchParams();
   const [creditCards, setCreditCards] = useState<CreditCard[]>([]);
   const [filteredCards, setFilteredCards] = useState<CreditCard[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [issuers, setIssuers] = useState<string[]>([]);
-  const [networks, setNetworks] = useState<string[]>([]);
-
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(50);
   const urlIssuer = searchParams.get("issuer");
+  const urlQuery = searchParams.get("q");
+  const urlFee = searchParams.get("fee");
+  const urlType = searchParams.get("type");
 
   useEffect(() => {
     const loadCreditCards = async () => {
@@ -37,20 +45,54 @@ export default function CreditCardsPage() {
 
         const uniqueIssuers = Array.from(
           new Set(activeCards.map((card: CreditCard) => card.issuer)),
-        ) as string[]; // Explicit type assertion
+        ) as string[];
         setIssuers(uniqueIssuers);
 
-        const uniqueNetworks = Array.from(
-          new Set(activeCards.map((card: CreditCard) => card.network)),
-        ) as string[]; // Explicit type assertion
-        setNetworks(uniqueNetworks);
-
+        // Filter by URL parameters if present
         if (urlIssuer) {
-          initialDisplayCards = activeCards.filter(
+          initialDisplayCards = initialDisplayCards.filter(
             (card: CreditCard) => card.issuer === urlIssuer,
           );
         }
+
+        if (urlFee === "0") {
+          initialDisplayCards = initialDisplayCards.filter(
+            (card: CreditCard) => card.annualFee === 0,
+          );
+        }
+
+        if (urlType === "travel") {
+          initialDisplayCards = initialDisplayCards.filter(
+            (card: CreditCard) =>
+              card.name.toLowerCase().includes("travel") ||
+              card.name.toLowerCase().includes("sapphire") ||
+              card.name.toLowerCase().includes("venture") ||
+              card.name.toLowerCase().includes("platinum") ||
+              card.details?.toLowerCase().includes("miles") ||
+              card.details?.toLowerCase().includes("points"),
+          );
+        } else if (urlType === "cashback") {
+          initialDisplayCards = initialDisplayCards.filter(
+            (card: CreditCard) =>
+              card.universalCashbackPercent > 1.5 ||
+              card.name.toLowerCase().includes("cash") ||
+              card.name.toLowerCase().includes("freedom") ||
+              card.name.toLowerCase().includes("quicksilver"),
+          );
+        }
+
+        if (urlQuery) {
+          const q = urlQuery.toLowerCase();
+          initialDisplayCards = initialDisplayCards.filter(
+            (card: CreditCard) =>
+              card.name.toLowerCase().includes(q) ||
+              card.issuer.toLowerCase().includes(q) ||
+              card.details?.toLowerCase().includes(q),
+          );
+        }
+
         setFilteredCards(initialDisplayCards);
+        setCurrentPage(1);
       } catch (error) {
         console.error("Error loading credit cards:", error);
       } finally {
@@ -59,7 +101,7 @@ export default function CreditCardsPage() {
     };
 
     loadCreditCards();
-  }, [urlIssuer]);
+  }, [urlIssuer, urlQuery, urlFee, urlType]);
 
   const handleFilterChange = (filters: FilterOptions) => {
     let tempFiltered = [...creditCards];
@@ -67,12 +109,6 @@ export default function CreditCardsPage() {
     if (filters.issuer && filters.issuer.length > 0) {
       tempFiltered = tempFiltered.filter((card: CreditCard) =>
         filters.issuer!.includes(card.issuer),
-      );
-    }
-
-    if (filters.network && filters.network.length > 0) {
-      tempFiltered = tempFiltered.filter((card: CreditCard) =>
-        filters.network!.includes(card.network),
       );
     }
 
@@ -103,8 +139,8 @@ export default function CreditCardsPage() {
           card.isAnnualFeeWaived === filters.isAnnualFeeWaived,
       );
     }
-
     setFilteredCards(tempFiltered);
+    setCurrentPage(1);
   };
 
   const handleSortChange = (sort: SortOptions) => {
@@ -140,46 +176,130 @@ export default function CreditCardsPage() {
     }
 
     setFilteredCards(tempSorted);
+    setCurrentPage(1);
+  };
+
+  const totalPages = Math.ceil(filteredCards.length / pageSize) || 1;
+  const safeCurrentPage = Math.min(Math.max(1, currentPage), totalPages);
+  const startIndex = (safeCurrentPage - 1) * pageSize;
+  const paginatedCards = filteredCards.slice(startIndex, startIndex + pageSize);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handlePageSizeChange = (newSize: number) => {
+    setPageSize(newSize);
+    setCurrentPage(1);
   };
 
   return (
-    <PageContainer className="py-8">
-      <PageHeader
-        title="Credit Card Offers"
-        description="Compare bonus offers side by side and capture the value banks use to buy new customers."
-      />
+    <div className="min-h-[calc(100vh-4rem)] bg-[#f4f6f8] py-8 md:py-12 dark:bg-slate-950">
+      <PageContainer>
+        <PageHeader
+          title="Compare Credit Card Bonus Offers"
+          description="Side-by-side welcome bonuses, spend requirements, and fee comparisons ranked by real net payout."
+        />
 
-      <div className="mb-6 rounded-2xl border border-border/70 bg-card/80 p-4 shadow-sm">
         <CreditCardFilters
           onFilterChange={handleFilterChange}
           onSortChange={handleSortChange}
           issuers={issuers}
-          networks={networks}
-          // Pass initial searchParam for issuer if needed by CreditCardFilters
-          initialIssuer={urlIssuer || undefined}
         />
-      </div>
 
-      {isLoading ? (
-        <LoadingCards
-          count={8}
-          columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-        />
-      ) : (
-        <>
-          <div className="mb-6">
-            <p className="text-muted-foreground">
-              Showing {filteredCards.length} of {creditCards.length} credit
-              cards
-            </p>
-          </div>
-
-          <CreditCardGrid
-            cards={filteredCards}
-            emptyMessage="No credit cards match your filters. Try adjusting your criteria."
+        {isLoading ? (
+          <LoadingCards
+            count={8}
+            columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
           />
-        </>
-      )}
-    </PageContainer>
+        ) : (
+          <>
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+              <p className="text-sm font-semibold text-slate-600 dark:text-slate-400">
+                Showing{" "}
+                <span className="font-bold text-slate-900 dark:text-white">
+                  {filteredCards.length === 0
+                    ? 0
+                    : (safeCurrentPage - 1) * pageSize + 1}
+                  –{Math.min(safeCurrentPage * pageSize, filteredCards.length)}
+                </span>{" "}
+                of{" "}
+                <span className="font-bold text-slate-900 dark:text-white">
+                  {filteredCards.length}
+                </span>{" "}
+                cards
+                {urlQuery && ` matching "${urlQuery}"`}
+              </p>
+
+              {/* Per page selector */}
+              <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+                <span className="font-semibold text-slate-500 dark:text-slate-400">
+                  Per page:
+                </span>
+                <Select
+                  value={String(pageSize)}
+                  onValueChange={(val) => handlePageSizeChange(Number(val))}
+                >
+                  <SelectTrigger
+                    aria-label="Select cards per page"
+                    className="h-8 w-[76px] rounded-lg border-slate-200 bg-white px-2.5 text-xs font-semibold text-slate-700 shadow-2xs focus:ring-1 focus:ring-[#0160c4] dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200"
+                  >
+                    <SelectValue placeholder={String(pageSize)} />
+                  </SelectTrigger>
+                  <SelectContent className="min-w-[76px] rounded-xl border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
+                    {[25, 50, 100].map((size) => (
+                      <SelectItem
+                        key={size}
+                        value={String(size)}
+                        className="text-xs font-semibold"
+                      >
+                        {size}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <CreditCardGrid
+              cards={paginatedCards}
+              emptyMessage="No credit cards match your current criteria. Try resetting filters."
+            />
+
+            {/* Bottom Pagination Controls */}
+            {filteredCards.length > 0 && (
+              <PaginationControls
+                currentPage={safeCurrentPage}
+                totalPages={totalPages}
+                pageSize={pageSize}
+                totalItems={filteredCards.length}
+                onPageChange={handlePageChange}
+                onPageSizeChange={handlePageSizeChange}
+                itemLabel="cards"
+                className="mt-8 border-t border-slate-200/80 pt-4 dark:border-slate-800"
+              />
+            )}
+          </>
+        )}
+      </PageContainer>
+    </div>
+  );
+}
+
+export default function CreditCardsPage() {
+  return (
+    <Suspense
+      fallback={
+        <PageContainer className="py-8 md:py-12">
+          <LoadingCards
+            count={8}
+            columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          />
+        </PageContainer>
+      }
+    >
+      <CreditCardsPageContent />
+    </Suspense>
   );
 }

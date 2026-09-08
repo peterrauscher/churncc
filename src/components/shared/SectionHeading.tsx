@@ -16,19 +16,23 @@ export function SectionHeading({
   return (
     <div
       className={cn(
-        "mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between",
+        "mb-8 flex flex-col gap-4 md:mb-10 md:flex-row md:items-end md:justify-between",
         className,
       )}
     >
-      <div>
-        <h2 className="font-serif text-3xl tracking-tight text-foreground md:text-4xl">
+      <div className="max-w-2xl">
+        <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl md:text-4xl dark:text-white">
           {title}
         </h2>
         {description ? (
-          <p className="mt-2 max-w-2xl text-muted-foreground">{description}</p>
+          <p className="mt-2 text-base text-slate-600 dark:text-slate-400">
+            {description}
+          </p>
         ) : null}
       </div>
       {action ? <div className="shrink-0">{action}</div> : null}
     </div>
   );
 }
+
+export default SectionHeading;
