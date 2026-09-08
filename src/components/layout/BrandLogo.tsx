@@ -11,9 +11,9 @@ interface BrandLogoProps {
 }
 
 const dimensions = {
-  sm: { iconSize: 26, textSize: "text-lg" },
-  md: { iconSize: 32, textSize: "text-xl" },
-  lg: { iconSize: 40, textSize: "text-2xl" },
+  sm: { iconSize: 28, textSize: "text-lg", gap: "gap-2.5" },
+  md: { iconSize: 36, textSize: "text-[22px] sm:text-2xl", gap: "gap-3" },
+  lg: { iconSize: 44, textSize: "text-2xl sm:text-3xl", gap: "gap-3.5" },
 };
 
 export function LogoIcon({
@@ -46,7 +46,7 @@ export function BrandLogo({
   const dim = dimensions[size];
 
   const content = (
-    <div className={cn("inline-flex items-center gap-2.5", className)}>
+    <div className={cn("inline-flex items-center", dim.gap, className)}>
       <Image
         src="/logo-icon.svg"
         alt="Churnable icon"

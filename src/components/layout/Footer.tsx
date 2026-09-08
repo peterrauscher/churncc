@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { BrandLogo } from "./BrandLogo";
-import { ShieldCheck, Sparkle } from "@phosphor-icons/react/dist/ssr";
 
 const Footer = () => {
   return (
@@ -15,20 +14,6 @@ const Footer = () => {
               welcome bonuses and bank account promotions so you can keep more
               money from every paycheck.
             </p>
-
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-950/70 border border-emerald-800/60 px-3 py-1 text-xs font-semibold text-emerald-300">
-                <ShieldCheck
-                  weight="bold"
-                  className="h-3.5 w-3.5 text-emerald-400"
-                />
-                <span>100% Unbiased Rankings</span>
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-950/70 border border-blue-800/60 px-3 py-1 text-xs font-semibold text-[#38b6ff]">
-                <Sparkle weight="bold" className="h-3.5 w-3.5 text-[#38b6ff]" />
-                <span>Daily Rate Tracking</span>
-              </span>
-            </div>
           </div>
 
           {/* Column 1: Cards */}
@@ -179,7 +164,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-slate-800 pt-8 sm:flex-row">
           <p className="text-xs text-slate-400">
-            (c) {new Date().getFullYear()} Churnable. All rights reserved.
+            © {new Date().getFullYear()} Churnable. All rights reserved.
           </p>
           <div className="flex flex-wrap items-center gap-6 text-xs text-slate-400">
             <Link
