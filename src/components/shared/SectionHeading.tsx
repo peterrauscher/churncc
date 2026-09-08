@@ -3,7 +3,6 @@ import { cn } from "@/lib/utils";
 interface SectionHeadingProps {
   title: string;
   description?: string;
-  eyebrow?: string;
   action?: React.ReactNode;
   className?: string;
 }
@@ -11,7 +10,6 @@ interface SectionHeadingProps {
 export function SectionHeading({
   title,
   description,
-  eyebrow,
   action,
   className,
 }: SectionHeadingProps) {
@@ -23,11 +21,6 @@ export function SectionHeading({
       )}
     >
       <div className="max-w-2xl">
-        {eyebrow ? (
-          <p className="mb-2 text-xs font-bold tracking-wider text-[#0160c4] uppercase dark:text-[#38b6ff]">
-            {eyebrow}
-          </p>
-        ) : null}
         <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl md:text-4xl dark:text-white">
           {title}
         </h2>

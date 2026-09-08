@@ -5,7 +5,6 @@ import Link from "next/link";
 import CreditCardItem from "@/components/cards/CreditCardItem";
 import BankAccountGrid from "@/components/cards/BankAccountGrid";
 import { LoadingCards } from "@/components/shared/LoadingCards";
-import { SearchBar } from "@/components/shared/SearchBar";
 import { BonusCalculator } from "@/components/finance/BonusCalculator";
 import { BankLogoCarousel } from "@/components/layout/BankLogoCarousel";
 import { HeroInfographic } from "@/components/layout/HeroInfographic";
@@ -74,15 +73,12 @@ export default function HomePage() {
               </h1>
 
               <p className="mt-4 max-w-xl text-base text-slate-600 sm:text-lg dark:text-slate-300">
-                Banks budget billions to acquire customers. We track verified
-                welcome bonuses and deposit promos so you keep more money.
+                Banks spend billions to acquire customers. We help you track
+                bonuses so you can capture your fair share of it.
               </p>
 
-              {/* Dynamic Search Bar - Borderless with soft shadow */}
-              <SearchBar />
-
               {/* Quick Actions */}
-              <div className="mt-6 flex flex-wrap items-center gap-3">
+              <div className="mt-8 flex flex-wrap items-center gap-3">
                 <Link
                   href="/credit-cards"
                   className="inline-flex items-center gap-2 rounded-xl bg-[#0160c4] px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#0052cc] active:scale-[0.98]"
@@ -111,7 +107,57 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 2: CATEGORY QUICK NAV BENTO - Curated off-white background #f4f6f8 */}
+      {/* SECTION 2: INTERACTIVE BONUS CALCULATOR - Curated off-white background #f4f6f8 */}
+      <section className="bg-[#f4f6f8] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 dark:bg-slate-900/50">
+        <div className="mx-auto max-w-7xl">
+          <BonusCalculator />
+        </div>
+      </section>
+
+      {/* SECTION 3: FEATURED CREDIT CARD OFFERS - Solid white background */}
+      <section className="bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-8 dark:bg-slate-950">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-2xl">
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl md:text-4xl dark:text-white">
+                Highest-upside credit card offers
+              </h2>
+              <p className="mt-2 text-base text-slate-600 dark:text-slate-400">
+                Issuer incentives ranked by net welcome payout and fee
+                structure.
+              </p>
+            </div>
+            <Link
+              href="/credit-cards"
+              className="inline-flex items-center gap-1 text-sm font-semibold text-[#0160c4] hover:underline dark:text-[#38b6ff]"
+            >
+              <span>View all credit cards</span>
+              <ArrowRight weight="bold" className="h-4 w-4" />
+            </Link>
+          </div>
+
+          {isLoading ? (
+            <LoadingCards count={4} columns="grid-cols-1 md:grid-cols-12" />
+          ) : leadCard ? (
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
+              <div className="md:col-span-7">
+                <CreditCardItem card={leadCard} featured />
+              </div>
+              <div className="flex flex-col gap-6 md:col-span-5">
+                {stackedCards.map((card) => (
+                  <CreditCardItem key={card.cardId} card={card} />
+                ))}
+              </div>
+            </div>
+          ) : (
+            <p className="text-slate-500">
+              No featured credit cards available at the moment.
+            </p>
+          )}
+        </div>
+      </section>
+
+      {/* SECTION 4: CATEGORY QUICK NAV BENTO - Curated off-white background #f4f6f8 */}
       <section className="bg-[#f4f6f8] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 dark:bg-slate-900/50">
         <div className="mx-auto max-w-7xl">
           <div className="mb-8 max-w-2xl">
@@ -229,56 +275,6 @@ export default function HomePage() {
               </div>
             </Link>
           </div>
-        </div>
-      </section>
-
-      {/* SECTION 3: FEATURED CREDIT CARD OFFERS - Solid white background */}
-      <section className="bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-8 dark:bg-slate-950">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div className="max-w-2xl">
-              <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl md:text-4xl dark:text-white">
-                Highest-upside credit card offers
-              </h2>
-              <p className="mt-2 text-base text-slate-600 dark:text-slate-400">
-                Issuer incentives ranked by net welcome payout and fee
-                structure.
-              </p>
-            </div>
-            <Link
-              href="/credit-cards"
-              className="inline-flex items-center gap-1 text-sm font-semibold text-[#0160c4] hover:underline dark:text-[#38b6ff]"
-            >
-              <span>View all credit cards</span>
-              <ArrowRight weight="bold" className="h-4 w-4" />
-            </Link>
-          </div>
-
-          {isLoading ? (
-            <LoadingCards count={4} columns="grid-cols-1 md:grid-cols-12" />
-          ) : leadCard ? (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
-              <div className="md:col-span-7">
-                <CreditCardItem card={leadCard} featured />
-              </div>
-              <div className="flex flex-col gap-6 md:col-span-5">
-                {stackedCards.map((card) => (
-                  <CreditCardItem key={card.cardId} card={card} />
-                ))}
-              </div>
-            </div>
-          ) : (
-            <p className="text-slate-500">
-              No featured credit cards available at the moment.
-            </p>
-          )}
-        </div>
-      </section>
-
-      {/* SECTION 4: INTERACTIVE BONUS CALCULATOR - Curated off-white background #f4f6f8 */}
-      <section className="bg-[#f4f6f8] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 dark:bg-slate-900/50">
-        <div className="mx-auto max-w-7xl">
-          <BonusCalculator />
         </div>
       </section>
 

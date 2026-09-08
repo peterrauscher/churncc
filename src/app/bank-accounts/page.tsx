@@ -8,8 +8,15 @@ import { BankAccount } from "@/types";
 import { getMockBankAccounts } from "@/services/api";
 import { PageContainer } from "@/components/shared/PageContainer";
 import { PageHeader } from "@/components/shared/PageHeader";
+import { PaginationControls } from "@/components/shared/PaginationControls";
 import { LoadingCards } from "@/components/shared/LoadingCards";
-import { ShieldCheck } from "@phosphor-icons/react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface BankAccountFilterState {
   institutions?: string[];
@@ -30,7 +37,8 @@ function BankAccountsPageContent() {
   const [filteredAccounts, setFilteredAccounts] = useState<BankAccount[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [institutions, setInstitutions] = useState<string[]>([]);
-
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(50);
   const urlType = searchParams.get("type");
   const urlFee = searchParams.get("fee");
   const urlQuery = searchParams.get("q");
@@ -42,6 +50,7 @@ function BankAccountsPageContent() {
         const accountsData = getMockBankAccounts();
         setBankAccounts(accountsData);
         let initialDisplay = [...accountsData];
+        setCurrentPage(1);
 
         const uniqueInstitutions = Array.from(
           new Set(
@@ -120,6 +129,7 @@ function BankAccountsPageContent() {
     }
 
     setFilteredAccounts(tempFiltered);
+    setCurrentPage(1);
   };
 
   const handleSortChange = (sort: BankAccountSortState) => {
@@ -147,31 +157,40 @@ function BankAccountsPageContent() {
     }
 
     setFilteredAccounts(tempSorted);
+    setCurrentPage(1);
+  };
+
+  const totalPages = Math.ceil(filteredAccounts.length / pageSize) || 1;
+  const safeCurrentPage = Math.min(Math.max(1, currentPage), totalPages);
+  const startIndex = (safeCurrentPage - 1) * pageSize;
+  const paginatedAccounts = filteredAccounts.slice(
+    startIndex,
+    startIndex + pageSize,
+  );
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handlePageSizeChange = (newSize: number) => {
+    setPageSize(newSize);
+    setCurrentPage(1);
   };
 
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-[#f4f6f8] py-8 md:py-12 dark:bg-slate-950">
       <PageContainer>
         <PageHeader
-          eyebrow="Banking"
           title="Compare Bank Account Bonuses"
           description="Find checking and savings promotions that pay you cash for moving your everyday deposits."
-          badge={
-            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300">
-              <ShieldCheck weight="bold" className="h-3.5 w-3.5" />
-              <span>FDIC / NCUA Insured Products</span>
-            </span>
-          }
         />
 
-        {/* Filter Surface - Pure white, borderless, soft shadow */}
-        <div className="mb-10 rounded-2xl bg-white p-5 shadow-[0_2px_16px_rgba(15,23,42,0.06)] md:p-6 dark:bg-slate-900">
-          <BankAccountFilters
-            onFilterChange={handleFilterChange}
-            onSortChange={handleSortChange}
-            institutions={institutions}
-          />
-        </div>
+        <BankAccountFilters
+          onFilterChange={handleFilterChange}
+          onSortChange={handleSortChange}
+          institutions={institutions}
+        />
 
         {isLoading ? (
           <LoadingCards
@@ -180,20 +199,74 @@ function BankAccountsPageContent() {
           />
         ) : (
           <>
-            <div className="mb-6 flex items-center justify-between">
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
               <p className="text-sm font-semibold text-slate-600 dark:text-slate-400">
                 Showing{" "}
                 <span className="font-bold text-slate-900 dark:text-white">
+                  {filteredAccounts.length === 0
+                    ? 0
+                    : (safeCurrentPage - 1) * pageSize + 1}
+                  –
+                  {Math.min(
+                    safeCurrentPage * pageSize,
+                    filteredAccounts.length,
+                  )}
+                </span>{" "}
+                of{" "}
+                <span className="font-bold text-slate-900 dark:text-white">
                   {filteredAccounts.length}
                 </span>{" "}
-                of {bankAccounts.length} accounts
+                accounts
               </p>
+
+              {/* Per page selector */}
+              <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+                <span className="font-semibold text-slate-500 dark:text-slate-400">
+                  Per page:
+                </span>
+                <Select
+                  value={String(pageSize)}
+                  onValueChange={(val) => handlePageSizeChange(Number(val))}
+                >
+                  <SelectTrigger
+                    aria-label="Select accounts per page"
+                    className="h-8 w-[76px] rounded-lg border-slate-200 bg-white px-2.5 text-xs font-semibold text-slate-700 shadow-2xs focus:ring-1 focus:ring-[#0160c4] dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200"
+                  >
+                    <SelectValue placeholder={String(pageSize)} />
+                  </SelectTrigger>
+                  <SelectContent className="min-w-[76px] rounded-xl border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
+                    {[25, 50, 100].map((size) => (
+                      <SelectItem
+                        key={size}
+                        value={String(size)}
+                        className="text-xs font-semibold"
+                      >
+                        {size}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
 
             <BankAccountGrid
-              accounts={filteredAccounts}
+              accounts={paginatedAccounts}
               emptyMessage="No bank accounts match your current criteria. Try resetting filters."
             />
+
+            {/* Bottom Pagination Controls */}
+            {filteredAccounts.length > 0 && (
+              <PaginationControls
+                currentPage={safeCurrentPage}
+                totalPages={totalPages}
+                pageSize={pageSize}
+                totalItems={filteredAccounts.length}
+                onPageChange={handlePageChange}
+                onPageSizeChange={handlePageSizeChange}
+                itemLabel="accounts"
+                className="mt-8 border-t border-slate-200/80 pt-4 dark:border-slate-800"
+              />
+            )}
           </>
         )}
       </PageContainer>

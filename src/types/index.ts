@@ -76,7 +76,6 @@ export interface BankAccount {
 // Filter Types
 export interface FilterOptions {
   issuer?: string[];
-  network?: string[];
   annualFeeMax?: number;
   offerAmountMin?: number;
   categories?: string[];

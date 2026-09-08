@@ -1,11 +1,21 @@
 import Link from "next/link";
 import { BrandLogo } from "./BrandLogo";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  XLogo,
-  LinkedinLogo,
-  YoutubeLogo,
-  FacebookLogo,
-} from "@phosphor-icons/react/dist/ssr";
+  NewTwitterIcon,
+  Linkedin01Icon,
+  YoutubeIcon,
+  Facebook01Icon,
+} from "@hugeicons/core-free-icons";
+import { socialLinks } from "@/lib/socials";
+
+const footerIcons = {
+  x: NewTwitterIcon,
+  linkedin: Linkedin01Icon,
+  youtube: YoutubeIcon,
+  facebook: Facebook01Icon,
+} as const;
+
 const Footer = () => {
   return (
     <footer className="border-t border-slate-800 bg-[#0f172a] text-slate-300">
@@ -187,36 +197,43 @@ const Footer = () => {
             © {new Date().getFullYear()} Churnable. All rights reserved.
           </p>
           <div className="flex items-center gap-2">
-            <a
-              href="https://x.com/churncc"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Follow Churnable on X"
-              className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
-            >
-              <XLogo weight="bold" className="h-4 w-4" />
-            </a>
-            <a
-              href="#"
-              aria-label="Churnable on LinkedIn (coming soon)"
-              className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
-            >
-              <LinkedinLogo weight="bold" className="h-4 w-4" />
-            </a>
-            <a
-              href="#"
-              aria-label="Churnable on YouTube (coming soon)"
-              className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
-            >
-              <YoutubeLogo weight="bold" className="h-4 w-4" />
-            </a>
-            <a
-              href="#"
-              aria-label="Churnable on Facebook (coming soon)"
-              className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
-            >
-              <FacebookLogo weight="bold" className="h-4 w-4" />
-            </a>
+            {socialLinks.map((social) => {
+              const icon = (
+                <HugeiconsIcon
+                  icon={footerIcons[social.id]}
+                  size={24}
+                  color="currentColor"
+                  strokeWidth={2}
+                />
+              );
+              const className =
+                "flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-800 hover:text-white";
+
+              if (!social.href) {
+                return (
+                  <span
+                    key={social.id}
+                    aria-label={social.ariaLabel}
+                    className={className}
+                  >
+                    {icon}
+                  </span>
+                );
+              }
+
+              return (
+                <a
+                  key={social.id}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.ariaLabel}
+                  className={className}
+                >
+                  {icon}
+                </a>
+              );
+            })}
           </div>
         </div>
       </div>

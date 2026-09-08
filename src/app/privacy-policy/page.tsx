@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { PageContainer } from "@/components/shared/PageContainer";
 import { PageHeader } from "@/components/shared/PageHeader";
-import { ArrowLeft, ShieldCheck } from "@phosphor-icons/react/dist/ssr";
+import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | Churnable",
@@ -27,19 +27,12 @@ export default function PrivacyPolicyPage() {
         </div>
 
         <PageHeader
-          eyebrow="Legal & Trust"
           title="Privacy Policy"
           description={`Last updated: ${lastUpdated}. Understand how we handle information when you use our comparison tools and email course.`}
-          badge={
-            <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-3 py-0.5 text-xs font-semibold text-[#0160c4] dark:bg-blue-950/60 dark:text-[#38b6ff]">
-              <ShieldCheck weight="bold" className="h-3.5 w-3.5" />
-              <span>Consumer Privacy</span>
-            </span>
-          }
         />
 
-        <div className="space-y-8">
-          <div className="rounded-2xl bg-white p-6 shadow-[0_2px_16px_rgba(15,23,42,0.06)] md:p-10 dark:bg-slate-900">
+        <div className="space-y-10 md:space-y-12">
+          <section>
             <h2 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-white">
               1. Overview & Our Commitment to Privacy
             </h2>
@@ -57,9 +50,9 @@ export default function PrivacyPolicyPage() {
                 account.
               </p>
             </div>
-          </div>
+          </section>
 
-          <div className="rounded-2xl bg-white p-6 shadow-[0_2px_16px_rgba(15,23,42,0.06)] md:p-10 dark:bg-slate-900">
+          <section>
             <h2 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-white">
               2. Information We Collect
             </h2>
@@ -86,9 +79,9 @@ export default function PrivacyPolicyPage() {
                 prevent abuse, and optimize performance.
               </p>
             </div>
-          </div>
+          </section>
 
-          <div className="rounded-2xl bg-white p-6 shadow-[0_2px_16px_rgba(15,23,42,0.06)] md:p-10 dark:bg-slate-900">
+          <section>
             <h2 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-white">
               3. Outbound Links & Third-Party Financial Institutions
             </h2>
@@ -109,9 +102,9 @@ export default function PrivacyPolicyPage() {
                 submitting personal data.
               </p>
             </div>
-          </div>
+          </section>
 
-          <div className="rounded-2xl bg-white p-6 shadow-[0_2px_16px_rgba(15,23,42,0.06)] md:p-10 dark:bg-slate-900">
+          <section>
             <h2 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-white">
               4. Cookies & Web Technologies
             </h2>
@@ -124,9 +117,9 @@ export default function PrivacyPolicyPage() {
                 preferences may not be saved.
               </p>
             </div>
-          </div>
+          </section>
 
-          <div className="rounded-2xl bg-white p-6 shadow-[0_2px_16px_rgba(15,23,42,0.06)] md:p-10 dark:bg-slate-900">
+          <section>
             <h2 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-white">
               5. Your Privacy Rights & Contact
             </h2>
@@ -143,7 +136,7 @@ export default function PrivacyPolicyPage() {
                 <strong>contact@churn.cc</strong>.
               </p>
             </div>
-          </div>
+          </section>
         </div>
       </PageContainer>
     </div>

@@ -13,8 +13,18 @@ import {
   ArrowRight,
   ShieldCheck,
   XLogo,
-  ChatCircleText,
+  LinkedinLogo,
+  YoutubeLogo,
+  FacebookLogo,
 } from "@phosphor-icons/react";
+import { socialLinks } from "@/lib/socials";
+
+const contactIcons = {
+  x: XLogo,
+  linkedin: LinkedinLogo,
+  youtube: YoutubeLogo,
+  facebook: FacebookLogo,
+} as const;
 
 export default function ContactPage() {
   const [name, setName] = useState("");
@@ -64,15 +74,8 @@ export default function ContactPage() {
         </div>
 
         <PageHeader
-          eyebrow="Support & Inquiries"
           title="Contact Us"
           description="Have a question about a bonus, spotted an offer correction, or have feedback? We are here to help."
-          badge={
-            <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-[#0160c4] dark:bg-blue-950/60 dark:text-[#38b6ff]">
-              <ChatCircleText weight="bold" className="h-3.5 w-3.5" />
-              <span>Direct Support</span>
-            </span>
-          }
         />
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
@@ -132,26 +135,59 @@ export default function ContactPage() {
                 Real-time offer alerts and churning tips:
               </p>
 
-              <div className="mt-4">
-                <a
-                  href="https://x.com/churncc"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between rounded-xl bg-slate-50 p-3 transition-colors hover:bg-slate-100 dark:bg-slate-800/80 dark:hover:bg-slate-800"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <XLogo
-                      weight="bold"
-                      className="h-4 w-4 text-slate-900 dark:text-white"
-                    />
-                    <span className="text-xs font-semibold text-slate-900 dark:text-white">
-                      @churncc on X
-                    </span>
-                  </div>
-                  <span className="text-xs font-medium text-[#0160c4] dark:text-[#38b6ff]">
-                    Follow
-                  </span>
-                </a>
+              <div className="mt-4 space-y-2">
+                {socialLinks.map((social) => {
+                  const Icon = contactIcons[social.id];
+                  const content = (
+                    <>
+                      <div className="flex items-center gap-2.5">
+                        <Icon
+                          weight="bold"
+                          className="h-4 w-4 text-slate-900 dark:text-white"
+                        />
+                        <span className="text-xs font-semibold text-slate-900 dark:text-white">
+                          {social.handle} on {social.name}
+                        </span>
+                      </div>
+                      <span
+                        className={
+                          social.href
+                            ? "text-xs font-medium text-[#0160c4] dark:text-[#38b6ff]"
+                            : "text-xs font-medium text-slate-400"
+                        }
+                      >
+                        {social.actionLabel}
+                      </span>
+                    </>
+                  );
+                  const className =
+                    "flex items-center justify-between rounded-xl bg-slate-50 p-3 dark:bg-slate-800/80";
+
+                  if (!social.href) {
+                    return (
+                      <div
+                        key={social.id}
+                        className={className}
+                        aria-label={social.ariaLabel}
+                      >
+                        {content}
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <a
+                      key={social.id}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.ariaLabel}
+                      className={`${className} transition-colors hover:bg-slate-100 dark:hover:bg-slate-800`}
+                    >
+                      {content}
+                    </a>
+                  );
+                })}
               </div>
             </div>
 

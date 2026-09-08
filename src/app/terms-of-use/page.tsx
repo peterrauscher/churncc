@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { PageContainer } from "@/components/shared/PageContainer";
 import { PageHeader } from "@/components/shared/PageHeader";
-import { ArrowLeft, ShieldCheck } from "@phosphor-icons/react/dist/ssr";
+import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 
 export const metadata: Metadata = {
   title: "Terms of Use | Churnable",
@@ -11,8 +11,6 @@ export const metadata: Metadata = {
 };
 
 export default function TermsOfUsePage() {
-  const lastUpdated = "September 2026";
-
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-[#f4f6f8] py-8 md:py-14 dark:bg-slate-950">
       <PageContainer className="max-w-4xl">
@@ -26,20 +24,10 @@ export default function TermsOfUsePage() {
           </Link>
         </div>
 
-        <PageHeader
-          eyebrow="Legal & Terms"
-          title="Terms of Use"
-          description={`Last updated: ${lastUpdated}. Please read these terms carefully before accessing or using Churnable.`}
-          badge={
-            <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-3 py-0.5 text-xs font-semibold text-[#0160c4] dark:bg-blue-950/60 dark:text-[#38b6ff]">
-              <ShieldCheck weight="bold" className="h-3.5 w-3.5" />
-              <span>User Agreement</span>
-            </span>
-          }
-        />
+        <PageHeader title="Terms of Use" />
 
-        <div className="space-y-8">
-          <div className="rounded-2xl bg-white p-6 shadow-[0_2px_16px_rgba(15,23,42,0.06)] md:p-10 dark:bg-slate-900">
+        <div className="space-y-10 md:space-y-12">
+          <section>
             <h2 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-white">
               1. Acceptance of Terms
             </h2>
@@ -51,9 +39,9 @@ export default function TermsOfUsePage() {
                 services.
               </p>
             </div>
-          </div>
+          </section>
 
-          <div className="rounded-2xl bg-white p-6 shadow-[0_2px_16px_rgba(15,23,42,0.06)] md:p-10 dark:bg-slate-900">
+          <section>
             <h2 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-white">
               2. Educational & Comparative Use (Not Financial Advice)
             </h2>
@@ -74,34 +62,58 @@ export default function TermsOfUsePage() {
                 illustrative purposes.
               </p>
             </div>
-          </div>
+          </section>
 
-          <div className="rounded-2xl bg-white p-6 shadow-[0_2px_16px_rgba(15,23,42,0.06)] md:p-10 dark:bg-slate-900">
+          <section>
             <h2 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-white">
-              3. Verification of Third-Party Terms
+              3. Financial Disclosures & Deposit Insurance
+            </h2>
+            <div className="mt-4 space-y-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+              <p>
+                Deposit accounts reviewed on Churnable (checking, savings, money
+                market, CDs) are offered by financial institutions that are
+                members of the FDIC or NCUA. Eligible deposits are insured up to
+                $250,000 per depositor, per insured institution, for each
+                account ownership category.
+              </p>
+              <p>
+                Churnable is not a bank, depository institution, certified
+                financial planner, or registered investment advisor. The
+                information provided on this site is for educational and
+                comparative purposes only and should not be construed as
+                individualized financial, tax, or legal advice.
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-white">
+              4. Verification of Third-Party Terms
             </h2>
             <div className="mt-4 space-y-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
               <p>
                 Credit card issuers and banking institutions frequently change
                 their welcome offer amounts, minimum spending criteria, annual
                 fees, interest rates, and promotional expiration dates without
-                notice.
+                notice. Bank promotions and credit card welcome bonuses are
+                fast-moving and subject to sudden changes or early expiration by
+                issuers.
               </p>
               <p>
-                While we strive to keep all data accurate and up to date,{" "}
+                While we strive to keep all data accurate and verified daily,{" "}
                 <strong>
                   you are solely responsible for reviewing and verifying the
-                  official terms, conditions, and fee schedules on the financial
-                  institution&apos;s website before submitting an application or
-                  depositing funds.
+                  official application page, terms, conditions, and fee
+                  schedules on the financial institution&apos;s website before
+                  submitting an application or depositing funds.
                 </strong>
               </p>
             </div>
-          </div>
+          </section>
 
-          <div className="rounded-2xl bg-white p-6 shadow-[0_2px_16px_rgba(15,23,42,0.06)] md:p-10 dark:bg-slate-900">
+          <section>
             <h2 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-white">
-              4. Third-Party Credit & Banking Decisions
+              5. Third-Party Credit & Banking Decisions
             </h2>
             <div className="mt-4 space-y-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
               <p>
@@ -112,11 +124,11 @@ export default function TermsOfUsePage() {
                 institutions.
               </p>
             </div>
-          </div>
+          </section>
 
-          <div className="rounded-2xl bg-white p-6 shadow-[0_2px_16px_rgba(15,23,42,0.06)] md:p-10 dark:bg-slate-900">
+          <section>
             <h2 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-white">
-              5. Limitation of Liability
+              6. Limitation of Liability
             </h2>
             <div className="mt-4 space-y-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
               <p>
@@ -127,11 +139,11 @@ export default function TermsOfUsePage() {
                 missed bonuses, fee charges, or credit score changes.
               </p>
             </div>
-          </div>
+          </section>
 
-          <div className="rounded-2xl bg-white p-6 shadow-[0_2px_16px_rgba(15,23,42,0.06)] md:p-10 dark:bg-slate-900">
+          <section>
             <h2 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-white">
-              6. Contact Information
+              7. Contact Information
             </h2>
             <div className="mt-4 space-y-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
               <p>
@@ -139,7 +151,7 @@ export default function TermsOfUsePage() {
                 please contact us at <strong>contact@churn.cc</strong>.
               </p>
             </div>
-          </div>
+          </section>
         </div>
       </PageContainer>
     </div>

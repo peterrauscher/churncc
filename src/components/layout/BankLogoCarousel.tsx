@@ -37,7 +37,7 @@ const bankLogos: BankLogo[] = [
     height: 32,
   },
   { name: "Discover", src: "/bank-logos/discover.svg", width: 120, height: 32 },
-  { name: "Barclays", src: "/bank-logos/barclays.svg", width: 130, height: 32 },
+  { name: "Barclays", src: "/bank-logos/barclays.svg", width: 140, height: 32 },
   { name: "SoFi", src: "/bank-logos/sofi.svg", width: 85, height: 32 },
 ];
 

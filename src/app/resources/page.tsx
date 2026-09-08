@@ -13,7 +13,6 @@ import {
   Info,
   ChartLineUp,
   CalendarBlank,
-  BookOpen,
 } from "@phosphor-icons/react";
 import { PageContainer } from "@/components/shared/PageContainer";
 import { PageHeader } from "@/components/shared/PageHeader";
@@ -24,15 +23,8 @@ const Resources = () => {
     <div className="min-h-[calc(100vh-4rem)] bg-[#f4f6f8] py-8 md:py-12 dark:bg-slate-950">
       <PageContainer>
         <PageHeader
-          eyebrow="Guides & Tips"
           title="Bonus Playbooks & Strategy Guides"
           description="Learn how to maximize credit card welcome offers and bank account promos while keeping your credit score strong."
-          badge={
-            <span className="inline-flex items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-[#0160c4] dark:border-blue-800 dark:bg-blue-950/60 dark:text-[#38b6ff]">
-              <BookOpen weight="bold" className="h-3.5 w-3.5" />
-              <span>Updated for 2026</span>
-            </span>
-          }
         />
 
         <Tabs defaultValue="creditcards" className="mb-12">

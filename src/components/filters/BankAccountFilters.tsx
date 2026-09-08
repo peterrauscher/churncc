@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import {
   Select,
@@ -12,12 +10,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Funnel, X } from "@phosphor-icons/react";
+  FilterBar,
+  FilterCheckboxList,
+  FilterClearButton,
+  FilterMenuPill,
+  FilterTogglePill,
+  sortPillClass,
+} from "@/components/filters/FilterBar";
 
 interface BankAccountFilterState {
   institutions?: string[];
@@ -32,6 +31,8 @@ interface BankAccountFiltersProps {
   onSortChange: (sort: { field: string; direction: "asc" | "desc" }) => void;
   institutions: string[];
 }
+
+const ACCOUNT_TYPES = ["CHECKING", "SAVINGS", "BROKERAGE", "HYBRID"];
 
 const BankAccountFilters = ({
   onFilterChange,
@@ -48,23 +49,17 @@ const BankAccountFilters = ({
     onFilterChange(updatedFilters);
   };
 
-  const handleInstitutionToggle = (institution: string, checked: boolean) => {
-    const current = filters.institutions || [];
+  const handleListToggle = (
+    key: "institutions" | "accountTypes",
+    value: string,
+    checked: boolean,
+  ) => {
+    const current = filters[key] || [];
     const updated = checked
-      ? [...current, institution]
-      : current.filter((i) => i !== institution);
+      ? [...current, value]
+      : current.filter((item) => item !== value);
     handleFilterChange({
-      institutions: updated.length > 0 ? updated : undefined,
-    });
-  };
-
-  const handleTypeToggle = (type: string, checked: boolean) => {
-    const current = filters.accountTypes || [];
-    const updated = checked
-      ? [...current, type]
-      : current.filter((t) => t !== type);
-    handleFilterChange({
-      accountTypes: updated.length > 0 ? updated : undefined,
+      [key]: updated.length > 0 ? updated : undefined,
     });
   };
 
@@ -92,47 +87,16 @@ const BankAccountFilters = ({
     Boolean(filters.accountTypes?.length) ||
     Boolean(filters.minBonus);
 
+  const bonusLabel = filters.minBonus
+    ? `Bonus ≥ $${filters.minBonus}`
+    : "Min bonus";
+
   return (
-    <div className="space-y-5">
-      {/* Header Bar */}
-      <div className="flex items-center justify-between border-b border-slate-100 pb-4 dark:border-slate-800">
-        <div className="flex items-center gap-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-[#0160c4] dark:bg-blue-950 dark:text-[#38b6ff]">
-            <Funnel weight="bold" className="h-4 w-4" />
-          </span>
-          <div>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">
-              Filter & Sort Bank Accounts
-            </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
-              Narrow down by bonus amount, account type, and deposit criteria
-            </p>
-          </div>
-        </div>
-
-        {hasActiveFilters && (
-          <button
-            type="button"
-            onClick={clearFilters}
-            className="inline-flex items-center gap-1 text-xs font-semibold text-rose-600 hover:text-rose-700 dark:text-rose-400"
-          >
-            <X weight="bold" className="h-3.5 w-3.5" />
-            <span>Reset All Filters</span>
-          </button>
-        )}
-      </div>
-
-      {/* Primary Controls: Sort + Quick Filter Chips */}
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
-            Sort by:
-          </span>
+    <FilterBar
+      trailing={
+        <>
           <Select value={sortOption} onValueChange={handleSortChange}>
-            <SelectTrigger
-              id="sort"
-              className="h-9 w-[190px] rounded-lg border-slate-200 text-xs font-semibold dark:border-slate-800"
-            >
+            <SelectTrigger id="sort" className={sortPillClass}>
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
@@ -146,135 +110,96 @@ const BankAccountFilters = ({
               </SelectItem>
             </SelectContent>
           </Select>
-        </div>
-
-        {/* Quick Filter Checkboxes */}
-        <div className="flex flex-wrap items-center gap-4 text-xs">
-          <label className="flex cursor-pointer items-center gap-2 font-medium text-slate-700 dark:text-slate-300">
-            <Checkbox
-              id="noMonthlyFee"
-              checked={filters.noMonthlyFee}
-              onCheckedChange={(checked) =>
-                handleFilterChange({ noMonthlyFee: checked ? true : undefined })
-              }
-            />
-            <span>No Monthly Fee</span>
-          </label>
-
-          <label className="flex cursor-pointer items-center gap-2 font-medium text-slate-700 dark:text-slate-300">
-            <Checkbox
-              id="directDepositRequired"
-              checked={filters.directDepositRequired}
-              onCheckedChange={(checked) =>
-                handleFilterChange({
-                  directDepositRequired: checked ? true : undefined,
-                })
-              }
-            />
-            <span>Direct Deposit Required</span>
-          </label>
-        </div>
-      </div>
-
-      {/* Accordion Detailed Filter Panels */}
-      <Accordion
-        type="single"
-        collapsible
-        className="w-full border-t border-slate-100 pt-2 dark:border-slate-800"
+          {hasActiveFilters ? (
+            <FilterClearButton onClick={clearFilters} />
+          ) : null}
+        </>
+      }
+    >
+      <FilterTogglePill
+        active={Boolean(filters.noMonthlyFee)}
+        onClick={() =>
+          handleFilterChange({
+            noMonthlyFee: filters.noMonthlyFee ? undefined : true,
+          })
+        }
       >
-        <AccordionItem
-          value="institutions"
-          className="border-b border-slate-100 dark:border-slate-800"
-        >
-          <AccordionTrigger className="text-xs font-bold text-slate-900 uppercase hover:no-underline dark:text-white">
-            Banks & Institutions (
-            {filters.institutions?.length
-              ? `${filters.institutions.length} selected`
-              : "All"}
-            )
-          </AccordionTrigger>
-          <AccordionContent>
-            <div className="grid grid-cols-2 gap-3 pt-1 md:grid-cols-3 lg:grid-cols-4">
-              {institutions.map((institution) => (
-                <div key={institution} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`institution-${institution}`}
-                    checked={filters.institutions?.includes(institution)}
-                    onCheckedChange={(checked) =>
-                      handleInstitutionToggle(institution, checked as boolean)
-                    }
-                  />
-                  <Label
-                    htmlFor={`institution-${institution}`}
-                    className="text-xs font-medium cursor-pointer"
-                  >
-                    {institution}
-                  </Label>
-                </div>
-              ))}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
+        No monthly fee
+      </FilterTogglePill>
 
-        <AccordionItem
-          value="account-types"
-          className="border-b border-slate-100 dark:border-slate-800"
-        >
-          <AccordionTrigger className="text-xs font-bold text-slate-900 uppercase hover:no-underline dark:text-white">
-            Account Types (
-            {filters.accountTypes?.length
-              ? `${filters.accountTypes.length} selected`
-              : "All"}
-            )
-          </AccordionTrigger>
-          <AccordionContent>
-            <div className="grid grid-cols-2 gap-3 pt-1 sm:grid-cols-4">
-              {["CHECKING", "SAVINGS", "BROKERAGE", "HYBRID"].map((type) => (
-                <div key={type} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`type-${type}`}
-                    checked={filters.accountTypes?.includes(type)}
-                    onCheckedChange={(checked) =>
-                      handleTypeToggle(type, checked as boolean)
-                    }
-                  />
-                  <Label
-                    htmlFor={`type-${type}`}
-                    className="text-xs font-medium cursor-pointer"
-                  >
-                    {type.charAt(0) + type.slice(1).toLowerCase()}
-                  </Label>
-                </div>
-              ))}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
+      <FilterTogglePill
+        active={Boolean(filters.directDepositRequired)}
+        onClick={() =>
+          handleFilterChange({
+            directDepositRequired: filters.directDepositRequired
+              ? undefined
+              : true,
+          })
+        }
+      >
+        Direct deposit required
+      </FilterTogglePill>
 
-        <AccordionItem value="bonus-amount" className="border-b-0">
-          <AccordionTrigger className="text-xs font-bold text-slate-900 uppercase hover:no-underline dark:text-white">
-            Minimum Cash Bonus: ${minBonus}
-          </AccordionTrigger>
-          <AccordionContent>
-            <div className="space-y-3 px-1 pt-2">
-              <Slider
-                value={[minBonus]}
-                min={0}
-                max={1000}
-                step={50}
-                onValueChange={handleMinBonusChange}
-              />
-              <div className="flex items-center justify-between text-xs text-slate-500">
-                <span>$0</span>
-                <span className="font-semibold text-slate-900 dark:text-white">
-                  At least ${minBonus}
-                </span>
-                <span>$1,000+</span>
-              </div>
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    </div>
+      <FilterMenuPill
+        label={
+          filters.institutions?.length === 1
+            ? filters.institutions[0]
+            : "Institution"
+        }
+        active={Boolean(filters.institutions?.length)}
+        count={filters.institutions?.length}
+      >
+        <FilterCheckboxList
+          options={institutions}
+          selected={filters.institutions}
+          onToggle={(value, checked) =>
+            handleListToggle("institutions", value, checked)
+          }
+        />
+      </FilterMenuPill>
+
+      <FilterMenuPill
+        label={
+          filters.accountTypes?.length === 1
+            ? filters.accountTypes[0].charAt(0) +
+              filters.accountTypes[0].slice(1).toLowerCase()
+            : "Account type"
+        }
+        active={Boolean(filters.accountTypes?.length)}
+        count={filters.accountTypes?.length}
+      >
+        <FilterCheckboxList
+          options={ACCOUNT_TYPES}
+          selected={filters.accountTypes}
+          onToggle={(value, checked) =>
+            handleListToggle("accountTypes", value, checked)
+          }
+          formatLabel={(value) =>
+            value.charAt(0) + value.slice(1).toLowerCase()
+          }
+        />
+      </FilterMenuPill>
+
+      <FilterMenuPill label={bonusLabel} active={Boolean(filters.minBonus)}>
+        <div className="space-y-3">
+          <p className="text-xs font-semibold text-muted-foreground">
+            Minimum cash bonus
+          </p>
+          <Slider
+            value={[minBonus]}
+            min={0}
+            max={1000}
+            step={50}
+            onValueChange={handleMinBonusChange}
+          />
+          <div className="flex items-center justify-between text-xs text-muted-foreground">
+            <span>$0</span>
+            <span className="font-semibold text-foreground">${minBonus}</span>
+            <span>$1,000+</span>
+          </div>
+        </div>
+      </FilterMenuPill>
+    </FilterBar>
   );
 };
 

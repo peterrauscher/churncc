@@ -2,11 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { PageContainer } from "@/components/shared/PageContainer";
 import { PageHeader } from "@/components/shared/PageHeader";
-import {
-  ShieldCheck,
-  CheckCircle,
-  ArrowLeft,
-} from "@phosphor-icons/react/dist/ssr";
+import { CheckCircle, ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 
 export const metadata: Metadata = {
   title: "How We're Paid - Editorial & Referral Disclosure | Churnable",
@@ -29,23 +25,12 @@ export default function HowWerePaidPage() {
         </div>
 
         <PageHeader
-          eyebrow="Editorial & Referral Disclosure"
           title="How We're Paid"
           description="Complete transparency into our revenue model, our referral links, and our strict editorial independence."
-          badge={
-            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-3 py-0.5 text-xs font-semibold text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300">
-              <ShieldCheck
-                weight="bold"
-                className="h-3.5 w-3.5 text-[#00a859]"
-              />
-              <span>100% Transparent</span>
-            </span>
-          }
         />
 
-        <div className="space-y-8">
-          {/* Core Statement Card */}
-          <div className="rounded-2xl bg-white p-6 shadow-[0_2px_16px_rgba(15,23,42,0.06)] md:p-10 dark:bg-slate-900">
+        <div className="space-y-10 md:space-y-12">
+          <section>
             <h2 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-white">
               Standard Consumer Referral Programs Only
             </h2>
@@ -71,10 +56,9 @@ export default function HowWerePaidPage() {
                 server costs, and daily data tracking of Churnable.
               </p>
             </div>
-          </div>
+          </section>
 
-          {/* Editorial Independence */}
-          <div className="rounded-2xl bg-white p-6 shadow-[0_2px_16px_rgba(15,23,42,0.06)] md:p-10 dark:bg-slate-900">
+          <section>
             <h2 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-white">
               Zero Paid Promotions or Sponsored Reviews
             </h2>
@@ -86,7 +70,7 @@ export default function HowWerePaidPage() {
                 </strong>
               </p>
               <div className="grid grid-cols-1 gap-4 pt-2 sm:grid-cols-2">
-                <div className="flex items-start gap-3 rounded-xl bg-[#f4f6f8] p-4 dark:bg-slate-800/60">
+                <div className="flex items-start gap-3 rounded-xl bg-white p-4 shadow-[0_2px_16px_rgba(15,23,42,0.06)] dark:bg-slate-900">
                   <CheckCircle
                     weight="fill"
                     className="mt-0.5 h-5 w-5 shrink-0 text-[#00a859]"
@@ -103,7 +87,7 @@ export default function HowWerePaidPage() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 rounded-xl bg-[#f4f6f8] p-4 dark:bg-slate-800/60">
+                <div className="flex items-start gap-3 rounded-xl bg-white p-4 shadow-[0_2px_16px_rgba(15,23,42,0.06)] dark:bg-slate-900">
                   <CheckCircle
                     weight="fill"
                     className="mt-0.5 h-5 w-5 shrink-0 text-[#00a859]"
@@ -121,49 +105,7 @@ export default function HowWerePaidPage() {
                 </div>
               </div>
             </div>
-          </div>
-
-          {/* Deposit Insurance & Regulatory Disclosures */}
-          <div className="rounded-2xl bg-white p-6 shadow-[0_2px_16px_rgba(15,23,42,0.06)] md:p-10 dark:bg-slate-900">
-            <h2 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-white">
-              Financial Disclosures & Deposit Insurance
-            </h2>
-            <div className="mt-4 space-y-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-              <p>
-                Deposit accounts reviewed on Churnable (checking, savings, money
-                market, CDs) are offered by financial institutions that are
-                members of the FDIC or NCUA. Eligible deposits are insured up to
-                $250,000 per depositor, per insured institution, for each
-                account ownership category.
-              </p>
-              <p>
-                Churnable is not a bank, depository institution, certified
-                financial planner, or registered investment advisor. The
-                information provided on this site is for educational and
-                comparative purposes only and should not be construed as
-                individualized financial, tax, or legal advice.
-              </p>
-            </div>
-          </div>
-
-          {/* Verification Reminder */}
-          <div className="rounded-2xl bg-white p-6 shadow-[0_2px_16px_rgba(15,23,42,0.06)] md:p-10 dark:bg-slate-900">
-            <h2 className="text-xl font-bold text-slate-900 sm:text-2xl dark:text-white">
-              Always Verify Current Terms
-            </h2>
-            <div className="mt-4 space-y-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-              <p>
-                Bank promotions and credit card welcome bonuses are fast-moving
-                and subject to sudden changes or early expiration by issuers.
-              </p>
-              <p>
-                While we work hard to keep all data points accurate and verified
-                daily, always review the official application page, terms of
-                service, and fee schedules on the financial institution&apos;s
-                website before opening an account or submitting an application.
-              </p>
-            </div>
-          </div>
+          </section>
         </div>
       </PageContainer>
     </div>
