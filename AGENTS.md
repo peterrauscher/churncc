@@ -46,9 +46,9 @@ bun install
 bun run dev          # next dev --turbopack
 bun run build        # next build (webpack; typecheck happens here)
 bun start            # production server
-bun run lint         # next lint
+bun run lint         # oxlint .
 bun run lint:fix
-bun run format       # prettier --check .
+bun run format       # oxfmt --check .
 bun run format:fix
 ```
 
@@ -74,7 +74,7 @@ Finish edits with `lint:fix` and `format:fix`. There is no `test` script.
 - `src/services/api.ts` / `src/app/api/bank-rewards/route.ts` — data
 - `src/types/index.ts`
 - `src/components/filters/FilterBar.tsx`
-- `package.json`, `tsconfig.json` (`@/*` → `./src/*`), `eslint.config.mjs`, `.prettierrc` (`{}` = Prettier defaults), `components.json` (shadcn new-york, `rsc: false`)
+- `package.json`, `tsconfig.json` (`@/*` → `./src/*`), `.oxlintrc.json` (migrated from `eslint.config.mjs`), `.oxfmtrc.json` (`printWidth: 80`), `components.json` (shadcn new-york, `rsc: false`)
 - `.github/workflows/ci.yml`, `.husky/pre-commit`
 
 Do not edit `.next/` or `next-env.d.ts`.

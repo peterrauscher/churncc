@@ -3,16 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "**/*": "oxfmt --no-error-on-unmatched-pattern"
   },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --check .",
-    "format:fix": "prettier --write .",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint . --fix",
+    "format": "oxfmt --check .",
+    "format:fix": "oxfmt .",
     "prepare": "husky"
   },
   "dependencies": {
@@ -70,18 +70,15 @@
     "zod": "^3.25.51"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9.31.0",
-    "eslint-config-next": "16.3.4",
-    "eslint-config-prettier": "^10.1.8",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
-    "prettier": "^3.6.2",
+    "oxfmt": "^0.67.0",
+    "oxlint": "^1.82.0",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.4",
     "typescript": "^5"
