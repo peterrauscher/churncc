@@ -2,13 +2,13 @@
 
 ## Build and Test
 
-- Use npm commands for all local automation.
-- Install dependencies with `npm install`.
-- Start local development with `npm run dev`.
-- Build with `npm run build` and run production locally with `npm start`.
-- Lint with `npm run lint`.
-- Format check with `npm run format`.
-- When making edits, prefer `npm run lint:fix` and `npm run format:fix` before finishing.
+- Use Bun for all local automation (`bun.lock`).
+- Install dependencies with `bun install`.
+- Start local development with `bun run dev`.
+- Build with `bun run build` and run production locally with `bun start`.
+- Lint with `bun run lint`.
+- Format check with `bun run format`.
+- When making edits, prefer `bun run lint:fix` and `bun run format:fix` before finishing.
 
 ## Architecture
 
