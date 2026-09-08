@@ -36,8 +36,8 @@ export const socialLinks: SocialLink[] = [
     id: "facebook",
     name: "Facebook",
     handle: "Churnable",
-    href: null,
-    actionLabel: "Coming soon",
-    ariaLabel: "Churnable on Facebook (coming soon)",
+    href: "https://www.facebook.com/churnable/",
+    actionLabel: "Follow",
+    ariaLabel: "Follow Churnable on Facebook",
   },
 ];
