@@ -5,15 +5,10 @@ const Footer = () => {
   return (
     <footer className="border-t border-slate-800 bg-[#0f172a] text-slate-300">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
-          {/* Brand Column */}
-          <div className="lg:col-span-2">
+        <div className="grid grid-cols-2 gap-10 sm:grid-cols-2 md:grid-cols-5">
+          {/* Brand Column - Logo only */}
+          <div className="col-span-2 md:col-span-1">
             <BrandLogo size="md" href="/" className="[&_span]:text-white" />
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-400">
-              The premier bonus optimization platform. We track live credit card
-              welcome bonuses and bank account promotions so you can keep more
-              money from every paycheck.
-            </p>
           </div>
 
           {/* Column 1: Cards */}
@@ -98,7 +93,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 3: Resources */}
+          {/* Column 3: Guides & Tips */}
           <div>
             <p className="text-xs font-bold tracking-wider text-white uppercase">
               Guides & Tips
@@ -138,52 +133,72 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-        </div>
 
-        {/* Editorial Disclosure and Legal Notes */}
-        <div className="mt-12 rounded-xl border border-slate-800 bg-slate-900/80 p-6">
-          <p className="text-xs font-semibold text-white uppercase">
-            Editorial Disclosure & Disclaimer
-          </p>
-          <p className="mt-2 text-xs leading-relaxed text-slate-400">
-            Churnable is an independent comparison service. We may receive
-            compensation from card issuers or financial institutions when you
-            click links to products. However, this compensation does not impact
-            our editorial rankings, recommendations, or calculations. Offers and
-            promotional rates are subject to change without notice. Please
-            review the official terms on the issuer or bank website before
-            applying.
-          </p>
-          <p className="mt-2 text-xs leading-relaxed text-slate-400">
-            Deposit products from partner institutions are FDIC or NCUA insured
-            up to the allowable limits. Churnable is not an investment advisor
-            or depository institution.
-          </p>
+          {/* Column 4: Help */}
+          <div>
+            <p className="text-xs font-bold tracking-wider text-white uppercase">
+              Help
+            </p>
+            <ul className="mt-4 space-y-2.5 text-sm">
+              <li>
+                <Link
+                  href="/how-we-are-paid"
+                  className="text-slate-400 transition-colors hover:text-white"
+                >
+                  How We&apos;re Paid
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/privacy-policy"
+                  className="text-slate-400 transition-colors hover:text-white"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/terms-of-use"
+                  className="text-slate-400 transition-colors hover:text-white"
+                >
+                  Terms of Use
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/resources"
+                  className="text-slate-400 transition-colors hover:text-white"
+                >
+                  All Guides & FAQs
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-slate-800 pt-8 sm:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-800 pt-8 sm:flex-row">
           <p className="text-xs text-slate-400">
             © {new Date().getFullYear()} Churnable. All rights reserved.
           </p>
           <div className="flex flex-wrap items-center gap-6 text-xs text-slate-400">
             <Link
-              href="/resources"
+              href="/how-we-are-paid"
               className="hover:text-white transition-colors"
             >
-              Terms of Service
+              How We&apos;re Paid
             </Link>
             <Link
-              href="/resources"
+              href="/privacy-policy"
               className="hover:text-white transition-colors"
             >
               Privacy Policy
             </Link>
             <Link
-              href="/resources"
+              href="/terms-of-use"
               className="hover:text-white transition-colors"
             >
-              Editorial Policy
+              Terms of Use
             </Link>
           </div>
         </div>

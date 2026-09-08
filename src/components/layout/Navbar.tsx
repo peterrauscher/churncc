@@ -53,7 +53,7 @@ const Navbar = () => {
   return (
     <>
       <header className="sticky top-0 z-[var(--z-nav)] w-full border-b border-slate-200/80 bg-white/95 shadow-xs backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/95">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-18 sm:h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Logo */}
           <div className="flex items-center gap-8">
             <BrandLogo size="md" href="/" />
@@ -116,7 +116,7 @@ const Navbar = () => {
 
       {/* Mobile Menu Drawer */}
       {isOpen && (
-        <div className="fixed inset-0 top-16 z-[var(--z-overlay)] flex flex-col bg-white px-4 py-6 md:hidden dark:bg-slate-950">
+        <div className="fixed inset-0 top-18 sm:top-20 z-[var(--z-overlay)] flex flex-col bg-white px-4 py-6 md:hidden dark:bg-slate-950">
           <div className="flex flex-col gap-2">
             <p className="px-3 text-xs font-bold tracking-wider text-slate-400 uppercase dark:text-slate-500">
               Compare & Explore
