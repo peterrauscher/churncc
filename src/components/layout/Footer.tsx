@@ -171,10 +171,10 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/resources"
+                  href="/contact"
                   className="text-slate-400 transition-colors hover:text-white"
                 >
-                  All Guides & FAQs
+                  Contact Us
                 </Link>
               </li>
             </ul>

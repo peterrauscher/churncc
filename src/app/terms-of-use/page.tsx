@@ -136,7 +136,7 @@ export default function TermsOfUsePage() {
             <div className="mt-4 space-y-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
               <p>
                 If you have questions or feedback regarding these Terms of Use,
-                please contact us at <strong>legal@churnable.com</strong>.
+                please contact us at <strong>contact@churn.cc</strong>.
               </p>
             </div>
           </div>

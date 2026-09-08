@@ -140,7 +140,7 @@ export default function PrivacyPolicyPage() {
               <p>
                 To exercise any privacy rights, or if you have questions about
                 this policy, please reach out to us at{" "}
-                <strong>privacy@churnable.com</strong>.
+                <strong>contact@churn.cc</strong>.
               </p>
             </div>
           </div>

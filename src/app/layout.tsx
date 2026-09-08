@@ -26,6 +26,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://churn.cc"),
   title: "Churnable: Compare Credit Card & Bank Account Bonuses",
   description:
     "Find and compare the latest credit card welcome offers and bank account bonuses. Maximize your rewards with unbiased, data-driven financial tools.",
