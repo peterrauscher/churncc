@@ -13,7 +13,6 @@ import {
   Info,
   ArrowLeft,
   ArrowUpRight,
-  ShieldCheck,
   Sparkle,
 } from "@phosphor-icons/react";
 import { PageContainer } from "@/components/shared/PageContainer";
@@ -107,10 +106,6 @@ export default function BankAccountDetailPage() {
                 </span>
                 <span className="rounded-md border border-blue-200 bg-blue-50 px-2.5 py-1 text-xs font-bold text-[#0160c4] uppercase dark:border-blue-900/60 dark:bg-blue-950/60 dark:text-[#38b6ff]">
                   {account.type}
-                </span>
-                <span className="inline-flex items-center gap-1 rounded-md border border-emerald-200 bg-emerald-50 px-2 py-1 text-xs font-semibold text-emerald-800 dark:border-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300">
-                  <ShieldCheck weight="bold" className="h-3 w-3" />
-                  <span>FDIC Insured</span>
                 </span>
               </div>
 

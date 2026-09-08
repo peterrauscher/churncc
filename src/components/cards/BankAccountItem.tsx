@@ -6,7 +6,6 @@ import {
   CheckCircle,
   ArrowRight,
   ArrowUpRight,
-  ShieldCheck,
 } from "@phosphor-icons/react/dist/ssr";
 
 interface BankAccountItemProps {
@@ -35,10 +34,6 @@ const BankAccountItem = ({ account }: BankAccountItemProps) => {
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold tracking-wider text-emerald-800 uppercase dark:text-emerald-400">
               Cash Bonus
-            </span>
-            <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-700 dark:text-emerald-400">
-              <ShieldCheck weight="bold" className="h-3 w-3" />
-              <span>FDIC Insured</span>
             </span>
           </div>
           <p className="mt-1 text-3xl font-extrabold text-[#00a859] dark:text-emerald-400">
