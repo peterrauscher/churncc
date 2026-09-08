@@ -52,8 +52,11 @@ export function SearchBar({ className }: { className?: string }) {
         }, 25);
         return () => clearTimeout(timeout);
       } else {
-        setPhase("typing");
-        setSuggestionIndex((suggestionIndex + 1) % suggestions.length);
+        const timeout = setTimeout(() => {
+          setPhase("typing");
+          setSuggestionIndex((suggestionIndex + 1) % suggestions.length);
+        }, 0);
+        return () => clearTimeout(timeout);
       }
     }
   }, [charIndex, phase, suggestionIndex, focused, inputValue]);

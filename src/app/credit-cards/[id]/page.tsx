@@ -31,7 +31,7 @@ export default function CreditCardDetailPage() {
   const params = useParams<{ id: string }>();
   const id = params?.id;
   const [card, setCard] = useState<CreditCard | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(Boolean(id));
 
   useEffect(() => {
     const loadCreditCard = async () => {
@@ -50,8 +50,6 @@ export default function CreditCardDetailPage() {
 
     if (id) {
       loadCreditCard();
-    } else {
-      setIsLoading(false);
     }
   }, [id]);
 

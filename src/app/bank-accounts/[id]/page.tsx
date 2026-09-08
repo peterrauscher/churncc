@@ -24,7 +24,7 @@ export default function BankAccountDetailPage() {
   const params = useParams<{ id: string }>();
   const id = params?.id;
   const [account, setAccount] = useState<BankAccount | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(Boolean(id));
 
   useEffect(() => {
     const loadBankAccount = async () => {
@@ -43,8 +43,6 @@ export default function BankAccountDetailPage() {
 
     if (id) {
       loadBankAccount();
-    } else {
-      setIsLoading(false);
     }
   }, [id]);
 
