@@ -1,6 +1,11 @@
 import Link from "next/link";
 import { BrandLogo } from "./BrandLogo";
-
+import {
+  XLogo,
+  LinkedinLogo,
+  YoutubeLogo,
+  FacebookLogo,
+} from "@phosphor-icons/react/dist/ssr";
 const Footer = () => {
   return (
     <footer className="border-t border-slate-800 bg-[#0f172a] text-slate-300">
@@ -176,30 +181,42 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-800 pt-8 sm:flex-row">
-          <p className="text-xs text-slate-400">
+        {/* Bottom Bar without HR divider */}
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 sm:flex-row">
+          <p className="text-xs text-slate-500">
             © {new Date().getFullYear()} Churnable. All rights reserved.
           </p>
-          <div className="flex flex-wrap items-center gap-6 text-xs text-slate-400">
-            <Link
-              href="/how-we-are-paid"
-              className="hover:text-white transition-colors"
+          <div className="flex items-center gap-2">
+            <a
+              href="https://x.com/churncc"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Follow Churnable on X"
+              className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
             >
-              How We&apos;re Paid
-            </Link>
-            <Link
-              href="/privacy-policy"
-              className="hover:text-white transition-colors"
+              <XLogo weight="bold" className="h-4 w-4" />
+            </a>
+            <a
+              href="#"
+              aria-label="Churnable on LinkedIn (coming soon)"
+              className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
             >
-              Privacy Policy
-            </Link>
-            <Link
-              href="/terms-of-use"
-              className="hover:text-white transition-colors"
+              <LinkedinLogo weight="bold" className="h-4 w-4" />
+            </a>
+            <a
+              href="#"
+              aria-label="Churnable on YouTube (coming soon)"
+              className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
             >
-              Terms of Use
-            </Link>
+              <YoutubeLogo weight="bold" className="h-4 w-4" />
+            </a>
+            <a
+              href="#"
+              aria-label="Churnable on Facebook (coming soon)"
+              className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
+            >
+              <FacebookLogo weight="bold" className="h-4 w-4" />
+            </a>
           </div>
         </div>
       </div>
