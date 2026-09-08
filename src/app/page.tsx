@@ -12,7 +12,6 @@ import { HeroInfographic } from "@/components/layout/HeroInfographic";
 import { BankBonusEmailCourse } from "@/components/layout/BankBonusEmailCourse";
 import {
   Bank as BankIcon,
-  ShieldCheck,
   ArrowRight,
   TrendUp,
   AirplaneTilt,
@@ -316,47 +315,6 @@ export default function HomePage() {
               emptyMessage="No featured bank accounts available at the moment."
             />
           )}
-        </div>
-      </section>
-
-      {/* SECTION 6: EDITORIAL CALLOUT & GUIDES TEASER - Solid dark slate container, no gradient */}
-      <section className="bg-[#f4f6f8] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 dark:bg-slate-900/50">
-        <div className="mx-auto max-w-7xl">
-          <div className="rounded-2xl bg-[#0f172a] p-8 text-white shadow-[0_10px_35px_rgba(15,23,42,0.14)] sm:p-14 dark:bg-slate-900">
-            <div className="mx-auto max-w-3xl text-center">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-800 px-3.5 py-1 text-xs font-semibold text-[#38b6ff]">
-                <ShieldCheck weight="bold" className="h-4 w-4 text-[#00bf63]" />
-                <span>The Churnable Difference</span>
-              </span>
-
-              <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-                Never leave acquisition cash on the table.
-              </h2>
-
-              <p className="mt-3 text-base text-slate-300 sm:text-lg">
-                From managing the Chase 5/24 rule to timing deposit
-                requirements, our guides help you maximize profits while
-                protecting your credit score.
-              </p>
-
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-                <Link
-                  href="/resources"
-                  className="inline-flex items-center gap-2 rounded-xl bg-[#0160c4] px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#0052cc] active:scale-[0.98]"
-                >
-                  <span>Read Guides & Tips</span>
-                  <ArrowRight weight="bold" className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="/credit-cards"
-                  className="inline-flex items-center gap-2 rounded-xl bg-slate-800 px-6 py-3 text-sm font-semibold text-white shadow-xs transition-all hover:bg-slate-700 active:scale-[0.98]"
-                >
-                  <span>Compare Card Bonuses</span>
-                  <ArrowRight weight="bold" className="h-4 w-4" />
-                </Link>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
