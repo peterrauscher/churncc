@@ -8,36 +8,63 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 
-const filterPillBase =
-  "inline-flex h-8 shrink-0 items-center gap-1.5 rounded-full border px-3 text-xs font-semibold transition-colors";
+const filterChipBase =
+  "inline-flex h-12 shrink-0 items-center justify-center gap-1.5 rounded-md border-2 px-4 text-sm font-bold whitespace-nowrap transition-colors";
 
-function filterPillClass(active: boolean) {
+function filterChipClass(active: boolean) {
   return cn(
-    filterPillBase,
+    filterChipBase,
     active
-      ? "border-primary bg-primary text-primary-foreground"
-      : "border-border bg-background text-foreground hover:bg-muted",
+      ? "border-primary bg-accent text-foreground hover:bg-accent"
+      : "border-muted-foreground/40 bg-background text-foreground hover:border-primary hover:bg-accent",
   );
 }
 
-export const sortPillClass = cn(
-  filterPillClass(false),
-  "w-auto shadow-none [&>svg]:h-3 [&>svg]:w-3",
-);
+export const filterControlClass =
+  "h-12 w-auto min-w-[11rem] rounded-md border border-foreground/50 bg-background px-3 text-sm font-medium shadow-none [&>svg]:h-4 [&>svg]:w-4";
 
 export function FilterBar({
-  children,
+  chips,
+  controls,
   trailing,
 }: {
-  children: React.ReactNode;
+  chips: React.ReactNode;
+  controls?: React.ReactNode;
   trailing?: React.ReactNode;
 }) {
   return (
-    <div className="mb-8 flex flex-wrap items-center gap-2">
-      {children}
-      {trailing ? (
-        <div className="flex items-center gap-2 sm:ml-auto">{trailing}</div>
+    <div className="mb-8 flex flex-col gap-4">
+      <div>
+        <p className="mb-2 text-sm font-medium text-foreground">Filter by</p>
+        <div className="flex flex-wrap items-center gap-2">{chips}</div>
+      </div>
+      {controls || trailing ? (
+        <div className="flex flex-wrap items-end gap-3">
+          {controls}
+          {trailing ? (
+            <div className="flex items-end gap-2 sm:ml-auto">{trailing}</div>
+          ) : null}
+        </div>
       ) : null}
+    </div>
+  );
+}
+
+export function FilterLabeledControl({
+  label,
+  htmlFor,
+  children,
+}: {
+  label: string;
+  htmlFor?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex min-w-[10rem] flex-col gap-1">
+      <label htmlFor={htmlFor} className="text-sm font-bold text-foreground">
+        {label}
+      </label>
+      {children}
     </div>
   );
 }
@@ -56,7 +83,7 @@ export function FilterTogglePill({
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={filterPillClass(active)}
+      className={filterChipClass(active)}
     >
       {children}
     </button>
@@ -79,14 +106,14 @@ export function FilterMenuPill({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <button type="button" className={filterPillClass(Boolean(active))}>
+        <button type="button" className={filterChipClass(Boolean(active))}>
           <span>{label}</span>
           {count ? (
             <span
               className={cn(
-                "flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[10px] font-bold",
+                "flex h-4 min-w-4 items-center justify-center rounded-sm px-1 text-[10px] font-bold",
                 active
-                  ? "bg-primary-foreground/20 text-primary-foreground"
+                  ? "bg-primary/15 text-primary"
                   : "bg-muted text-muted-foreground",
               )}
             >
@@ -111,7 +138,7 @@ export function FilterClearButton({ onClick }: { onClick: () => void }) {
     <button
       type="button"
       onClick={onClick}
-      className="inline-flex h-8 items-center gap-1 px-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground"
+      className="inline-flex h-12 items-center gap-1 px-1.5 text-sm font-semibold text-muted-foreground hover:text-foreground"
     >
       <X weight="bold" className="h-3.5 w-3.5" />
       Clear

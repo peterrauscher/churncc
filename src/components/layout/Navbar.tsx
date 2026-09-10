@@ -104,10 +104,10 @@ const Navbar = () => {
                     key={href}
                     href={href}
                     className={cn(
-                      "rounded-lg px-3.5 py-2 text-sm font-semibold transition-colors",
+                      "relative px-3.5 py-2 text-sm font-semibold transition-colors after:absolute after:inset-x-3.5 after:bottom-1.5 after:h-0.5 after:rounded-full after:bg-current after:opacity-0 after:transition-opacity after:duration-200 hover:after:opacity-100",
                       isActive
-                        ? "bg-slate-100 text-[#0160c4] dark:bg-slate-900 dark:text-[#38b6ff]"
-                        : "text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-900 dark:hover:text-white",
+                        ? "text-[#0160c4] dark:text-[#38b6ff]"
+                        : "text-slate-600 dark:text-slate-300",
                     )}
                   >
                     {label}
@@ -122,7 +122,7 @@ const Navbar = () => {
             {/* Desktop All Offers Link */}
             <Link
               href="/credit-cards"
-              className="group hidden items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900 sm:inline-flex dark:text-slate-300 dark:hover:bg-slate-900 dark:hover:text-white"
+              className="group relative hidden items-center gap-1.5 px-3.5 py-2 text-sm font-semibold text-slate-600 sm:inline-flex dark:text-slate-300 after:absolute after:inset-x-3.5 after:bottom-1.5 after:h-0.5 after:rounded-full after:bg-current after:opacity-0 after:transition-opacity after:duration-200 hover:after:opacity-100"
             >
               <span>All Offers</span>
               <ArrowRight

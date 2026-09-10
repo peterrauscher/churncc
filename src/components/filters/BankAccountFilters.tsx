@@ -13,9 +13,10 @@ import {
   FilterBar,
   FilterCheckboxList,
   FilterClearButton,
+  FilterLabeledControl,
   FilterMenuPill,
   FilterTogglePill,
-  sortPillClass,
+  filterControlClass,
 } from "@/components/filters/FilterBar";
 
 interface BankAccountFilterState {
@@ -45,6 +46,13 @@ const BankAccountFilters = ({
 
   const handleFilterChange = (newFilters: Partial<BankAccountFilterState>) => {
     const updatedFilters = { ...filters, ...newFilters };
+    (Object.keys(newFilters) as (keyof BankAccountFilterState)[]).forEach(
+      (key) => {
+        if (newFilters[key] === undefined) {
+          delete updatedFilters[key];
+        }
+      },
+    );
     setFilters(updatedFilters);
     onFilterChange(updatedFilters);
   };
@@ -71,7 +79,7 @@ const BankAccountFilters = ({
 
   const handleMinBonusChange = (value: number[]) => {
     setMinBonus(value[0]);
-    handleFilterChange({ minBonus: value[0] });
+    handleFilterChange({ minBonus: value[0] === 0 ? undefined : value[0] });
   };
 
   const clearFilters = () => {
@@ -87,119 +95,139 @@ const BankAccountFilters = ({
     Boolean(filters.accountTypes?.length) ||
     Boolean(filters.minBonus);
 
+  const allAccountsActive = !hasActiveFilters;
   const bonusLabel = filters.minBonus
     ? `Bonus ≥ $${filters.minBonus}`
-    : "Min bonus";
+    : "Any bonus";
 
   return (
     <FilterBar
-      trailing={
+      chips={
         <>
-          <Select value={sortOption} onValueChange={handleSortChange}>
-            <SelectTrigger id="sort" className={sortPillClass}>
-              <SelectValue placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="offerAmount-desc">
-                Highest Cash Bonus
-              </SelectItem>
-              <SelectItem value="offerAmount-asc">Lowest Cash Bonus</SelectItem>
-              <SelectItem value="monthlyFee-asc">Lowest Monthly Fee</SelectItem>
-              <SelectItem value="monthlyFee-desc">
-                Highest Monthly Fee
-              </SelectItem>
-            </SelectContent>
-          </Select>
-          {hasActiveFilters ? (
-            <FilterClearButton onClick={clearFilters} />
-          ) : null}
+          <FilterTogglePill active={allAccountsActive} onClick={clearFilters}>
+            All accounts
+          </FilterTogglePill>
+          <FilterTogglePill
+            active={Boolean(filters.noMonthlyFee)}
+            onClick={() =>
+              handleFilterChange({
+                noMonthlyFee: filters.noMonthlyFee ? undefined : true,
+              })
+            }
+          >
+            No monthly fee
+          </FilterTogglePill>
+          <FilterTogglePill
+            active={Boolean(filters.directDepositRequired)}
+            onClick={() =>
+              handleFilterChange({
+                directDepositRequired: filters.directDepositRequired
+                  ? undefined
+                  : true,
+              })
+            }
+          >
+            Direct deposit required
+          </FilterTogglePill>
         </>
       }
-    >
-      <FilterTogglePill
-        active={Boolean(filters.noMonthlyFee)}
-        onClick={() =>
-          handleFilterChange({
-            noMonthlyFee: filters.noMonthlyFee ? undefined : true,
-          })
-        }
-      >
-        No monthly fee
-      </FilterTogglePill>
-
-      <FilterTogglePill
-        active={Boolean(filters.directDepositRequired)}
-        onClick={() =>
-          handleFilterChange({
-            directDepositRequired: filters.directDepositRequired
-              ? undefined
-              : true,
-          })
-        }
-      >
-        Direct deposit required
-      </FilterTogglePill>
-
-      <FilterMenuPill
-        label={
-          filters.institutions?.length === 1
-            ? filters.institutions[0]
-            : "Institution"
-        }
-        active={Boolean(filters.institutions?.length)}
-        count={filters.institutions?.length}
-      >
-        <FilterCheckboxList
-          options={institutions}
-          selected={filters.institutions}
-          onToggle={(value, checked) =>
-            handleListToggle("institutions", value, checked)
-          }
-        />
-      </FilterMenuPill>
-
-      <FilterMenuPill
-        label={
-          filters.accountTypes?.length === 1
-            ? filters.accountTypes[0].charAt(0) +
-              filters.accountTypes[0].slice(1).toLowerCase()
-            : "Account type"
-        }
-        active={Boolean(filters.accountTypes?.length)}
-        count={filters.accountTypes?.length}
-      >
-        <FilterCheckboxList
-          options={ACCOUNT_TYPES}
-          selected={filters.accountTypes}
-          onToggle={(value, checked) =>
-            handleListToggle("accountTypes", value, checked)
-          }
-          formatLabel={(value) =>
-            value.charAt(0) + value.slice(1).toLowerCase()
-          }
-        />
-      </FilterMenuPill>
-
-      <FilterMenuPill label={bonusLabel} active={Boolean(filters.minBonus)}>
-        <div className="space-y-3">
-          <p className="text-xs font-semibold text-muted-foreground">
-            Minimum cash bonus
-          </p>
-          <Slider
-            value={[minBonus]}
-            min={0}
-            max={1000}
-            step={50}
-            onValueChange={handleMinBonusChange}
-          />
-          <div className="flex items-center justify-between text-xs text-muted-foreground">
-            <span>$0</span>
-            <span className="font-semibold text-foreground">${minBonus}</span>
-            <span>$1,000+</span>
-          </div>
-        </div>
-      </FilterMenuPill>
-    </FilterBar>
+      controls={
+        <>
+          <FilterLabeledControl label="Institution">
+            <FilterMenuPill
+              label={
+                filters.institutions?.length === 1
+                  ? filters.institutions[0]
+                  : "All institutions"
+              }
+              active={Boolean(filters.institutions?.length)}
+              count={filters.institutions?.length}
+            >
+              <FilterCheckboxList
+                options={institutions}
+                selected={filters.institutions}
+                onToggle={(value, checked) =>
+                  handleListToggle("institutions", value, checked)
+                }
+              />
+            </FilterMenuPill>
+          </FilterLabeledControl>
+          <FilterLabeledControl label="Account type">
+            <FilterMenuPill
+              label={
+                filters.accountTypes?.length === 1
+                  ? filters.accountTypes[0].charAt(0) +
+                    filters.accountTypes[0].slice(1).toLowerCase()
+                  : "All types"
+              }
+              active={Boolean(filters.accountTypes?.length)}
+              count={filters.accountTypes?.length}
+            >
+              <FilterCheckboxList
+                options={ACCOUNT_TYPES}
+                selected={filters.accountTypes}
+                onToggle={(value, checked) =>
+                  handleListToggle("accountTypes", value, checked)
+                }
+                formatLabel={(value) =>
+                  value.charAt(0) + value.slice(1).toLowerCase()
+                }
+              />
+            </FilterMenuPill>
+          </FilterLabeledControl>
+          <FilterLabeledControl label="Min bonus">
+            <FilterMenuPill
+              label={bonusLabel}
+              active={Boolean(filters.minBonus)}
+            >
+              <div className="space-y-3">
+                <p className="text-xs font-semibold text-muted-foreground">
+                  Minimum cash bonus
+                </p>
+                <Slider
+                  value={[minBonus]}
+                  min={0}
+                  max={1000}
+                  step={50}
+                  onValueChange={handleMinBonusChange}
+                />
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <span>$0</span>
+                  <span className="font-semibold text-foreground">
+                    ${minBonus}
+                  </span>
+                  <span>$1,000+</span>
+                </div>
+              </div>
+            </FilterMenuPill>
+          </FilterLabeledControl>
+          <FilterLabeledControl label="Sort by" htmlFor="sort">
+            <Select value={sortOption} onValueChange={handleSortChange}>
+              <SelectTrigger id="sort" className={filterControlClass}>
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="offerAmount-desc">
+                  Highest Cash Bonus
+                </SelectItem>
+                <SelectItem value="offerAmount-asc">
+                  Lowest Cash Bonus
+                </SelectItem>
+                <SelectItem value="monthlyFee-asc">
+                  Lowest Monthly Fee
+                </SelectItem>
+                <SelectItem value="monthlyFee-desc">
+                  Highest Monthly Fee
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </FilterLabeledControl>
+        </>
+      }
+      trailing={
+        hasActiveFilters ? <FilterClearButton onClick={clearFilters} /> : null
+      }
+    />
   );
 };
 

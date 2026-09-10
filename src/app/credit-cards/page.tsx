@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import CreditCardGrid from "@/components/cards/CreditCardGrid";
 import CreditCardFilters from "@/components/filters/CreditCardFilters";
@@ -17,6 +17,10 @@ import {
 } from "@/components/ui/select";
 import { CreditCard, FilterOptions, SortOptions } from "@/types";
 import { fetchCreditCards } from "@/services/api";
+import {
+  applyCreditCardFilters,
+  CARD_CATEGORY_PRESETS,
+} from "@/lib/card-categories";
 
 function CreditCardsPageContent() {
   const searchParams = useSearchParams();
@@ -30,6 +34,18 @@ function CreditCardsPageContent() {
   const urlQuery = searchParams.get("q");
   const urlFee = searchParams.get("fee");
   const urlType = searchParams.get("type");
+  const urlFilters: FilterOptions = useMemo(
+    () => ({
+      issuer: urlIssuer ? [urlIssuer] : undefined,
+      annualFeeMax: urlFee === "0" ? 0 : undefined,
+      categories:
+        urlType &&
+        (CARD_CATEGORY_PRESETS as readonly string[]).includes(urlType)
+          ? [urlType]
+          : undefined,
+    }),
+    [urlIssuer, urlFee, urlType],
+  );
 
   useEffect(() => {
     const loadCreditCards = async () => {
@@ -41,45 +57,16 @@ function CreditCardsPageContent() {
           (card: CreditCard) => !card.discontinued,
         );
         setCreditCards(activeCards);
-        let initialDisplayCards = [...activeCards];
 
         const uniqueIssuers = Array.from(
           new Set(activeCards.map((card: CreditCard) => card.issuer)),
         ) as string[];
         setIssuers(uniqueIssuers);
 
-        // Filter by URL parameters if present
-        if (urlIssuer) {
-          initialDisplayCards = initialDisplayCards.filter(
-            (card: CreditCard) => card.issuer === urlIssuer,
-          );
-        }
-
-        if (urlFee === "0") {
-          initialDisplayCards = initialDisplayCards.filter(
-            (card: CreditCard) => card.annualFee === 0,
-          );
-        }
-
-        if (urlType === "travel") {
-          initialDisplayCards = initialDisplayCards.filter(
-            (card: CreditCard) =>
-              card.name.toLowerCase().includes("travel") ||
-              card.name.toLowerCase().includes("sapphire") ||
-              card.name.toLowerCase().includes("venture") ||
-              card.name.toLowerCase().includes("platinum") ||
-              card.details?.toLowerCase().includes("miles") ||
-              card.details?.toLowerCase().includes("points"),
-          );
-        } else if (urlType === "cashback") {
-          initialDisplayCards = initialDisplayCards.filter(
-            (card: CreditCard) =>
-              card.universalCashbackPercent > 1.5 ||
-              card.name.toLowerCase().includes("cash") ||
-              card.name.toLowerCase().includes("freedom") ||
-              card.name.toLowerCase().includes("quicksilver"),
-          );
-        }
+        let initialDisplayCards = applyCreditCardFilters(
+          activeCards,
+          urlFilters,
+        );
 
         if (urlQuery) {
           const q = urlQuery.toLowerCase();
@@ -101,45 +88,10 @@ function CreditCardsPageContent() {
     };
 
     loadCreditCards();
-  }, [urlIssuer, urlQuery, urlFee, urlType]);
+  }, [urlIssuer, urlQuery, urlFee, urlType, urlFilters]);
 
   const handleFilterChange = (filters: FilterOptions) => {
-    let tempFiltered = [...creditCards];
-
-    if (filters.issuer && filters.issuer.length > 0) {
-      tempFiltered = tempFiltered.filter((card: CreditCard) =>
-        filters.issuer!.includes(card.issuer),
-      );
-    }
-
-    if (filters.annualFeeMax !== undefined) {
-      tempFiltered = tempFiltered.filter(
-        (card: CreditCard) => card.annualFee <= filters.annualFeeMax!,
-      );
-    }
-
-    if (filters.offerAmountMin !== undefined) {
-      tempFiltered = tempFiltered.filter((card: CreditCard) => {
-        if (card.offers.length === 0) return false;
-        const bestOffer = card.offers[0];
-        const offerAmount = bestOffer.amount[0]?.amount || 0;
-        return offerAmount >= filters.offerAmountMin!;
-      });
-    }
-
-    if (filters.isBusiness !== undefined) {
-      tempFiltered = tempFiltered.filter(
-        (card: CreditCard) => card.isBusiness === filters.isBusiness,
-      );
-    }
-
-    if (filters.isAnnualFeeWaived !== undefined) {
-      tempFiltered = tempFiltered.filter(
-        (card: CreditCard) =>
-          card.isAnnualFeeWaived === filters.isAnnualFeeWaived,
-      );
-    }
-    setFilteredCards(tempFiltered);
+    setFilteredCards(applyCreditCardFilters(creditCards, filters));
     setCurrentPage(1);
   };
 
@@ -206,6 +158,7 @@ function CreditCardsPageContent() {
           onFilterChange={handleFilterChange}
           onSortChange={handleSortChange}
           issuers={issuers}
+          initialFilters={urlFilters}
         />
 
         {isLoading ? (

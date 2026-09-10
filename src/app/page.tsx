@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import CreditCardItem from "@/components/cards/CreditCardItem";
+import CreditCardGrid from "@/components/cards/CreditCardGrid";
 import BankAccountGrid from "@/components/cards/BankAccountGrid";
 import { LoadingCards } from "@/components/shared/LoadingCards";
 import { BonusCalculator } from "@/components/finance/BonusCalculator";
@@ -39,7 +39,7 @@ export default function HomePage() {
             const bOffer = b.offers[0]?.amount[0]?.amount || 0;
             return bOffer - aOffer;
           })
-          .slice(0, 4);
+          .slice(0, 3);
         setFeaturedCards(topCards);
 
         const accounts = getMockBankAccounts();
@@ -56,9 +56,6 @@ export default function HomePage() {
 
     loadFeaturedItems();
   }, []);
-
-  const leadCard = featuredCards[0];
-  const stackedCards = featuredCards.slice(1, 4);
 
   return (
     <div className="flex flex-col">
@@ -107,15 +104,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 2: INTERACTIVE BONUS CALCULATOR - Curated off-white background #f4f6f8 */}
+      {/* SECTION 2: FEATURED CREDIT CARD OFFERS - Curated off-white background #f4f6f8 */}
       <section className="bg-[#f4f6f8] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 dark:bg-slate-900/50">
-        <div className="mx-auto max-w-7xl">
-          <BonusCalculator />
-        </div>
-      </section>
-
-      {/* SECTION 3: FEATURED CREDIT CARD OFFERS - Solid white background */}
-      <section className="bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-8 dark:bg-slate-950">
         <div className="mx-auto max-w-7xl">
           <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div className="max-w-2xl">
@@ -137,22 +127,52 @@ export default function HomePage() {
           </div>
 
           {isLoading ? (
-            <LoadingCards count={4} columns="grid-cols-1 md:grid-cols-12" />
-          ) : leadCard ? (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
-              <div className="md:col-span-7">
-                <CreditCardItem card={leadCard} featured />
-              </div>
-              <div className="flex flex-col gap-6 md:col-span-5">
-                {stackedCards.map((card) => (
-                  <CreditCardItem key={card.cardId} card={card} />
-                ))}
-              </div>
-            </div>
+            <LoadingCards
+              count={3}
+              columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+            />
           ) : (
-            <p className="text-slate-500">
-              No featured credit cards available at the moment.
-            </p>
+            <CreditCardGrid
+              cards={featuredCards}
+              columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+              emptyMessage="No featured credit cards available at the moment."
+            />
+          )}
+        </div>
+      </section>
+
+      {/* SECTION 3: TOP BANK ACCOUNT BONUSES - Solid white background */}
+      <section className="bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-8 dark:bg-slate-950">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-2xl">
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl md:text-4xl dark:text-white">
+                Top bank account deposit bonuses
+              </h2>
+              <p className="mt-2 text-base text-slate-600 dark:text-slate-400">
+                Checking and savings promos that pay cash for funds you already
+                move.
+              </p>
+            </div>
+            <Link
+              href="/bank-accounts"
+              className="inline-flex items-center gap-1 text-sm font-semibold text-[#0160c4] hover:underline dark:text-[#38b6ff]"
+            >
+              <span>View all bank promos</span>
+              <ArrowRight weight="bold" className="h-4 w-4" />
+            </Link>
+          </div>
+
+          {isLoading ? (
+            <LoadingCards
+              count={3}
+              columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+            />
+          ) : (
+            <BankAccountGrid
+              accounts={featuredAccounts}
+              emptyMessage="No featured bank accounts available at the moment."
+            />
           )}
         </div>
       </section>
@@ -278,43 +298,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 5: TOP BANK ACCOUNT BONUSES - Solid white background */}
+      {/* SECTION 5: INTERACTIVE BONUS CALCULATOR - Solid white background */}
       <section className="bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-8 dark:bg-slate-950">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div className="max-w-2xl">
-              <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl md:text-4xl dark:text-white">
-                Top bank account deposit bonuses
-              </h2>
-              <p className="mt-2 text-base text-slate-600 dark:text-slate-400">
-                Checking and savings promos that pay cash for funds you already
-                move.
-              </p>
-            </div>
-            <Link
-              href="/bank-accounts"
-              className="inline-flex items-center gap-1 text-sm font-semibold text-[#0160c4] hover:underline dark:text-[#38b6ff]"
-            >
-              <span>View all bank promos</span>
-              <ArrowRight weight="bold" className="h-4 w-4" />
-            </Link>
-          </div>
-
-          {isLoading ? (
-            <LoadingCards
-              count={3}
-              columns="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-            />
-          ) : (
-            <BankAccountGrid
-              accounts={featuredAccounts}
-              emptyMessage="No featured bank accounts available at the moment."
-            />
-          )}
+          <BonusCalculator />
         </div>
       </section>
 
-      {/* SECTION 7: FREE BANK BONUS EMAIL COURSE - Curated off-white section */}
+      {/* SECTION 6: FREE BANK BONUS EMAIL COURSE - Curated off-white section */}
       <section className="bg-[#f4f6f8] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 dark:bg-slate-900/50">
         <div className="mx-auto max-w-7xl">
           <BankBonusEmailCourse />
