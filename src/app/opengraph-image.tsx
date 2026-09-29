@@ -16,83 +16,31 @@ export default async function Image() {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        backgroundColor: "#015ecc",
+        backgroundColor: "#ffffff",
         padding: "54px 64px",
         fontFamily: "system-ui, -apple-system, sans-serif",
-        position: "relative",
-        overflow: "hidden",
+        color: "#0f172a",
       }}
     >
-      {/* Playful background bubble circles (solid, no gradients) */}
-      <div
-        style={{
-          position: "absolute",
-          top: "-80px",
-          right: "-60px",
-          width: "360px",
-          height: "360px",
-          borderRadius: "9999px",
-          backgroundColor: "#026be8",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          bottom: "-100px",
-          left: "240px",
-          width: "280px",
-          height: "280px",
-          borderRadius: "9999px",
-          backgroundColor: "#0052b3",
-        }}
-      />
-
-      {/* Top header row */}
+      {/* Top Header Row */}
       <div
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          position: "relative",
         }}
       >
-        {/* Bubbly Logo Pill */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "14px",
-            backgroundColor: "#ffffff",
-            padding: "10px 24px",
-            borderRadius: "9999px",
-            boxShadow: "0 6px 20px rgba(0, 32, 96, 0.22)",
-          }}
-        >
-          <div
-            style={{
-              width: "34px",
-              height: "34px",
-              borderRadius: "10px",
-              backgroundColor: "#0160c4",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <div
-              style={{
-                width: "18px",
-                height: "18px",
-                borderLeft: "4px solid #38b6ff",
-                borderBottom: "4px solid #00bf63",
-                transform: "rotate(-45deg)",
-              }}
-            />
-          </div>
+        {/* Brand Logo matching BrandLogo.tsx */}
+        <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <rect x="4" y="14" width="8" height="22" rx="4" fill="#38b6ff" />
+            <rect x="16" y="4" width="8" height="32" rx="4" fill="#0160c4" />
+            <rect x="28" y="10" width="8" height="26" rx="4" fill="#00bf63" />
+          </svg>
           <span
             style={{
-              fontSize: "26px",
-              fontWeight: 900,
+              fontSize: "30px",
+              fontWeight: 800,
               letterSpacing: "-0.03em",
               color: "#0f172a",
             }}
@@ -101,354 +49,336 @@ export default async function Image() {
           </span>
         </div>
 
-        {/* Tilted Sticker: Free Money Alert */}
+        {/* Editorial Category Pill */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             gap: "8px",
-            backgroundColor: "#ffd836",
-            color: "#1e293b",
-            padding: "10px 22px",
+            backgroundColor: "#eff6ff",
+            border: "1px solid #bfdbfe",
+            color: "#0160c4",
+            padding: "6px 18px",
             borderRadius: "9999px",
-            fontSize: "15px",
-            fontWeight: 900,
+            fontSize: "13px",
+            fontWeight: 700,
             letterSpacing: "0.02em",
-            transform: "rotate(3deg)",
-            boxShadow: "0 6px 18px rgba(0, 0, 0, 0.18)",
           }}
         >
-          <span>💸 FREE MONEY FROM BANKS</span>
+          <span>Independent & Merit-Ranked · 1,000+ Offers Tracked</span>
         </div>
       </div>
 
-      {/* Main Headline */}
+      {/* Headline & Subtitle */}
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "10px",
-          position: "relative",
-          marginTop: "16px",
-        }}
-      >
-        <div
-          style={{
-            fontSize: "66px",
-            fontWeight: 900,
-            lineHeight: 1.05,
-            letterSpacing: "-0.04em",
-            color: "#ffffff",
-            textShadow: "0 4px 16px rgba(0, 30, 90, 0.35)",
-          }}
-        >
-          Banks have billions.
-        </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "16px",
-            fontSize: "66px",
-            fontWeight: 900,
-            lineHeight: 1.05,
-            letterSpacing: "-0.04em",
-            color: "#ffd836",
-            textShadow: "0 4px 16px rgba(0, 30, 90, 0.35)",
-          }}
-        >
-          <span>Go get your share.</span>
-          <span style={{ fontSize: "60px" }}>🎉</span>
-        </div>
-      </div>
-
-      {/* 3 Bubbly Floating Offer Cards */}
-      <div
-        style={{
-          display: "flex",
-          gap: "18px",
-          position: "relative",
+          gap: "8px",
           marginTop: "8px",
         }}
       >
-        {/* Bubble Card 1: Sapphire */}
+        <h1
+          style={{
+            fontSize: "50px",
+            fontWeight: 800,
+            lineHeight: 1.1,
+            letterSpacing: "-0.035em",
+            color: "#0f172a",
+            margin: 0,
+          }}
+        >
+          Smart bonus decisions start with honest math.
+        </h1>
+        <p
+          style={{
+            fontSize: "19px",
+            lineHeight: 1.45,
+            color: "#64748b",
+            margin: 0,
+            maxWidth: "920px",
+          }}
+        >
+          Compare the nation&apos;s highest credit card welcome bonuses and bank
+          account promotions. 100% free with zero referral bias.
+        </p>
+      </div>
+
+      {/* 2 Offer Preview Cards matching CreditCardItem & BankAccountItem design */}
+      <div style={{ display: "flex", gap: "20px", marginTop: "4px" }}>
+        {/* Card 1: Credit Card Item */}
         <div
           style={{
             flex: 1,
             display: "flex",
             flexDirection: "column",
-            gap: "6px",
+            justifyContent: "space-between",
             backgroundColor: "#ffffff",
-            borderRadius: "26px",
-            padding: "20px 22px",
-            boxShadow: "0 10px 28px rgba(0, 24, 80, 0.28)",
-            transform: "rotate(-2deg)",
+            border: "1px solid #e2e8f0",
+            borderRadius: "16px",
+            padding: "20px 24px",
+            boxShadow: "0 1px 3px rgba(15, 23, 42, 0.05)",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <span
+          <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <div
               style={{
-                fontSize: "12px",
-                fontWeight: 800,
-                color: "#0160c4",
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
               }}
             >
-              ✈️ Travel Card
-            </span>
+              <span
+                style={{
+                  fontSize: "11px",
+                  fontWeight: 700,
+                  color: "#64748b",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
+                }}
+              >
+                Chase · Travel Rewards
+              </span>
+              <span
+                style={{
+                  backgroundColor: "#eff6ff",
+                  color: "#0160c4",
+                  border: "1px solid #bfdbfe",
+                  borderRadius: "6px",
+                  padding: "2px 8px",
+                  fontSize: "11px",
+                  fontWeight: 700,
+                }}
+              >
+                Editor&apos;s Pick
+              </span>
+            </div>
             <span
               style={{
-                backgroundColor: "#eef6ff",
-                color: "#0160c4",
-                fontSize: "11px",
-                fontWeight: 800,
-                padding: "3px 8px",
-                borderRadius: "9999px",
+                fontSize: "20px",
+                fontWeight: 700,
+                color: "#0f172a",
+                letterSpacing: "-0.02em",
               }}
             >
-              TOP PICK
+              Sapphire Preferred Card
             </span>
           </div>
-          <span
-            style={{
-              fontSize: "16px",
-              fontWeight: 800,
-              color: "#0f172a",
-            }}
-          >
-            Chase Sapphire
-          </span>
+
           <div
             style={{
               display: "flex",
-              alignItems: "baseline",
-              gap: "6px",
-              marginTop: "4px",
+              flexDirection: "column",
+              gap: "2px",
+              marginTop: "14px",
             }}
           >
             <span
-              style={{
-                fontSize: "28px",
-                fontWeight: 900,
-                color: "#00a859",
-                letterSpacing: "-0.03em",
-              }}
+              style={{ fontSize: "12px", color: "#64748b", fontWeight: 500 }}
             >
-              75,000 pts
+              Welcome bonus payout
             </span>
-            <span
-              style={{ fontSize: "13px", fontWeight: 700, color: "#64748b" }}
+            <div
+              style={{ display: "flex", alignItems: "baseline", gap: "8px" }}
             >
-              ≈ $750
+              <span
+                style={{
+                  fontSize: "30px",
+                  fontWeight: 800,
+                  color: "#0f172a",
+                  letterSpacing: "-0.03em",
+                }}
+              >
+                75,000 pts
+              </span>
+              <span
+                style={{ fontSize: "14px", color: "#64748b", fontWeight: 600 }}
+              >
+                ≈ $750 est. value
+              </span>
+            </div>
+            <span
+              style={{ fontSize: "12px", color: "#64748b", marginTop: "2px" }}
+            >
+              After $4,000 spend in 90 days · $95 annual fee
             </span>
           </div>
         </div>
 
-        {/* Bubble Card 2: Checking */}
+        {/* Card 2: Bank Account Item */}
         <div
           style={{
             flex: 1,
             display: "flex",
             flexDirection: "column",
-            gap: "6px",
+            justifyContent: "space-between",
             backgroundColor: "#ffffff",
-            borderRadius: "26px",
-            padding: "20px 22px",
-            boxShadow: "0 10px 28px rgba(0, 24, 80, 0.28)",
-            transform: "rotate(1.5deg)",
+            border: "1px solid #e2e8f0",
+            borderRadius: "16px",
+            padding: "20px 24px",
+            boxShadow: "0 1px 3px rgba(15, 23, 42, 0.05)",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <span
+          <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <div
               style={{
-                fontSize: "12px",
-                fontWeight: 800,
-                color: "#0284c7",
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
               }}
             >
-              🏦 Checking Bonus
-            </span>
+              <span
+                style={{
+                  fontSize: "11px",
+                  fontWeight: 700,
+                  color: "#64748b",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
+                }}
+              >
+                Citibank · Checking Promo
+              </span>
+              <span
+                style={{
+                  backgroundColor: "#ecfdf5",
+                  color: "#00875a",
+                  border: "1px solid #a7f3d0",
+                  borderRadius: "6px",
+                  padding: "2px 8px",
+                  fontSize: "11px",
+                  fontWeight: 700,
+                }}
+              >
+                Direct Deposit
+              </span>
+            </div>
             <span
               style={{
-                backgroundColor: "#e0f2fe",
-                color: "#0284c7",
-                fontSize: "11px",
-                fontWeight: 800,
-                padding: "3px 8px",
-                borderRadius: "9999px",
+                fontSize: "20px",
+                fontWeight: 700,
+                color: "#0f172a",
+                letterSpacing: "-0.02em",
               }}
             >
-              CASH
+              Citi Priority Checking
             </span>
           </div>
-          <span
-            style={{
-              fontSize: "16px",
-              fontWeight: 800,
-              color: "#0f172a",
-            }}
-          >
-            Citi Priority Checking
-          </span>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "baseline",
-              gap: "6px",
-              marginTop: "4px",
-            }}
-          >
-            <span
-              style={{
-                fontSize: "28px",
-                fontWeight: 900,
-                color: "#00a859",
-                letterSpacing: "-0.03em",
-              }}
-            >
-              +$700
-            </span>
-            <span
-              style={{ fontSize: "13px", fontWeight: 700, color: "#64748b" }}
-            >
-              direct deposit
-            </span>
-          </div>
-        </div>
 
-        {/* Bubble Card 3: Year 1 Upside */}
-        <div
-          style={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            gap: "6px",
-            backgroundColor: "#e6f9f0",
-            borderRadius: "26px",
-            padding: "20px 22px",
-            boxShadow: "0 10px 28px rgba(0, 24, 80, 0.28)",
-            border: "2px solid #a7f3d0",
-            transform: "rotate(-1deg)",
-          }}
-        >
           <div
             style={{
               display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
+              flexDirection: "column",
+              gap: "2px",
+              marginTop: "14px",
             }}
           >
             <span
-              style={{
-                fontSize: "12px",
-                fontWeight: 800,
-                color: "#047857",
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
-              }}
+              style={{ fontSize: "12px", color: "#64748b", fontWeight: 500 }}
             >
-              🚀 1st-Year Potential
+              Cash deposit promo
             </span>
-            <span
-              style={{
-                backgroundColor: "#d1fae5",
-                color: "#065f46",
-                fontSize: "11px",
-                fontWeight: 800,
-                padding: "3px 8px",
-                borderRadius: "9999px",
-              }}
+            <div
+              style={{ display: "flex", alignItems: "baseline", gap: "8px" }}
             >
-              COMBINED
-            </span>
-          </div>
-          <span
-            style={{
-              fontSize: "16px",
-              fontWeight: 800,
-              color: "#064e3b",
-            }}
-          >
-            Avg. Churner Upside
-          </span>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "baseline",
-              gap: "6px",
-              marginTop: "4px",
-            }}
-          >
+              <span
+                style={{
+                  fontSize: "30px",
+                  fontWeight: 800,
+                  color: "#00875a",
+                  letterSpacing: "-0.03em",
+                }}
+              >
+                +$700
+              </span>
+              <span
+                style={{ fontSize: "14px", color: "#64748b", fontWeight: 600 }}
+              >
+                cash payout
+              </span>
+            </div>
             <span
-              style={{
-                fontSize: "28px",
-                fontWeight: 900,
-                color: "#00875a",
-                letterSpacing: "-0.03em",
-              }}
+              style={{ fontSize: "12px", color: "#64748b", marginTop: "2px" }}
             >
-              +$2,350
-            </span>
-            <span
-              style={{ fontSize: "13px", fontWeight: 700, color: "#065f46" }}
-            >
-              /year
+              Deposit $50,000 within 30 days · $30 monthly fee waivable
             </span>
           </div>
         </div>
       </div>
 
-      {/* Bottom Pill Bar */}
+      {/* Bottom Bar matching design system */}
       <div
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          position: "relative",
-          marginTop: "16px",
+          borderTop: "1px solid #e2e8f0",
+          paddingTop: "18px",
+          marginTop: "8px",
         }}
       >
         <div
           style={{
             display: "flex",
-            alignItems: "center",
-            gap: "24px",
-            color: "#ffffff",
-            fontSize: "15px",
-            fontWeight: 800,
+            gap: "28px",
+            color: "#64748b",
+            fontSize: "13px",
+            fontWeight: 600,
           }}
         >
-          <span>✨ 100% Free to Use</span>
-          <span style={{ opacity: 0.5 }}>•</span>
-          <span>🎯 0% Corporate Bias</span>
-          <span style={{ opacity: 0.5 }}>•</span>
-          <span>⚡️ Verified Daily</span>
+          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+            <svg
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#00875a"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span>100% Free & Independent</span>
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+            <svg
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#00875a"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span>Zero Referral Bias</span>
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+            <svg
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#00875a"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span>Daily Verification</span>
+          </div>
         </div>
 
         <div
           style={{
-            backgroundColor: "rgba(255, 255, 255, 0.2)",
-            color: "#ffffff",
-            padding: "8px 20px",
-            borderRadius: "9999px",
-            fontSize: "16px",
-            fontWeight: 900,
-            letterSpacing: "-0.01em",
+            fontSize: "17px",
+            fontWeight: 700,
+            color: "#0160c4",
           }}
         >
           churn.cc
