@@ -11,11 +11,12 @@
   --popover: #ffffff;
   --popover-foreground: #0f172a;
   --primary: #0160c4;
+  --primary-hover: #0152a8;
   --primary-foreground: #ffffff;
   --secondary: #00875a;
   --secondary-foreground: #ffffff;
-  --muted: #f8fafc;
-  --muted-foreground: #64748b;
+  --muted: #f6f7f9;
+  --muted-foreground: #5b6678;
   --accent: #f0f7ff;
   --accent-foreground: #0160c4;
   --destructive: #dc2626;
@@ -27,6 +28,7 @@
   --brand-cyan: #38b6ff;
   --brand-green: #00a859;
   --brand-green-light: #e6f9f0;
+  --positive: #00875a;
   --brand-blue-light: #eef6ff;
   --chart-1: #0160c4;
   --chart-2: #00a859;
@@ -45,7 +47,7 @@
     var(--font-ibm-plex-sans), -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, sans-serif;
   --font-mono: var(--font-ibm-plex-mono), monospace;
-  --radius: 0.875rem;
+  --radius: 0.625rem;
   --z-overlay: 40;
   --z-nav: 50;
   --shadow-xs: 0 1px 2px 0 rgb(15 23 42 / 0.05);
@@ -70,6 +72,7 @@
   --popover: #0f172a;
   --popover-foreground: #f8fafc;
   --primary: #38b6ff;
+  --primary-hover: #6cc8ff;
   --primary-foreground: #090d16;
   --secondary: #00bf63;
   --secondary-foreground: #090d16;
@@ -86,6 +89,7 @@
   --brand-cyan: #38b6ff;
   --brand-green: #00bf63;
   --brand-green-light: #064e3b;
+  --positive: #00bf63;
   --brand-blue-light: #172554;
   --chart-1: #38b6ff;
   --chart-2: #00bf63;
@@ -104,7 +108,7 @@
     var(--font-ibm-plex-sans), -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, sans-serif;
   --font-mono: var(--font-ibm-plex-mono), monospace;
-  --radius: 0.875rem;
+  --radius: 0.625rem;
 }
 
 @theme inline {
@@ -115,6 +119,7 @@
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -133,6 +138,7 @@
   --color-brand-green: var(--brand-green);
   --color-brand-green-light: var(--brand-green-light);
   --color-brand-blue-light: var(--brand-blue-light);
+  --color-positive: var(--positive);
 
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
@@ -195,8 +201,8 @@
   h5,
   h6 {
     font-family: var(--font-sans);
-    letter-spacing: -0.025em;
-    font-weight: 700;
+    letter-spacing: -0.02em;
+    font-weight: 600;
     text-wrap: balance;
   }
 

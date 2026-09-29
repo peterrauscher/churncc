@@ -1,0 +1,34 @@
+# Churnable
+
+> Compare credit card welcome bonuses and bank account signup promotions. Unbiased, merit-ranked financial rewards intelligence and playbooks.
+
+## Overview
+
+Churnable (https://churn.cc) is an independent financial comparison platform tracking over 1,000 credit card welcome offers and bank account promotions across the United States. All rankings are 100% merit-based: financial products are ranked strictly by real net cash payout, spend hurdle feasibility, and fee structure, with zero corporate influence, sponsored placement bias, or private corporate compensation contracts.
+
+## Primary Sections & Core URLs
+
+- [Homepage](https://churn.cc/): Central comparison hub with Editor's Ranked Picks of the month, quick topic categories, interactive bonus calculator, and free email crash course.
+- [Credit Card Welcome Bonuses](https://churn.cc/credit-cards): Side-by-side welcome offers, minimum spend thresholds, and annual fee comparisons with conservative point-to-dollar valuations. Filterable by issuer, annual fee, reward type, and minimum spend.
+- [Bank Account Promotions](https://churn.cc/bank-accounts): High-yield checking, savings, and deposit promotions paying cash bonuses. Filterable by account type, deposit requirements, and monthly fee waiver rules.
+- [Bonus Playbooks & Strategy Guides](https://churn.cc/resources): Comprehensive guides on the Chase 5/24 rule, direct deposit verification workarounds, application timelines, and IRS 1099-INT tax considerations.
+- [Editorial Standards & Revenue Transparency](https://churn.cc/how-we-are-paid): Full disclosure on consumer referral revenue, advertising independence, and rating methodologies.
+- [Contact & Offer Corrections](https://churn.cc/contact): Editorial feedback and offer update submissions.
+
+## Key Methodologies & Mathematical Formulas
+
+- **Conservative Point Valuations**: Loyalty currencies are converted into estimated USD using conservative redemption rates (typically 1.0¢–1.5¢ per point for transferable currencies like Chase Ultimate Rewards and American Express Membership Rewards; 0.5¢–0.8¢ for hotel and budget airline programs). This prevents inflated marketing claims from distorting offer comparisons.
+- **Spend Feasibility**: Welcome bonuses detail exact minimum spend hurdles (e.g., $4,000 spend in 90 days = ~$1,333/month) and account retention timelines (often 180–365 days) to prevent bonus clawbacks or closure penalties.
+- **Tax Transparency**: Clear differentiation between tax-free credit card rewards (classified by the IRS under Publication 525 as non-taxable spend rebates) and taxable bank interest bonuses (reported on Form 1099-INT as taxable income).
+- **Chase 5/24 Rule Compliance**: Tracking whether cards count towards the industry standard threshold of opening 5 or more personal credit cards across all banks in a rolling 24-month period.
+
+## Top Categories
+
+- [Travel Rewards Cards](https://churn.cc/credit-cards?type=travel): Airline miles and transferable points cards with $750+ initial welcome bonuses.
+- [Cash Back Cards](https://churn.cc/credit-cards?type=cashback): Straightforward dollar statement credits with $0 annual fees and simple cash redemptions.
+- [Checking Account Promos](https://churn.cc/bank-accounts?type=checking): Cash payouts for routing direct deposits.
+- [High-Yield Savings Promos](https://churn.cc/bank-accounts?type=savings): Competitive 4%+ APY yields combined with deposit match cash bonuses.
+
+## Optional
+
+- [Full LLM Context](https://churn.cc/llms-full.txt): Complete database summary, rules matrix, and detailed financial intelligence.

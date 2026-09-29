@@ -23,7 +23,7 @@ const Footer = () => {
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-2 md:grid-cols-5">
           {/* Brand Column - Logo only */}
           <div className="col-span-2 md:col-span-1">
-            <BrandLogo size="md" href="/" className="[&_span]:text-white" />
+            <BrandLogo size="sm" href="/" className="[&_span]:text-white" />
           </div>
 
           {/* Column 1: Cards */}

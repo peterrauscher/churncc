@@ -21,6 +21,7 @@ import {
   applyCreditCardFilters,
   CARD_CATEGORY_PRESETS,
 } from "@/lib/card-categories";
+import { cardOfferValueInUsd } from "@/lib/rewards";
 
 function CreditCardsPageContent() {
   const searchParams = useSearchParams();
@@ -101,9 +102,8 @@ function CreditCardsPageContent() {
     switch (sort.field) {
       case "offerAmount":
         tempSorted.sort((a: CreditCard, b: CreditCard) => {
-          const aOffer = a.offers[0]?.amount[0]?.amount || 0;
-          const bOffer = b.offers[0]?.amount[0]?.amount || 0;
-          return sort.direction === "asc" ? aOffer - bOffer : bOffer - aOffer;
+          const delta = cardOfferValueInUsd(a) - cardOfferValueInUsd(b);
+          return sort.direction === "asc" ? delta : -delta;
         });
         break;
 

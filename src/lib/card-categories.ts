@@ -1,4 +1,5 @@
 import { CreditCard, FilterOptions } from "@/types";
+import { cardOfferValueInUsd } from "@/lib/rewards";
 
 export const CARD_CATEGORY_PRESETS = ["rewards", "travel", "cashback"] as const;
 
@@ -55,8 +56,10 @@ export function applyCreditCardFilters(
       return false;
     }
     if (filters.offerAmountMin !== undefined) {
-      const offerAmount = card.offers[0]?.amount[0]?.amount || 0;
-      if (card.offers.length === 0 || offerAmount < filters.offerAmountMin) {
+      if (
+        card.offers.length === 0 ||
+        cardOfferValueInUsd(card) < filters.offerAmountMin
+      ) {
         return false;
       }
     }

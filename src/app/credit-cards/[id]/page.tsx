@@ -26,6 +26,7 @@ import { PageContainer } from "@/components/shared/PageContainer";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { CurrencyValue } from "@/components/finance/CurrencyValue";
 import { OfferSummary } from "@/components/finance/OfferSummary";
+import { resolveOfferCurrency, rewardUnitLabel } from "@/lib/rewards";
 
 export default function CreditCardDetailPage() {
   const params = useParams<{ id: string }>();
@@ -90,6 +91,7 @@ export default function CreditCardDetailPage() {
   }
 
   const bestOffer = card.offers.length > 0 ? card.offers[0] : null;
+  const offerCurrency = resolveOfferCurrency(card, bestOffer?.amount[0]);
 
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-[#f4f6f8] py-8 md:py-12 dark:bg-slate-950">
@@ -106,17 +108,19 @@ export default function CreditCardDetailPage() {
         </div>
 
         {/* Main Grid: Left = Info & Welcome Offer, Right = Card Art & Details */}
-        <div className="mb-10 grid grid-cols-1 gap-8 lg:grid-cols-12">
+        <div className="mb-10 grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
           {/* Left Column: Hero Details & Welcome Bonus */}
-          <div className="flex flex-col justify-between space-y-6 lg:col-span-7">
+          <div className="flex flex-col space-y-6 lg:col-span-7">
             <div>
               <div className="mb-3 flex flex-wrap items-center gap-2">
                 <span className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-semibold text-slate-700 uppercase dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300">
-                  {card.issuer.replace("_", " ")}
+                  {card.issuer.replaceAll("_", " ")}
                 </span>
-                <span className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-semibold text-slate-700 uppercase dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300">
-                  {card.network.replace("_", " ")}
-                </span>
+                {card.network !== card.issuer && (
+                  <span className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-semibold text-slate-700 uppercase dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300">
+                    {card.network.replaceAll("_", " ")}
+                  </span>
+                )}
                 {card.isBusiness && (
                   <span className="rounded-md bg-blue-100 px-2.5 py-1 text-xs font-bold text-[#0160c4] dark:bg-blue-950 dark:text-[#38b6ff]">
                     Business Card
@@ -168,7 +172,7 @@ export default function CreditCardDetailPage() {
 
             {/* Current Welcome Offer Box - Solid emerald, borderless */}
             {bestOffer && (
-              <div className="rounded-2xl bg-emerald-50/80 p-6 shadow-sm dark:bg-emerald-950/40 md:p-8">
+              <div className="rounded-2xl bg-emerald-50/80 p-7 shadow-sm dark:bg-emerald-950/40 md:p-8">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold tracking-wider text-emerald-800 uppercase dark:text-emerald-400">
                     Current Welcome Bonus
@@ -179,15 +183,18 @@ export default function CreditCardDetailPage() {
                   </span>
                 </div>
 
-                <div className="mt-2">
+                <div className="mt-3">
                   <CurrencyValue
                     amount={bestOffer.amount[0]?.amount || 0}
-                    currency={bestOffer.amount[0]?.currency || "USD"}
-                    className="text-3xl font-extrabold text-[#00a859] sm:text-4xl dark:text-emerald-400"
+                    currency={offerCurrency}
+                    className="text-4xl font-extrabold text-[#00a859] sm:text-5xl dark:text-emerald-400"
                   />
+                  <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+                    {rewardUnitLabel(offerCurrency)}
+                  </p>
                 </div>
 
-                <div className="mt-4 text-xs text-slate-600 dark:text-slate-400">
+                <div className="mt-5 text-sm text-slate-600 dark:text-slate-400">
                   <OfferSummary
                     spend={bestOffer.spend}
                     days={bestOffer.days}
@@ -250,7 +257,7 @@ export default function CreditCardDetailPage() {
             )}
 
             {/* Credits and Benefits */}
-            {card.credits.length > 0 && (
+            {!!card.credits?.length && (
               <div className="mb-6">
                 <h3 className="mb-3 text-sm font-bold text-slate-900 uppercase dark:text-white">
                   Statement Credits & Value
@@ -282,7 +289,7 @@ export default function CreditCardDetailPage() {
             )}
 
             {/* Reward Multipliers Table */}
-            {card.rewardMultipliers.length > 0 && (
+            {!!card.rewardMultipliers?.length && (
               <div>
                 <h3 className="mb-3 text-sm font-bold text-slate-900 uppercase dark:text-white">
                   Reward Multipliers
@@ -320,13 +327,13 @@ export default function CreditCardDetailPage() {
 
         {/* Pros & Cons Section */}
         {/* Pros & Cons Section - Borderless */}
-        {(card.pros.length > 0 || card.cons.length > 0) && (
+        {((card.pros?.length ?? 0) > 0 || (card.cons?.length ?? 0) > 0) && (
           <div className="rounded-2xl bg-white p-6 shadow-[0_2px_12px_rgba(15,23,42,0.06)] dark:bg-slate-900 sm:p-8">
             <h2 className="text-xl font-bold text-slate-900 dark:text-white">
               Editorial Review: Pros & Cons
             </h2>
             <div className="mt-6 grid grid-cols-1 gap-8 md:grid-cols-2">
-              {card.pros.length > 0 && (
+              {(card.pros?.length ?? 0) > 0 && (
                 <div>
                   <span className="text-xs font-bold tracking-wider text-[#00a859] uppercase">
                     Why We Love It (Pros)
@@ -347,7 +354,7 @@ export default function CreditCardDetailPage() {
                   </ul>
                 </div>
               )}
-              {card.cons.length > 0 && (
+              {(card.cons?.length ?? 0) > 0 && (
                 <div>
                   <span className="text-xs font-bold tracking-wider text-rose-600 uppercase dark:text-rose-400">
                     Things to Keep in Mind (Cons)

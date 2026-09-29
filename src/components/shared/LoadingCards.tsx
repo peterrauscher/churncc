@@ -1,5 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { Bezel } from "@/components/shared/Bezel";
+import { cn } from "@/lib/utils";
 
 interface LoadingCardsProps {
   count?: number;
@@ -11,20 +11,25 @@ export function LoadingCards({
   columns = "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4",
 }: LoadingCardsProps) {
   return (
-    <div className={`grid gap-6 ${columns}`}>
+    <div className={cn("grid gap-6", columns)} aria-busy="true">
       {Array.from({ length: count }).map((_, index) => (
-        <Bezel key={index}>
-          <div className="p-5">
-            <Skeleton className="h-40 w-full rounded-[1.4rem] bg-muted" />
-            <Skeleton className="mt-5 h-6 w-2/3 bg-muted" />
-            <Skeleton className="mt-3 h-4 w-5/6 bg-muted" />
-            <Skeleton className="mt-2 h-4 w-4/6 bg-muted" />
-            <div className="mt-8 flex items-center justify-between">
-              <Skeleton className="h-4 w-24 bg-muted" />
-              <Skeleton className="h-10 w-28 rounded-full bg-muted" />
+        <div
+          key={index}
+          className="overflow-hidden rounded-xl border border-border bg-card"
+        >
+          <Skeleton className="h-44 w-full rounded-none" />
+          <div className="p-6">
+            <Skeleton className="h-3.5 w-24" />
+            <Skeleton className="mt-2.5 h-5 w-2/3" />
+            <Skeleton className="mt-7 h-3.5 w-20" />
+            <Skeleton className="mt-2.5 h-7 w-32" />
+            <Skeleton className="mt-2.5 h-3.5 w-3/4" />
+            <div className="mt-7 grid grid-cols-2 gap-3 border-t border-border pt-6">
+              <Skeleton className="h-10" />
+              <Skeleton className="h-10" />
             </div>
           </div>
-        </Bezel>
+        </div>
       ))}
     </div>
   );

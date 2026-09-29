@@ -250,14 +250,14 @@ const CreditCardFilters = ({
               </div>
             </FilterMenuPill>
           </FilterLabeledControl>
-          <FilterLabeledControl label="Min bonus">
+          <FilterLabeledControl label="Min value">
             <FilterMenuPill
               label={bonusLabel}
               active={Boolean(filters.offerAmountMin)}
             >
               <div className="space-y-3">
                 <p className="text-xs font-semibold text-muted-foreground">
-                  Minimum bonus value
+                  Minimum bonus value, cash and points converted to USD
                 </p>
                 <Slider
                   value={[minOfferAmount]}
@@ -283,10 +283,10 @@ const CreditCardFilters = ({
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="offerAmount-desc">
-                  Highest Welcome Bonus
+                  Highest Bonus Value
                 </SelectItem>
                 <SelectItem value="offerAmount-asc">
-                  Lowest Welcome Bonus
+                  Lowest Bonus Value
                 </SelectItem>
                 <SelectItem value="annualFee-asc">Lowest Annual Fee</SelectItem>
                 <SelectItem value="annualFee-desc">

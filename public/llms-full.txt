@@ -1,0 +1,71 @@
+# Churnable — Full LLM Context & Financial Intelligence Reference
+
+> Complete documentation, rules matrix, reward valuation methodologies, and database structure for Churnable (https://churn.cc).
+
+## About Churnable
+
+Churnable is an independent personal-finance rewards tracking service founded to help consumers capture sign-up bonuses offered by credit card issuers and retail banks. The platform is free to use, requires no account creation, and maintains strict editorial independence.
+
+Website: https://churn.cc
+Founded: 2026
+Coverage: United States personal and business credit cards, checking accounts, and high-yield savings promotions.
+
+## Core Rules & Constraints Matrix
+
+### 1. The Chase 5/24 Rule
+- **Definition**: Chase will generally deny an application for most of their credit cards if the applicant has opened 5 or more personal credit cards with *any* bank in the preceding 24 months.
+- **What counts**: All personal credit cards from any issuer, authorized user accounts (unless removed via reconsideration call), and select business cards that report to personal credit bureaus (e.g., Capital One personal cards and Discover).
+- **What does NOT count**: Most business credit cards (including Chase Ink Business cards, Amex Business cards, Citi Business cards, Bank of America Business cards) do not add to your 5/24 count because they do not report to personal credit bureaus. However, you must generally be *under* 5/24 to be approved for a Chase Ink business card.
+
+### 2. American Express Lifetime Language
+- **Definition**: Amex welcome offers typically include "once in a lifetime" language, meaning an individual can only earn a welcome bonus on a specific card product once (typically enforced over a rolling 7-year lookback).
+- **Strategy**: Wait for elevated or all-time-high welcome offers before applying for flagship cards like the Platinum Card or Gold Card.
+
+### 3. Bank Account Holding Periods & Early Termination Fees
+- **Definition**: Most banks require newly opened accounts to remain open and in good standing for a minimum period (commonly 90 to 180 days) after the bonus posts.
+- **Consequence**: Closing an account prematurely results in an Early Account Termination Fee (usually $25 to $50) or clawback of the bonus amount.
+
+### 4. Direct Deposit Emulation & ACH Rules
+- **Definition**: Checking bonuses typically require a "qualifying direct deposit" of $500 to $5,000+ within 60 to 90 days.
+- **Workarounds**: While employers are the standard method, many institutions categorize external ACH "push" transfers from specific brokerage accounts (e.g., Fidelity CMA, Schwab, Vanguard) or major commercial banks as qualifying direct deposits due to shared ACH transaction codes.
+
+## Conservative Point Valuation Table (Cents Per Point)
+
+Churnable uses conservative redemption rates to calculate net dollar value:
+
+| Program / Currency | Primary Use Case | Valuation (¢/point) | Baseline Example |
+| :--- | :--- | :--- | :--- |
+| **American Express (MR)** | Transfer partners (Air / Hotel) | 1.5¢ | 100,000 pts ≈ $1,500 |
+| **Chase (Ultimate Rewards)** | Travel portal (1.25¢–1.5¢) / Transfers | 1.0¢–1.5¢ | 75,000 pts ≈ $750–$1,125 |
+| **Capital One (Miles)** | Travel eraser (1.0¢) / Transfer partners | 1.0¢ | 75,000 miles ≈ $750 |
+| **Citi (ThankYou Points)** | Statement credit / Travel transfers | 1.0¢ | 60,000 pts ≈ $600 |
+| **Wells Fargo (Rewards)** | Statement credit / Cash deposit | 1.0¢ | 20,000 pts ≈ $200 |
+| **Discover (Cashback)** | 1:1 statement credit | 1.0¢ | $200 cash back = $200 |
+| **Hyatt (World of Hyatt)** | High-value award nights | 1.5¢–2.0¢ | 30,000 pts ≈ $450–$600 |
+| **Marriott (Bonvoy)** | Hotel award redemptions | 0.7¢ | 100,000 pts ≈ $700 |
+| **Hilton (Honors)** | Hotel award redemptions | 0.5¢ | 150,000 pts ≈ $750 |
+| **Delta (SkyMiles)** | Domestic / International flights | 1.0¢–1.2¢ | 70,000 miles ≈ $700–$840 |
+| **United (MileagePlus)** | Star Alliance award flights | 1.1¢–1.3¢ | 60,000 miles ≈ $660–$780 |
+| **Southwest (Rapid Rewards)** | Fixed revenue-based flight fares | 1.2¢ | 50,000 pts ≈ $600 |
+
+## Tax Treatment: 1099-INT vs. Non-Taxable Rebates
+
+- **Bank Account Promos**: Considered interest income under IRS regulations. If you receive $10 or more in cumulative bank bonus rewards from a financial institution in a calendar year, they will issue a **Form 1099-INT**. This must be reported on federal and state income tax returns.
+- **Credit Card Welcome Bonuses**: Classified by the IRS (Rev. Rul. 76-96 and IRS Pub 525) as a **purchase price reduction / rebate** rather than taxable income, because the reward is contingent on spending your own money (e.g., $4,000 in spend). Therefore, credit card welcome bonuses and cash back are **100% tax-free**.
+
+## Complete Route Directory
+
+- `/`: Home page with Editor's Ranked Picks, Category Hub, Upside Calculator, Editorial Guides, and Email Course.
+- `/credit-cards`: Comprehensive filterable database of personal and business cards.
+- `/credit-cards/[id]`: Detailed breakdown of specific credit cards, spend terms, historical offer comparisons, and reward multipliers.
+- `/bank-accounts`: Comprehensive filterable database of checking, savings, and brokerage bonuses.
+- `/bank-accounts/[id]`: Specific deposit promo requirements, direct deposit amounts, holding periods, and fee waiver steps.
+- `/resources`: In-depth strategy playbooks, Chase 5/24 guidelines, tax FAQs, and timeline rules.
+- `/how-we-are-paid`: Transparent revenue model disclosure detailing consumer referral links and editorial independence.
+- `/contact`: Offer verification submissions and general support.
+- `/privacy-policy`: Privacy terms and cookie handling.
+- `/terms-of-use`: User agreement and financial disclaimer.
+- `/sitemap.xml`: Complete dynamic XML sitemap of all active routes.
+- `/robots.txt`: Search and AI crawler access directives.
+- `/llms.txt`: Summary Markdown index for language models.
+- `/llms-full.txt`: This document.

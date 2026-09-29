@@ -7,6 +7,8 @@ interface BankLogo {
   src: string;
   width: number;
   height: number;
+  /** Square badge logos need more height for their knocked-out lettering to read. */
+  badge?: boolean;
 }
 
 const bankLogos: BankLogo[] = [
@@ -16,6 +18,7 @@ const bankLogos: BankLogo[] = [
     src: "/bank-logos/american-express.svg",
     width: 70,
     height: 32,
+    badge: true,
   },
   {
     name: "Capital One",
@@ -35,6 +38,7 @@ const bankLogos: BankLogo[] = [
     src: "/bank-logos/wells-fargo.svg",
     width: 60,
     height: 32,
+    badge: true,
   },
   { name: "Discover", src: "/bank-logos/discover.svg", width: 120, height: 32 },
   { name: "Barclays", src: "/bank-logos/barclays.svg", width: 140, height: 32 },
@@ -48,39 +52,39 @@ export function BankLogoCarousel({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "mt-8 border-t border-slate-200/80 pt-6 dark:border-slate-800",
+        "flex flex-col gap-6 lg:flex-row lg:items-center lg:gap-12",
         className,
       )}
     >
-      <p className="text-xs font-bold tracking-wider text-slate-500 uppercase dark:text-slate-400">
-        Find the best bonuses from the top financial institutions
+      <p className="shrink-0 text-sm text-muted-foreground">
+        Tracking offers from the largest US issuers
       </p>
 
-      {/* Infinite Marquee viewport with gradient edge fade masks */}
-      <div className="relative mt-5 w-full overflow-hidden py-1">
-        {/* Left fade gradient */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-white via-white/80 to-transparent dark:from-slate-950 sm:w-16" />
-        {/* Right fade gradient */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-white via-white/80 to-transparent dark:from-slate-950 sm:w-16" />
-
-        {/* Scrolling track */}
-        <div className="animate-marquee flex items-center gap-10 sm:gap-14">
+      {/* Edge-masked marquee; the mask is an alpha fade, not a visible gradient */}
+      <div
+        className="min-w-0 flex-1 overflow-hidden"
+        style={{
+          maskImage:
+            "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+          WebkitMaskImage:
+            "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+        }}
+      >
+        <div className="animate-marquee flex items-center">
           {duplicatedLogos.map((bank, index) => (
-            <div
-              key={`${bank.name}-${index}`}
-              className="flex h-10 shrink-0 items-center justify-center px-1 transition-all duration-200"
-              title={bank.name}
-            >
-              {/* Greyscale by default; returns to true color on hover */}
+            <span key={`${bank.name}-${index}`} className="shrink-0 pr-14">
               <Image
                 src={bank.src}
-                alt={`${bank.name} logo`}
+                alt={index < bankLogos.length ? `${bank.name} logo` : ""}
                 width={bank.width}
                 height={bank.height}
                 unoptimized
-                className="h-7 sm:h-8 w-auto max-w-[140px] object-contain opacity-55 grayscale transition-all duration-200 hover:opacity-100 hover:grayscale-0 dark:opacity-70 dark:brightness-125 dark:grayscale dark:hover:grayscale-0"
+                className={cn(
+                  "w-auto max-w-[120px] object-contain opacity-50 grayscale",
+                  bank.badge ? "h-9 opacity-40" : "h-6",
+                )}
               />
-            </div>
+            </span>
           ))}
         </div>
       </div>
