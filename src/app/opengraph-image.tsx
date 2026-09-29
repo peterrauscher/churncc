@@ -16,28 +16,63 @@ export default async function Image() {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        backgroundColor: "#090d16",
-        padding: "70px 80px",
+        backgroundColor: "#015ecc",
+        padding: "54px 64px",
         fontFamily: "system-ui, -apple-system, sans-serif",
-        color: "#ffffff",
-        border: "1px solid #1e293b",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
-      {/* Top bar with brand logo & kicker */}
+      {/* Playful background bubble circles (solid, no gradients) */}
+      <div
+        style={{
+          position: "absolute",
+          top: "-80px",
+          right: "-60px",
+          width: "360px",
+          height: "360px",
+          borderRadius: "9999px",
+          backgroundColor: "#026be8",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          bottom: "-100px",
+          left: "240px",
+          width: "280px",
+          height: "280px",
+          borderRadius: "9999px",
+          backgroundColor: "#0052b3",
+        }}
+      />
+
+      {/* Top header row */}
       <div
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          position: "relative",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-          {/* Churnable logo icon representation */}
+        {/* Bubbly Logo Pill */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "14px",
+            backgroundColor: "#ffffff",
+            padding: "10px 24px",
+            borderRadius: "9999px",
+            boxShadow: "0 6px 20px rgba(0, 32, 96, 0.22)",
+          }}
+        >
           <div
             style={{
-              width: "48px",
-              height: "48px",
-              borderRadius: "12px",
+              width: "34px",
+              height: "34px",
+              borderRadius: "10px",
               backgroundColor: "#0160c4",
               display: "flex",
               alignItems: "center",
@@ -46,8 +81,8 @@ export default async function Image() {
           >
             <div
               style={{
-                width: "24px",
-                height: "24px",
+                width: "18px",
+                height: "18px",
                 borderLeft: "4px solid #38b6ff",
                 borderBottom: "4px solid #00bf63",
                 transform: "rotate(-45deg)",
@@ -56,139 +91,364 @@ export default async function Image() {
           </div>
           <span
             style={{
-              fontSize: "36px",
-              fontWeight: 800,
+              fontSize: "26px",
+              fontWeight: 900,
               letterSpacing: "-0.03em",
-              color: "#ffffff",
+              color: "#0f172a",
             }}
           >
             Churnable
           </span>
         </div>
 
+        {/* Tilted Sticker: Free Money Alert */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             gap: "8px",
-            backgroundColor: "#172554",
-            border: "1px solid #1e3a8a",
-            padding: "8px 18px",
+            backgroundColor: "#ffd836",
+            color: "#1e293b",
+            padding: "10px 22px",
             borderRadius: "9999px",
-            fontSize: "14px",
-            fontWeight: 700,
-            color: "#38b6ff",
-            letterSpacing: "0.05em",
-            textTransform: "uppercase",
+            fontSize: "15px",
+            fontWeight: 900,
+            letterSpacing: "0.02em",
+            transform: "rotate(3deg)",
+            boxShadow: "0 6px 18px rgba(0, 0, 0, 0.18)",
           }}
         >
-          1,000+ Offers Tracked · Daily Verification
+          <span>💸 FREE MONEY FROM BANKS</span>
         </div>
       </div>
 
-      {/* Center content */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-        <h1
+      {/* Main Headline */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px",
+          position: "relative",
+          marginTop: "16px",
+        }}
+      >
+        <div
           style={{
-            fontSize: "64px",
-            fontWeight: 800,
-            lineHeight: 1.08,
+            fontSize: "66px",
+            fontWeight: 900,
+            lineHeight: 1.05,
             letterSpacing: "-0.04em",
             color: "#ffffff",
-            margin: 0,
+            textShadow: "0 4px 16px rgba(0, 30, 90, 0.35)",
           }}
         >
-          Smart bonus decisions start with honest math.
-        </h1>
-        <p
+          Banks have billions.
+        </div>
+        <div
           style={{
-            fontSize: "24px",
-            lineHeight: 1.4,
-            color: "#94a3b8",
-            margin: 0,
-            maxWidth: "960px",
+            display: "flex",
+            alignItems: "center",
+            gap: "16px",
+            fontSize: "66px",
+            fontWeight: 900,
+            lineHeight: 1.05,
+            letterSpacing: "-0.04em",
+            color: "#ffd836",
+            textShadow: "0 4px 16px rgba(0, 30, 90, 0.35)",
           }}
         >
-          Compare the nation&apos;s highest credit card welcome offers and bank
-          account deposit promotions. 100% free, independent, and ranked
-          strictly by net payout.
-        </p>
+          <span>Go get your share.</span>
+          <span style={{ fontSize: "60px" }}>🎉</span>
+        </div>
       </div>
 
-      {/* Bottom metrics banner */}
+      {/* 3 Bubbly Floating Offer Cards */}
+      <div
+        style={{
+          display: "flex",
+          gap: "18px",
+          position: "relative",
+          marginTop: "8px",
+        }}
+      >
+        {/* Bubble Card 1: Sapphire */}
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            gap: "6px",
+            backgroundColor: "#ffffff",
+            borderRadius: "26px",
+            padding: "20px 22px",
+            boxShadow: "0 10px 28px rgba(0, 24, 80, 0.28)",
+            transform: "rotate(-2deg)",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "12px",
+                fontWeight: 800,
+                color: "#0160c4",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+              }}
+            >
+              ✈️ Travel Card
+            </span>
+            <span
+              style={{
+                backgroundColor: "#eef6ff",
+                color: "#0160c4",
+                fontSize: "11px",
+                fontWeight: 800,
+                padding: "3px 8px",
+                borderRadius: "9999px",
+              }}
+            >
+              TOP PICK
+            </span>
+          </div>
+          <span
+            style={{
+              fontSize: "16px",
+              fontWeight: 800,
+              color: "#0f172a",
+            }}
+          >
+            Chase Sapphire
+          </span>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              gap: "6px",
+              marginTop: "4px",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "28px",
+                fontWeight: 900,
+                color: "#00a859",
+                letterSpacing: "-0.03em",
+              }}
+            >
+              75,000 pts
+            </span>
+            <span
+              style={{ fontSize: "13px", fontWeight: 700, color: "#64748b" }}
+            >
+              ≈ $750
+            </span>
+          </div>
+        </div>
+
+        {/* Bubble Card 2: Checking */}
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            gap: "6px",
+            backgroundColor: "#ffffff",
+            borderRadius: "26px",
+            padding: "20px 22px",
+            boxShadow: "0 10px 28px rgba(0, 24, 80, 0.28)",
+            transform: "rotate(1.5deg)",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "12px",
+                fontWeight: 800,
+                color: "#0284c7",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+              }}
+            >
+              🏦 Checking Bonus
+            </span>
+            <span
+              style={{
+                backgroundColor: "#e0f2fe",
+                color: "#0284c7",
+                fontSize: "11px",
+                fontWeight: 800,
+                padding: "3px 8px",
+                borderRadius: "9999px",
+              }}
+            >
+              CASH
+            </span>
+          </div>
+          <span
+            style={{
+              fontSize: "16px",
+              fontWeight: 800,
+              color: "#0f172a",
+            }}
+          >
+            Citi Priority Checking
+          </span>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              gap: "6px",
+              marginTop: "4px",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "28px",
+                fontWeight: 900,
+                color: "#00a859",
+                letterSpacing: "-0.03em",
+              }}
+            >
+              +$700
+            </span>
+            <span
+              style={{ fontSize: "13px", fontWeight: 700, color: "#64748b" }}
+            >
+              direct deposit
+            </span>
+          </div>
+        </div>
+
+        {/* Bubble Card 3: Year 1 Upside */}
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            gap: "6px",
+            backgroundColor: "#e6f9f0",
+            borderRadius: "26px",
+            padding: "20px 22px",
+            boxShadow: "0 10px 28px rgba(0, 24, 80, 0.28)",
+            border: "2px solid #a7f3d0",
+            transform: "rotate(-1deg)",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "12px",
+                fontWeight: 800,
+                color: "#047857",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+              }}
+            >
+              🚀 1st-Year Potential
+            </span>
+            <span
+              style={{
+                backgroundColor: "#d1fae5",
+                color: "#065f46",
+                fontSize: "11px",
+                fontWeight: 800,
+                padding: "3px 8px",
+                borderRadius: "9999px",
+              }}
+            >
+              COMBINED
+            </span>
+          </div>
+          <span
+            style={{
+              fontSize: "16px",
+              fontWeight: 800,
+              color: "#064e3b",
+            }}
+          >
+            Avg. Churner Upside
+          </span>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              gap: "6px",
+              marginTop: "4px",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "28px",
+                fontWeight: 900,
+                color: "#00875a",
+                letterSpacing: "-0.03em",
+              }}
+            >
+              +$2,350
+            </span>
+            <span
+              style={{ fontSize: "13px", fontWeight: 700, color: "#065f46" }}
+            >
+              /year
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Pill Bar */}
       <div
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          borderTop: "1px solid #1e293b",
-          paddingTop: "32px",
+          position: "relative",
+          marginTop: "16px",
         }}
       >
-        <div style={{ display: "flex", gap: "48px" }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-            <span
-              style={{
-                fontSize: "13px",
-                fontWeight: 700,
-                color: "#64748b",
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
-              }}
-            >
-              Rankings
-            </span>
-            <span
-              style={{ fontSize: "20px", fontWeight: 800, color: "#00bf63" }}
-            >
-              100% Merit-Based
-            </span>
-          </div>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-            <span
-              style={{
-                fontSize: "13px",
-                fontWeight: 700,
-                color: "#64748b",
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
-              }}
-            >
-              Valuations
-            </span>
-            <span
-              style={{ fontSize: "20px", fontWeight: 800, color: "#ffffff" }}
-            >
-              Conservative Dollar Math
-            </span>
-          </div>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-            <span
-              style={{
-                fontSize: "13px",
-                fontWeight: 700,
-                color: "#64748b",
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
-              }}
-            >
-              Access
-            </span>
-            <span
-              style={{ fontSize: "20px", fontWeight: 800, color: "#ffffff" }}
-            >
-              Free, No Login Needed
-            </span>
-          </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "24px",
+            color: "#ffffff",
+            fontSize: "15px",
+            fontWeight: 800,
+          }}
+        >
+          <span>✨ 100% Free to Use</span>
+          <span style={{ opacity: 0.5 }}>•</span>
+          <span>🎯 0% Corporate Bias</span>
+          <span style={{ opacity: 0.5 }}>•</span>
+          <span>⚡️ Verified Daily</span>
         </div>
 
         <div
           style={{
-            fontSize: "20px",
-            fontWeight: 700,
-            color: "#64748b",
+            backgroundColor: "rgba(255, 255, 255, 0.2)",
+            color: "#ffffff",
+            padding: "8px 20px",
+            borderRadius: "9999px",
+            fontSize: "16px",
+            fontWeight: 900,
+            letterSpacing: "-0.01em",
           }}
         >
           churn.cc
