@@ -46,7 +46,6 @@ const bankLogos: BankLogo[] = [
 ];
 
 export function BankLogoCarousel({ className }: { className?: string }) {
-  // Duplicated list creates the continuous seamless loop
   const duplicatedLogos = [...bankLogos, ...bankLogos];
 
   return (
