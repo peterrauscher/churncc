@@ -5,7 +5,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://churn.cc";
   const now = new Date();
 
-  // Core static marketing and tool pages
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
@@ -57,7 +56,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // Dynamic credit card offer routes
   let cardRoutes: MetadataRoute.Sitemap = [];
   try {
     const cards = await fetchCreditCards();
@@ -73,7 +71,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error("Error generating sitemap card routes:", error);
   }
 
-  // Dynamic bank account promo routes
   let accountRoutes: MetadataRoute.Sitemap = [];
   try {
     const accounts = getMockBankAccounts();

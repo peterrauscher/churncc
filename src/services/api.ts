@@ -5,7 +5,6 @@ const CREDIT_CARD_API_URL =
   "https://raw.githubusercontent.com/andenacitelli/credit-card-bonuses-api/main/exports/data.json";
 const BANK_REWARDS_PROXY_URL = "/api/bank-rewards"; // Will implement proxy API route to handle scraping
 
-// Fetch all credit card data
 export const fetchCreditCards = async (): Promise<CreditCard[]> => {
   try {
     const response = await fetch(CREDIT_CARD_API_URL);
@@ -28,7 +27,6 @@ export const fetchCreditCards = async (): Promise<CreditCard[]> => {
   }
 };
 
-// Fetch all bank account data
 export const fetchBankAccounts = async (): Promise<BankAccount[]> => {
   try {
     // In production, this would call your API route that handles the scraping
@@ -128,7 +126,6 @@ export const getMockBankAccounts = (): BankAccount[] => {
   ];
 };
 
-// Fetch a specific credit card by ID
 export const fetchCreditCardById = async (
   cardId: string,
 ): Promise<CreditCard | null> => {
@@ -141,7 +138,6 @@ export const fetchCreditCardById = async (
   }
 };
 
-// Fetch a specific bank account by ID
 export const fetchBankAccountById = async (
   accountId: string,
 ): Promise<BankAccount | null> => {

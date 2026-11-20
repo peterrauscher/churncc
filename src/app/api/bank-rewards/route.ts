@@ -86,7 +86,6 @@ const MOCK_BANK_ACCOUNTS: BankAccount[] = [
 ];
 
 export async function GET() {
-  // Simulate API delay
   await new Promise((resolve) => setTimeout(resolve, 500));
   return NextResponse.json(MOCK_BANK_ACCOUNTS);
 }

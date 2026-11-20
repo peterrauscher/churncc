@@ -32,7 +32,6 @@ export function PaginationControls({
   className,
   itemLabel = "items",
 }: PaginationControlsProps) {
-  // Generate page numbers with smart ellipsis
   const getPageNumbers = (): (number | "...")[] => {
     if (totalPages <= 7) {
       return Array.from({ length: totalPages }, (_, i) => i + 1);
